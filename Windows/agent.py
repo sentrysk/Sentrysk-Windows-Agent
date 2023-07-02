@@ -3,12 +3,14 @@ import psutil
 import math
 import winreg
 import subprocess
+import win32com.client
+import json
 
 
 def get_system_info():
     """
     Retrieve system information including operating system, CPU, memory, disks, installed programs,
-    user information, service details, audit policies, and BitLocker status.
+    user information, service details, audit policies, BitLocker status, Windows update history, and missing updates.
     """
     system_info = {}
 
@@ -70,6 +72,11 @@ def get_system_info():
     # Audit Policies
     audit_policies = get_audit_policies()
     system_info['audit_policies'] = audit_policies
+
+    # Missing Updates
+    missing_updates = check_missing_updates()
+    categorized_updates = categorize_updates(missing_updates)
+    system_info['missing_updates'] = categorized_updates
 
     return system_info
 
@@ -230,7 +237,7 @@ def get_audit_policies():
 
 def check_bitlocker_status(device):
     """
-    Check the BitLocker status for a given disk/device.
+    Check the BitLocker protection status of a disk.
     """
     device = device.replace("\\", "")
 
@@ -247,7 +254,47 @@ def check_bitlocker_status(device):
     return 'Unknown'
 
 
+def check_missing_updates():
+    """
+    Check for missing Windows updates.
+    """
+    missing_updates = []
+
+    try:
+        update_session = win32com.client.Dispatch("Microsoft.Update.Session")
+        update_searcher = update_session.CreateUpdateSearcher()
+
+        # Search for updates
+        search_result = update_searcher.Search("IsInstalled=0")
+
+        for update in search_result.Updates:
+            missing_update = {
+                'title': update.Title,
+                'description': update.Description,
+                'category': update.Categories[0].Name if update.Categories else 'Uncategorized'
+            }
+            missing_updates.append(missing_update)
+    except Exception:
+        pass
+
+    return missing_updates
+
+
+def categorize_updates(updates):
+    """
+    Categorize the list of updates based on their classification.
+    """
+    categorized_updates = {}
+
+    for update in updates:
+        if update['category'] not in categorized_updates:
+            categorized_updates[update['category']] = []
+        categorized_updates[update['category']].append(update)
+
+    return categorized_updates
+
+
 # Usage
 system_info = get_system_info()
-for key, value in system_info.items():
-    print(f"{key}: {value}")
+json_data = json.dumps(system_info, indent=4)
+print(json_data)
