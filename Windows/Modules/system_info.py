@@ -7,7 +7,6 @@ import psutil
 import subprocess
 import psutil
 import socket
-import json
 import wmi
 
 from helper_funcs import convert_size
@@ -18,7 +17,7 @@ from helper_funcs import convert_size
 def get_system_info():
     """
     Retrieve system information including operating system, domain, CPU, 
-    memory, disks, and networks.
+    memory, disks, and network interfaces.
     """
     system_info = {
         "os": {},
@@ -147,5 +146,3 @@ def get_network_info():
 
     return network_info
 ##############################################################################
-
-print(json.dumps(get_system_info() ,indent=4))
