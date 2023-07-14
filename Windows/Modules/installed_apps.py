@@ -4,7 +4,7 @@
 ##############################################################################
 import winreg
 
-from user_info import get_user_info
+from .user_info import get_user_info
 ##############################################################################
 
 # Functions
