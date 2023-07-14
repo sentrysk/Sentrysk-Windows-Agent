@@ -9,7 +9,7 @@ import psutil
 import socket
 import wmi
 
-from helper_funcs import convert_size
+from .helper_funcs import convert_size
 ##############################################################################
 
 # Functions
@@ -106,6 +106,7 @@ def check_bitlocker_status(device):
         pass
 
     return 'Unknown'
+
 
 def get_network_info():
     """
