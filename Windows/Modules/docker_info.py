@@ -4,7 +4,7 @@
 ##############################################################################
 import docker
 
-from helper_funcs import convert_size
+from .helper_funcs import convert_size
 ##############################################################################
 
 # Check Docker
