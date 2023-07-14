@@ -21,9 +21,15 @@ def check_docker_installed() -> bool:
         return False
 ##############################################################################
 
-# Dcoker Info
+# Docker Info
 ##############################################################################
 def get_docker_info():
+    if not check_docker_installed():
+        docker_info = {
+            "running": False
+        }
+        return docker_info
+
     # Connect to the Docker daemon
     client = docker.from_env()
 
