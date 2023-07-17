@@ -51,19 +51,13 @@ def get_npm_packages():
         npm_data["packages"] = package_data
 
         return npm_data
-    except subprocess.CalledProcessError as e:
+    except Exception as e:
         # Log the error with date and time
         timestamp = datetime.now().strftime(TIME_FORMAT)
-        logging.error(f'[{timestamp}] Error executing command: {e.cmd}')
-        logging.error(f'[{timestamp}] Return code: {e.returncode}')
-        logging.error(f'[{timestamp}] Stdout: {e.stdout.decode().strip()}')
-        logging.error(f'[{timestamp}] Stderr: {e.stderr.decode().strip()}')
-        sys.exit(1)
-    except FileNotFoundError:
-        # Log the error with date and time
-        timestamp = datetime.now().strftime(TIME_FORMAT)
+        logging.error(f'[{timestamp}] Error: {e}')
         data = {
-            "installed":False
+            "running":False
         }
         return data
+
 ##############################################################################
