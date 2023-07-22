@@ -12,6 +12,7 @@ from Modules.service_info import get_service_info
 from Modules.updates_info import get_update_history, check_missing_updates
 from Modules.docker_info import get_docker_info
 from Modules.npm_info import get_npm_packages
+from Modules.pip_info import get_pip_packages
 ##############################################################################
 
 # Functions
@@ -31,6 +32,7 @@ system_info['update_history']       = get_update_history()
 system_info['missing_updates']      = check_missing_updates()
 system_info['docker_info']          = get_docker_info()
 system_info['npm_info']             = get_npm_packages()
+system_info['pip_info']             = get_pip_packages()
 ##############################################################################
 
 

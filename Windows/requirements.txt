@@ -2,3 +2,4 @@ psutil
 pywin32
 docker
 wmi
+pkg_resources
