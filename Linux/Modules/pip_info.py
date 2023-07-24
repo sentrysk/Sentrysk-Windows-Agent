@@ -7,7 +7,7 @@ import pkg_resources
 
 # Functions
 ##############################################################################
-def get_installed_packages():
+def get_pip_packages():
     try:
         # Get a list of all installed packages using pkg_resources
         installed_packages = [
