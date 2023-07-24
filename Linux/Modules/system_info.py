@@ -6,7 +6,7 @@ import platform
 import psutil
 import socket
 
-from helper_funcs import convert_size
+from .helper_funcs import convert_size
 ##############################################################################
 
 

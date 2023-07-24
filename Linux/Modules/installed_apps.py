@@ -27,16 +27,8 @@ def get_installed_programs():
             programs = handler()
             installed_programs.extend(programs)
 
-    # Prepare the data as a dictionary
-    data = {
-        "installed_programs": installed_programs
-    }
-
-    # Convert the data to JSON with indentation and sorting
-    json_data = json.dumps(data, indent=4, sort_keys=True, ensure_ascii=False)
-
-    # Return the JSON data
-    return json_data
+    # Return the installed_programs
+    return installed_programs
 
 
 def is_command_available(command):
