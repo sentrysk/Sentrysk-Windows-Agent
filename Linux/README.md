@@ -1,5 +1,9 @@
 # Linux System Agent
 
 ## Provides
-- Installed Apps
+- System Info
 - Users Info
+- Services
+- Installed Apps
+- NPM Info
+- Pip Info
