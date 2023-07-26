@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import json
+from configparser import ConfigParser
 
 from Modules.system_info import get_system_info
 from Modules.user_info import get_user_info
@@ -13,6 +14,16 @@ from Modules.updates_info import get_update_history, check_missing_updates
 from Modules.docker_info import get_docker_info
 from Modules.npm_info import get_npm_packages
 from Modules.pip_info import get_pip_packages
+##############################################################################
+
+# Configs
+##############################################################################
+CONFIG_FILE = 'config.ini'
+
+config = ConfigParser()
+config.read(CONFIG_FILE)
+
+DASHBOARD_URL = config.get('dashboard','url')
 ##############################################################################
 
 # Functions
