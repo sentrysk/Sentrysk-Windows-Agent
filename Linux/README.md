@@ -7,3 +7,4 @@
 - Installed Apps
 - NPM Info
 - Pip Info
+- Docker Info
