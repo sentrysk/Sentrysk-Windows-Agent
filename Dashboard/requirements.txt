@@ -1,1 +1,2 @@
 flask
+mongoengine==0.27.0
