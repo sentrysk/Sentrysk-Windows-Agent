@@ -30,8 +30,8 @@ def get_agents():
 @agnt_bp.route('/<id>', methods=['GET'])
 def get_agent_by_id(id):
     try:
-        agents = Agent.objects(id=id).first().to_json()
-        return json.loads(agents)
+        agent = Agent.objects(id=id).first().serialize()
+        return jsonify(agent)
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 
