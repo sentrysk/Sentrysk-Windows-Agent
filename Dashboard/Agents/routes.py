@@ -61,4 +61,18 @@ def register():
         }
     ), 201
 
+# Delete Agent by ID
+@agnt_bp.route('/<id>', methods=['DELETE'])
+def delete_agent(id):
+    try:
+        agent = Agent.objects(id=id).first()
+
+        if agent:
+            agent.delete()
+            return jsonify({'message': 'Agent deleted successfully.'}), 200
+        else:
+            return jsonify({'message': 'Agent not found.'}), 401
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+    
 ##############################################################################
