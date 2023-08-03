@@ -5,6 +5,8 @@
 from flask import Flask
 from mongoengine import connect
 from configparser import ConfigParser
+
+from Agents.routes import agnt_bp
 ##############################################################################
 
 # Configs
@@ -28,6 +30,11 @@ db = connect(
     password = config.get('database','password')
 )
 
+##############################################################################
+
+# Blueprints
+##############################################################################
+app.register_blueprint(agnt_bp, url_prefix='/agent')
 ##############################################################################
 
 # Routes
