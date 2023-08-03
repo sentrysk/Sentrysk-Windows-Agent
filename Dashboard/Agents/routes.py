@@ -26,6 +26,14 @@ def get_agents():
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 
+# Get Agent by ID
+@agnt_bp.route('/<id>', methods=['GET'])
+def get_agent_by_id(id):
+    try:
+        agents = Agent.objects(id=id).first().to_json()
+        return json.loads(agents)
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
 
 # Register
 @agnt_bp.route('/register', methods=['POST'])
