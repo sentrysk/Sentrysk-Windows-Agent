@@ -4,7 +4,7 @@
 ##############################################################################
 from flask import Blueprint, request, jsonify
 import uuid
-
+import json
 from .models import Agent
 ##############################################################################
 
@@ -16,6 +16,17 @@ agnt_bp = Blueprint('agent_blueprint', __name__)
 
 # Routes
 ##############################################################################
+
+# Get All Agents
+@agnt_bp.route('/', methods=['GET'])
+def get_agents():
+    try:
+        agents = Agent.objects().to_json()
+        return json.loads(agents)
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+
+
 # Register
 @agnt_bp.route('/register', methods=['POST'])
 def register():
@@ -30,6 +41,16 @@ def register():
 
     agent = Agent(type=agent_type, token=token)
     agent.save()
+    
+    agent_data = json.loads(agent.to_json())
+    print(agent_data)
 
-    return jsonify({'message': 'Agent registered successfully.', 'token': token}), 201
+    return jsonify(
+        {
+            'message': 'Agent registered successfully.',
+            'token': token,
+            'agent':agent_data
+        }
+    ), 201
+
 ##############################################################################
