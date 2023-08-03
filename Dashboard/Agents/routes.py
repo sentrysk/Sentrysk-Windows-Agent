@@ -21,8 +21,8 @@ agnt_bp = Blueprint('agent_blueprint', __name__)
 @agnt_bp.route('/', methods=['GET'])
 def get_agents():
     try:
-        agents = Agent.objects().to_json()
-        return json.loads(agents)
+        agents = Agent.objects()
+        return [agent.serialize() for agent in agents] # Serialize & Return
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 
