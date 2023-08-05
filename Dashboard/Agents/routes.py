@@ -74,5 +74,30 @@ def delete_agent(id):
             return jsonify({'message': 'Agent not found.'}), 401
     except Exception as e:
         return jsonify({"error":str(e)}), 500
-    
+
+
+@agnt_bp.route('/<id>', methods=['PUT'])
+def update_agent(id):
+    try:
+        agent = Agent.objects(id=id).first()
+
+        if agent:
+            data = request.get_json()
+
+            if data.get('type'):
+                agent.type = data.get('type')
+
+            if data.get('token'):
+                agent.token = data.get('token')
+            
+            agent.save()
+            return jsonify(
+                {
+                    'message': 'Agent updated successfully.',
+                    'agent': agent.serialize()
+                }), 200
+        else:
+            return jsonify({'message': 'Agent not found.'}), 401
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
 ##############################################################################
