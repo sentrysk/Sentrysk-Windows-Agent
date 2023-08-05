@@ -11,4 +11,4 @@ In this section you can create,update,delete,list agents
 | Get by ID   | /<id>       | GET |
 | Create      | /register   | POST |
 | Delete      | /<id>       | DELETE |
-| Update      | (Not Implemented)  | PUT |
+| Update      | /<id>       | PUT |
