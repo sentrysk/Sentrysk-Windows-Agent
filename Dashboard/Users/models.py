@@ -26,6 +26,13 @@ class User(Document):
             "password":self.token,
             "created":self.created
         }
+    
+    def safe_serialize(self):
+        return {
+            "id":str(self.id),
+            "email":self.type,
+            "created":self.created
+        }
 
     def __str__(self):
         return str(self.serialize())
