@@ -7,6 +7,7 @@ from mongoengine import connect
 from configparser import ConfigParser
 
 from Agents.routes import agnt_bp
+from Users.routes import users_bp
 ##############################################################################
 
 # Configs
@@ -36,6 +37,7 @@ db = connect(
 # Blueprints
 ##############################################################################
 app.register_blueprint(agnt_bp, url_prefix='/agent')
+app.register_blueprint(users_bp, url_prefix='/user')
 ##############################################################################
 
 
