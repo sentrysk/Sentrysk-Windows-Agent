@@ -8,15 +8,21 @@ import sys
 import logging
 from datetime import datetime
 import os
+from configparser import ConfigParser, ExtendedInterpolation
 ##############################################################################
+
 
 # Configs
 ##############################################################################
+CONFIG_FILE = 'config.ini'
+
+config = ConfigParser(interpolation=ExtendedInterpolation())
+config.read(CONFIG_FILE)
+
+LOGFILE = config.get('logging','npm_logfile')
 
 # Configure logging to write errors to a log file
-logfile = os.path.dirname(os.path.realpath(__file__)) + "\\error.log"
-logging.basicConfig(filename=logfile, level=logging.ERROR)
-
+logging.basicConfig(filename=LOGFILE, level=logging.ERROR)
 ##############################################################################
 
 
