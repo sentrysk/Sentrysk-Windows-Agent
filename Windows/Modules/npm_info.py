@@ -4,31 +4,7 @@
 ##############################################################################
 import json
 import subprocess
-import sys
 import logging
-from datetime import datetime
-import os
-from configparser import ConfigParser, ExtendedInterpolation
-##############################################################################
-
-
-# Configs
-##############################################################################
-CONFIG_FILE = 'config.ini'
-
-config = ConfigParser(interpolation=ExtendedInterpolation())
-config.read(CONFIG_FILE)
-
-LOGFILE = config.get('logging','npm_logfile')
-
-# Configure logging to write errors to a log file
-logging.basicConfig(filename=LOGFILE, level=logging.ERROR)
-##############################################################################
-
-
-# Global Values
-##############################################################################
-TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 ##############################################################################
 
 
@@ -58,9 +34,8 @@ def get_npm_packages():
 
         return npm_data
     except Exception as e:
-        # Log the error with date and time
-        timestamp = datetime.now().strftime(TIME_FORMAT)
-        logging.error(f'[{timestamp}] Error: {e}')
+        # Log the error
+        logging.error(e)
         data = {
             "running":False
         }
