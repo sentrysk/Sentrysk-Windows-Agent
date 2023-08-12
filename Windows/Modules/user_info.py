@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import subprocess
+import logging
 ##############################################################################
 
 # Functions
@@ -29,7 +30,8 @@ def get_user_info():
                     'sid': sid
                 })
     except subprocess.CalledProcessError:
-        pass
+        # Log the error
+        logging.error(e)
 
     return user_info
 ##############################################################################
