@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import win32com.client
+import logging
 ##############################################################################
 
 # Get Update History
@@ -30,8 +31,9 @@ def get_update_history():
                 'date': update.Date.strftime('%Y-%m-%d %H:%M:%S'),
             }
             update_history.append(update_info)
-    except Exception:
-        pass
+    except Exception as e:
+        # Log the error
+        logging.error(e)
 
     return update_history
 ##############################################################################
@@ -59,8 +61,9 @@ def check_missing_updates():
                 'category': update.Categories[0].Name if update.Categories else 'Uncategorized'
             }
             missing_updates.append(missing_update)
-    except Exception:
-        pass
+    except Exception as e:
+        # Log the error
+        logging.error(e)
 
     return missing_updates
 ##############################################################################
