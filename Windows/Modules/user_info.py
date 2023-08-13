@@ -29,7 +29,7 @@ def get_user_info():
                     'name': name,
                     'sid': sid
                 })
-    except subprocess.CalledProcessError:
+    except Exception as e:
         # Log the error
         logging.error(e)
 
