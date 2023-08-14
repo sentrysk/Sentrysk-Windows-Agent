@@ -8,6 +8,7 @@ import subprocess
 import psutil
 import socket
 import wmi
+import logging
 
 from .helper_funcs import convert_size
 ##############################################################################
@@ -40,7 +41,8 @@ def get_system_info():
         system_info['domain']['domain'] = c.Win32_ComputerSystem()[0].Domain
         system_info['domain']['dns_hostname'] = c.Win32_ComputerSystem()[0].DNSHostName
     except Exception as e:
-        print(f'Error {e}')
+        # Log the error
+        logging.error(e)
 
     # CPU Information
     system_info['cpu']['cpu'] = platform.processor()
@@ -102,8 +104,9 @@ def check_bitlocker_status(device):
             if line.strip().startswith('Protection Status:'):
                 status = line.split(':', 1)[1].strip()
                 return status
-    except subprocess.CalledProcessError:
-        pass
+    except Exception as e:
+        # Log the error
+        logging.error(e)
 
     return 'Unknown'
 
