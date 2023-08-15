@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import subprocess
+import logging
 ##############################################################################
 
 # Functions
@@ -29,8 +30,9 @@ def get_service_info():
                     header[i]: value.strip() for i, value in enumerate(values)
                 }
                 service_info.append(service)
-    except subprocess.CalledProcessError:
-        pass
+    except Exception as e:
+        # Log the error
+        logging.error(e)
 
     return service_info
 ##############################################################################
