@@ -5,23 +5,6 @@
 import json
 import subprocess
 import logging
-from datetime import datetime
-import os
-##############################################################################
-
-# Configs
-##############################################################################
-
-# Configure logging to write errors to a log file
-logfile = os.path.dirname(os.path.realpath(__file__)) + "\\error.log"
-logging.basicConfig(filename=logfile, level=logging.ERROR)
-
-##############################################################################
-
-
-# Global Values
-##############################################################################
-TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 ##############################################################################
 
 
@@ -51,9 +34,8 @@ def get_npm_packages():
 
         return npm_data
     except Exception as e:
-        # Log the error with date and time
-        timestamp = datetime.now().strftime(TIME_FORMAT)
-        logging.error(f'[{timestamp}] Error: {e}')
+        # Log the error
+        logging.error(e)
         data = {
             "running":False
         }
