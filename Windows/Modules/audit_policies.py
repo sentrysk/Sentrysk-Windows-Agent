@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import subprocess
+import logging
 ##############################################################################
 
 # Functions
@@ -32,8 +33,9 @@ def get_audit_policies():
                     'setting': setting,
                     'success': success
                 })
-    except subprocess.CalledProcessError:
-        pass
+    except Exception as e:
+        # Log the error
+        logging.error(e)
 
     return audit_policies
 ##############################################################################
