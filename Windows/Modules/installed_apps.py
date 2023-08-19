@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import winreg
+import logging
 
 from .user_info import get_user_info
 ##############################################################################
@@ -71,8 +72,9 @@ def get_installed_programs():
                 winreg.CloseKey(subkey)
 
             winreg.CloseKey(reg_key)
-    except WindowsError:
-        pass
+    except Exception as e:
+        # Log the error
+        logging.error(e)
 
     return installed_programs
 ##############################################################################
