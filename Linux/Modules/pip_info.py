@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import pkg_resources
+import logging
 ##############################################################################
 
 # Functions
@@ -26,6 +27,7 @@ def get_pip_packages():
         pip_info = {
             "installed":False
         }
-        print(f"Error: {e}")
+        # Log the error
+        logging.error(e)
         return pip_info
 ##############################################################################
