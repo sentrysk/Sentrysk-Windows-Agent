@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import subprocess
+import logging
 ##############################################################################
 
 # Functions
@@ -57,6 +58,7 @@ def get_service_info():
         return services_info
 
     except subprocess.CalledProcessError as e:
-        print("Error executing the command:", e)
+        # Log the error
+        logging.error(e)
         return None
 ##############################################################################
