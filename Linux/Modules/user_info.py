@@ -2,7 +2,7 @@
 
 # Libraries
 ##############################################################################
-
+import logging
 ##############################################################################
 
 # Functions
@@ -23,7 +23,8 @@ def get_user_info():
                 users.append(user)
             
             return users
-    except FileNotFoundError:
-        print("The /etc/passwd file does not exist.")
+    except Exception as e:
+        # Log the error
+        logging.error(e)
         return []
 ##############################################################################
