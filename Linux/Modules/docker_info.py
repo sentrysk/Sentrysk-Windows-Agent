@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 import docker
+import logging
 
 from .helper_funcs import convert_size
 ##############################################################################
@@ -17,7 +18,9 @@ def check_docker_installed() -> bool:
         client = docker.from_env()
         client.ping()
         return True
-    except:
+    except Exception as e:
+        # Log the error
+        logging.error(e)
         return False
 ##############################################################################
 
