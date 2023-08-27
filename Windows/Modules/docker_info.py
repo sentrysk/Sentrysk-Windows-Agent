@@ -21,6 +21,7 @@ def check_docker_installed() -> bool:
     except Exception as e:
         # Log the error
         logging.error(e)
+        return False
 ##############################################################################
 
 # Docker Info
