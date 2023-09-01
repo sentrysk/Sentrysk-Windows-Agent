@@ -2,8 +2,10 @@
 
 # Libraries
 ##############################################################################
-from mongoengine import Document, StringField, DateTimeField, BinaryField
-from datetime import datetime
+from mongoengine import (
+    Document, StringField, DateTimeField, BinaryField, BooleanField
+)
+from datetime import datetime, timedelta
 ##############################################################################
 
 # Configs
@@ -36,4 +38,11 @@ class User(Document):
 
     def __str__(self):
         return str(self.serialize())
+
+class Session(Document):
+    email         = StringField(required=True)
+    token         = StringField(required=True, unique=True)
+    expire_date   = DateTimeField(default=datetime.now + timedelta(hours=24))
+    is_expired    = BooleanField(required=True, default=False)
+    created       = DateTimeField(default=datetime.now)
 ##############################################################################
