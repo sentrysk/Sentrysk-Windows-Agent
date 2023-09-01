@@ -4,8 +4,10 @@
 ##############################################################################
 from flask import Blueprint, request, jsonify
 import bcrypt
+import uuid
+from datetime import datetime,timedelta
 
-from .models import User
+from .models import User, Session
 ##############################################################################
 
 # Blueprint
@@ -35,4 +37,35 @@ def register_user():
     user.save()
 
     return jsonify({'message': 'User registered successfully.'}), 201
+
+@users_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({'message': 'Email and password are required.'}), 400
+
+    user = User.objects(email=email).first()
+
+    if user and bcrypt.checkpw(password.encode('utf-8'), user.password):
+        # Generate a token for the user session
+        token = str(uuid.uuid4())
+
+        session = Session(
+            email=email, 
+            token=token
+        )
+        session.save()
+
+        return jsonify(
+            {
+                'message': 'Login successful.',
+                'token': token,
+                'token_expiry_date': datetime.now() + timedelta(hours=24)
+            }
+        ), 200
+
+    return jsonify({'message': 'Invalid credentials.'}), 401
 ##############################################################################
