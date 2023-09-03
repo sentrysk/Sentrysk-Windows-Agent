@@ -3,7 +3,7 @@
 - The dashboard collect and show info
 
 # Agents
-In this section you can create,update,delete,list agents
+In this section you can create,update,delete,list **Agents**
 
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
@@ -14,8 +14,8 @@ In this section you can create,update,delete,list agents
 | Update      | /<id>       | PUT |
 
 
-# Agents
-In this section you can register,login,logout
+# Users
+In this section you can register,login,logout **Users**
 
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
