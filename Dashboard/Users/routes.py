@@ -7,7 +7,8 @@ import bcrypt
 import uuid
 from datetime import datetime,timedelta
 
-from .models import User, Session
+from .models import User
+from Session.models import Session
 ##############################################################################
 
 # Blueprint

@@ -3,9 +3,9 @@
 # Libraries
 ##############################################################################
 from mongoengine import (
-    Document, StringField, DateTimeField, BinaryField
+    Document, StringField, DateTimeField, BooleanField
 )
-from datetime import datetime
+from datetime import datetime, timedelta
 ##############################################################################
 
 # Configs
@@ -16,23 +16,20 @@ from datetime import datetime
 
 # Models
 ##############################################################################
-class User(Document):
-    email     = StringField(required=True, unique=True)
-    password  = BinaryField(required=True)
-    created   = DateTimeField(default=datetime.now)
+class Session(Document):
+    email         = StringField(required=True)
+    token         = StringField(required=True, unique=True)
+    expire_date   = DateTimeField(default=datetime.now() + timedelta(hours=24))
+    is_expired    = BooleanField(required=True, default=False)
+    created       = DateTimeField(default=datetime.now)
 
     def serialize(self):
         return {
             "id":str(self.id),
-            "email":self.email,
-            "password":self.password,
-            "created":self.created
-        }
-    
-    def safe_serialize(self):
-        return {
-            "id":str(self.id),
-            "email":self.email,
+            "email":self.type,
+            "token":self.token,
+            "expire_date":self.expire_date,
+            "is_expired":self.is_expired,
             "created":self.created
         }
 
