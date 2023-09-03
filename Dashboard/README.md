@@ -12,3 +12,18 @@ In this section you can create,update,delete,list agents
 | Create      | /register   | POST |
 | Delete      | /<id>       | DELETE |
 | Update      | /<id>       | PUT |
+
+
+# Agents
+In this section you can register,login,logout
+
+| Action      | Endpoint | Method |
+| ----------- | ----------- | ----------- |
+| Register    | /register   | POST |
+| Login       | /register   | POST |
+| Logout      | /logout     | POST |
+
+will be added:
+- list
+- update
+- delete
