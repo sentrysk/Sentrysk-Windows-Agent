@@ -52,10 +52,12 @@ def login():
 
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password):
         # Expire previous session
-        prev_session = Session.objects(email=email).first()
-        prev_session.is_expired = True
-        prev_session.expire_date = datetime.now()
-        prev_session.save()
+        prev_session = Session.objects(email=email,is_expired=False).first()
+        # If Previous session exist -> Expire
+        if prev_session:
+            prev_session.is_expired = True
+            prev_session.expire_date = datetime.now()
+            prev_session.save()
 
         # Generate a token for the user session
         token = str(uuid.uuid4())
