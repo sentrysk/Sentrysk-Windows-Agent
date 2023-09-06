@@ -22,6 +22,7 @@ config.read(CONFIG_FILE)
 HOST = '0.0.0.0'
 PORT = 5000
 app = Flask(__name__)
+app.config['SECRET_KEY'] = config.get('app','secret_key')
 
 # DB Config
 db = connect(
