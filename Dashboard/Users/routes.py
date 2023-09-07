@@ -4,11 +4,13 @@
 ##############################################################################
 from flask import Blueprint, request, jsonify
 import bcrypt
-import uuid
+import jwt
 from datetime import datetime,timedelta
+from configparser import ConfigParser
 
 from .models import User
 from Session.models import Session
+from .validators import auth_token_required
 ##############################################################################
 
 # Blueprint
@@ -16,6 +18,16 @@ from Session.models import Session
 users_bp = Blueprint('users_blueprint', __name__)
 ##############################################################################
 
+# Configs
+##############################################################################
+CONFIG_FILE = 'config.ini'
+config = ConfigParser()
+config.read(CONFIG_FILE)
+
+SECRET_KEY = config.get('app','secret_key')
+
+JWT_ALG = 'HS256' # JWT Algorithm
+##############################################################################
 
 # Routes
 ##############################################################################
@@ -60,7 +72,14 @@ def login():
             prev_session.save()
 
         # Generate a token for the user session
-        token = str(uuid.uuid4())
+        token = jwt.encode(
+            {
+                'email': email,
+                'exp': datetime.now() + timedelta(hours=24)
+            },
+            SECRET_KEY,     # Secret Key
+            JWT_ALG         # JWT Algorithm
+        )
 
         session = Session(
             email=email, 
