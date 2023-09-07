@@ -98,18 +98,18 @@ def login():
     return jsonify({'message': 'Invalid credentials.'}), 401
 
 @users_bp.route('/logout', methods=['POST'])
+@auth_token_required
 def logout():
-    token = request.headers.get('Authorization')
-    if not token:
-        return jsonify({'message': 'Token is missing.'}), 401
-
     # Get Session if is not expired
-    session = Session.objects(token=token, is_expired=False).first()
+    session = Session.objects(
+        token       =  request.headers.get('Authorization'), 
+        is_expired  =  False
+    ).first()
 
     if session:
         session.is_expired = True
         session.save()
         return jsonify({'message': 'Logout successful.'}), 200
-
-    return jsonify({'message': 'Invalid token.'}), 401
+    
+    return jsonify({'message': 'Token is invalid'}), 498
 ##############################################################################
