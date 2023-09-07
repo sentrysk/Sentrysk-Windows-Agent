@@ -33,7 +33,7 @@ def auth_token_required(f):
                 {
                     'message':'Token is missing'
                 }
-            ),403
+            ),499
 
         try:
             token = Session.objects(token=auth_header).first()
@@ -48,13 +48,13 @@ def auth_token_required(f):
                     {
                         'message':'Token is invalid'
                     }
-                ),403
+                ),498
         except Exception as e:
             return jsonify(
                 {
                     'message':'Token is invalid'
                 }
-            ),403
+            ),498
         
         return f(*args, **kwargs)
     return decorated
