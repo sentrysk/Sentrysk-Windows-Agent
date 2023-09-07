@@ -51,7 +51,6 @@ def register():
     agent.save()
     
     agent_data = json.loads(agent.to_json())
-    print(agent_data)
 
     return jsonify(
         {
