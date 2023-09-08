@@ -43,8 +43,10 @@ def register_user():
         return jsonify({'error': e.messages}), 400
 
     # Get Email & Password from request data
-    email = data.get('email')
-    password = data.get('password')
+    name        = data.get('name')
+    lastname    = data.get('lastname')
+    email       = data.get('email')
+    password    = data.get('password')
 
     # Check if User already exist
     existing_user = User.objects(email=email).first()
@@ -55,22 +57,36 @@ def register_user():
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     # Register User
-    user = User(email=email, password=hashed_password)
+    user = User(
+        name     = name,
+        lastname = lastname,
+        email    = email, 
+        password = hashed_password
+    )
     user.save()
 
-    return jsonify({'message': 'User registered successfully.'}), 201
+    return jsonify({
+        'message': 'User registered successfully.',
+        'user': user.safe_serialize()
+    }), 201
 
 @users_bp.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    try:
+        # Load and validate the JSON request using the schema
+        data = RegisterSchema().load(request.json)
+    except ValidationError as e:
+        # Return validation errors as a JSON response with a 400 status code
+        return jsonify({'error': e.messages}), 400
+
+    # Get Email & Password from request data
     email = data.get('email')
     password = data.get('password')
 
-    if not email or not password:
-        return jsonify({'message': 'Email and password are required.'}), 400
-
+    # Find user by email
     user = User.objects(email=email).first()
 
+    # If User exist & Password matches
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password):
         # Expire previous session
         prev_session = Session.objects(email=email,is_expired=False).first()
@@ -90,6 +106,7 @@ def login():
             JWT_ALG         # JWT Algorithm
         )
 
+        # Create a Session for this User
         session = Session(
             email=email, 
             token=token
