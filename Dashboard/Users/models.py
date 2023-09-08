@@ -8,15 +8,11 @@ from mongoengine import (
 from datetime import datetime
 ##############################################################################
 
-# Configs
-##############################################################################
-
-##############################################################################
-
-
 # Models
 ##############################################################################
 class User(Document):
+    name      = StringField(required=True)
+    lastname  = StringField(required=True)
     email     = StringField(required=True, unique=True)
     password  = BinaryField(required=True)
     created   = DateTimeField(default=datetime.now)
@@ -24,6 +20,8 @@ class User(Document):
     def serialize(self):
         return {
             "id":str(self.id),
+            "name":self.name,
+            "lastname":self.lastname,
             "email":self.email,
             "password":self.password,
             "created":self.created
@@ -32,6 +30,8 @@ class User(Document):
     def safe_serialize(self):
         return {
             "id":str(self.id),
+            "name":self.name,
+            "lastname":self.lastname,
             "email":self.email,
             "created":self.created
         }
