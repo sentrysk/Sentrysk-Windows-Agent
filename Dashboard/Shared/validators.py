@@ -5,20 +5,14 @@
 from functools import wraps
 from flask import request, jsonify
 import jwt
-from configparser import ConfigParser
 
 from Session.models import Session
+from .configs import SECRET_KEY,JWT_ALG
 ##############################################################################
 
 # Config
 ##############################################################################
-CONFIG_FILE = 'config.ini'
-config = ConfigParser()
-config.read(CONFIG_FILE)
 
-SECRET_KEY = config.get('app','secret_key')
-
-JWT_ALG = 'HS256' # JWT Algorithm
 ##############################################################################
 
 # Decorators
