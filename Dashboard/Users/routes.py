@@ -33,6 +33,8 @@ JWT_ALG = 'HS256' # JWT Algorithm
 
 # Routes
 ##############################################################################
+
+# Register Route
 @users_bp.route('/register', methods=['POST'])
 def register_user():
     try:
@@ -70,6 +72,7 @@ def register_user():
         'user': user.safe_serialize()
     }), 201
 
+# Login Route
 @users_bp.route('/login', methods=['POST'])
 def login():
     try:
@@ -123,6 +126,7 @@ def login():
 
     return jsonify({'message': 'Invalid credentials.'}), 401
 
+# Logout Route
 @users_bp.route('/logout', methods=['POST'])
 @auth_token_required
 def logout():
