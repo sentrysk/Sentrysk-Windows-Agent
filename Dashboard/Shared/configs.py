@@ -25,15 +25,3 @@ DB_NAME      = config.get('Database','DB')
 DB_USERNAME  = config.get('Database','USERNAME')
 DB_PASSWORD  = config.get('Database','PASSWORD')
 #############################################################################
-
-
-print("SECRET_KEY:"+SECRET_KEY+str(type(SECRET_KEY)))
-print("APP_HOST:"+APP_HOST+str(type(APP_HOST)))
-print("APP_PORT:"+str(APP_PORT)+str(type(APP_PORT)))
-
-print("\nJWT_ALG:"+JWT_ALG+str(type(JWT_ALG)))
-
-print("\nDB_HOST"+DB_HOST+str(type(DB_HOST)))
-print("DB_NAME:"+DB_NAME+str(type(DB_NAME)))
-print("DB_USERNAME"+DB_USERNAME+str(type(DB_USERNAME)))
-print("DB_PASSWORD"+DB_PASSWORD+str(type(DB_PASSWORD)))
