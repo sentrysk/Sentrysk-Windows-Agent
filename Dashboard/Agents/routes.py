@@ -5,7 +5,9 @@
 from flask import Blueprint, request, jsonify
 import uuid
 import json
+
 from .models import Agent
+from Shared.validators import auth_token_required
 ##############################################################################
 
 # Blueprint
@@ -19,6 +21,7 @@ agnt_bp = Blueprint('agent_blueprint', __name__)
 
 # Get All Agents
 @agnt_bp.route('/', methods=['GET'])
+@auth_token_required
 def get_agents():
     try:
         agents = Agent.objects()
@@ -37,6 +40,7 @@ def get_agent_by_id(id):
 
 # Register
 @agnt_bp.route('/register', methods=['POST'])
+@auth_token_required
 def register():
     data = request.get_json()
     agent_type = data.get('type')
@@ -62,6 +66,7 @@ def register():
 
 # Delete Agent by ID
 @agnt_bp.route('/<id>', methods=['DELETE'])
+@auth_token_required
 def delete_agent(id):
     try:
         agent = Agent.objects(id=id).first()
@@ -76,6 +81,7 @@ def delete_agent(id):
 
 
 @agnt_bp.route('/<id>', methods=['PUT'])
+@auth_token_required
 def update_agent(id):
     try:
         agent = Agent.objects(id=id).first()
