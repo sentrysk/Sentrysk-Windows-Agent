@@ -4,8 +4,11 @@
 ##############################################################################
 from flask import Flask
 from mongoengine import connect
-from configparser import ConfigParser
 
+from Shared.configs import (
+    SECRET_KEY,APP_HOST,APP_PORT,
+    DB_HOST,DB_NAME,DB_USERNAME,DB_PASSWORD
+)
 from Agents.routes import agnt_bp
 from Users.routes import users_bp
 ##############################################################################
@@ -13,23 +16,16 @@ from Users.routes import users_bp
 # Configs
 ##############################################################################
 
-# Config File
-CONFIG_FILE = 'config.ini'
-config = ConfigParser()
-config.read(CONFIG_FILE)
-
 # App Config
-HOST = '0.0.0.0'
-PORT = 5000
 app = Flask(__name__)
-app.config['SECRET_KEY'] = config.get('app','secret_key')
+app.config['SECRET_KEY'] = SECRET_KEY
 
 # DB Config
 db = connect(
-    host     = config.get('database','host'),
-    db       = config.get('database','db'),
-    username = config.get('database','username'), 
-    password = config.get('database','password')
+    host     = DB_HOST,
+    db       = DB_NAME,
+    username = DB_USERNAME, 
+    password = DB_PASSWORD
 )
 
 ##############################################################################
@@ -47,10 +43,10 @@ app.register_blueprint(users_bp, url_prefix='/user')
 def test_mongodb():
     try:
         db = connect(
-            host     = config.get('database','host'),
-            db       = config.get('database','db'),
-            username = config.get('database','username'), 
-            password = config.get('database','password')
+            host     = DB_HOST,
+            db       = DB_NAME,
+            username = DB_USERNAME, 
+            password = DB_PASSWORD
         )
         db.server_info() # This will raise an exception if the connection fail
         print('MongoDB connection successful!')
@@ -63,5 +59,5 @@ def test_mongodb():
 ##############################################################################
 if __name__ == '__main__':
     test_mongodb()
-    app.run(host=HOST, port=PORT, debug=True)
+    app.run(host=APP_HOST, port=APP_PORT, debug=True)
 ##############################################################################
