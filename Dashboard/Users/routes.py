@@ -6,29 +6,18 @@ from flask import Blueprint, request, jsonify
 import bcrypt
 import jwt
 from datetime import datetime,timedelta
-from configparser import ConfigParser
 from marshmallow import  ValidationError
 
 from .models import User
 from Session.models import Session
-from .validators import auth_token_required
 from .schema import RegisterSchema,LoginSchema
+from Shared.configs import SECRET_KEY,JWT_ALG
+from Shared.validators import auth_token_required
 ##############################################################################
 
 # Blueprint
 ##############################################################################
 users_bp = Blueprint('users_blueprint', __name__)
-##############################################################################
-
-# Configs
-##############################################################################
-CONFIG_FILE = 'config.ini'
-config = ConfigParser()
-config.read(CONFIG_FILE)
-
-SECRET_KEY = config.get('app','secret_key')
-
-JWT_ALG = 'HS256' # JWT Algorithm
 ##############################################################################
 
 # Routes
