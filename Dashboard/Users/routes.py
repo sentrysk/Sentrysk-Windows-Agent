@@ -12,7 +12,7 @@ from marshmallow import  ValidationError
 from .models import User
 from Session.models import Session
 from .validators import auth_token_required
-from .schema import RegisterSchema
+from .schema import RegisterSchema,LoginSchema
 ##############################################################################
 
 # Blueprint
@@ -74,7 +74,7 @@ def register_user():
 def login():
     try:
         # Load and validate the JSON request using the schema
-        data = RegisterSchema().load(request.json)
+        data = LoginSchema().load(request.json)
     except ValidationError as e:
         # Return validation errors as a JSON response with a 400 status code
         return jsonify({'error': e.messages}), 400
@@ -138,4 +138,14 @@ def logout():
         return jsonify({'message': 'Logout successful.'}), 200
     
     return jsonify({'message': 'Token is invalid'}), 498
+
+# Get User by ID
+@users_bp.route('/<id>', methods=['GET'])
+@auth_token_required
+def get_agent_by_id(id):
+    try:
+        agent = User.objects(id=id).first().safe_serialize()
+        return jsonify(agent)
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
 ##############################################################################
