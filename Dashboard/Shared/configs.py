@@ -21,6 +21,7 @@ JWT_ALG = config.get('JWT','JWT_ALG')
 
 # DB
 DB_HOST      = config.get('Database','HOST')
+DB_PORT      = config.get('Database','PORT')
 DB_NAME      = config.get('Database','DB')
 DB_USERNAME  = config.get('Database','USERNAME')
 DB_PASSWORD  = config.get('Database','PASSWORD')
