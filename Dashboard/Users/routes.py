@@ -135,10 +135,20 @@ def logout():
 # Get User by ID
 @users_bp.route('/<id>', methods=['GET'])
 @auth_token_required
-def get_agent_by_id(id):
+def get_user_by_id(id):
     try:
-        agent = User.objects(id=id).first().safe_serialize()
-        return jsonify(agent)
+        user = User.objects(id=id).first().safe_serialize()
+        return jsonify(user)
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+
+# Get All Users
+@users_bp.route('/', methods=['GET'])
+@auth_token_required
+def get_users():
+    try:
+        users = User.objects()
+        return [user.safe_serialize() for user in users] # Serialize & Return
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 ##############################################################################
