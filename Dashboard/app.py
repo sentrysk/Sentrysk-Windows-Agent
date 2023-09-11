@@ -11,6 +11,7 @@ from Shared.configs import (
 )
 from Agents.routes import agnt_bp
 from Users.routes import users_bp
+from SysData.routes import sys_data_bp
 ##############################################################################
 
 # Configs
@@ -35,6 +36,7 @@ db = connect(
 ##############################################################################
 app.register_blueprint(agnt_bp, url_prefix='/agent')
 app.register_blueprint(users_bp, url_prefix='/user')
+app.register_blueprint(sys_data_bp, url_prefix='/data')
 ##############################################################################
 
 
