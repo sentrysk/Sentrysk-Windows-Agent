@@ -4,6 +4,7 @@
 ##############################################################################
 from flask import Blueprint, request, jsonify
 import pymongo
+from datetime import datetime
 
 from Shared.configs import DB_NAME,DB_HOST,DB_PORT,DB_USERNAME,DB_PASSWORD
 from Shared.validators import agent_token_required
@@ -20,7 +21,9 @@ sys_data_bp = Blueprint('system_data_blueprint', __name__)
 mongo_client = pymongo.MongoClient(
     f"mongodb://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/"
 )
-collection = mongo_client[DB_NAME]["system_data"]
+db = mongo_client[DB_NAME]
+system_data_collection  = db["system_data"]
+changelog_collection    = db["changelog"]
 ##############################################################################
 
 
@@ -31,11 +34,42 @@ collection = mongo_client[DB_NAME]["system_data"]
 @sys_data_bp.route('/', methods=['POST'])
 @agent_token_required
 def register():
-    data = request.get_json()
-    data["agent_token"] = request.headers.get('Authorization')
+    # Extract the agent_token from the Authorization header
+    agent_token = request.headers.get("Authorization")
 
-    # Insert the System Data into the System Data Collection
-    collection.insert_one(data)
+    # Get Data from Request
+    data = request.get_json()
+
+    # Define the unique identifier using the agent_token
+    unique_identifier = {"agent_token": agent_token}
+
+    # Find existing document with the same identifier
+    existing_document = system_data_collection.find_one(unique_identifier)
+
+    if existing_document:
+        # Document with the same identifier exists, check for changes
+        changes = {}
+        for key, value in data.items():
+            if key not in existing_document or existing_document[key] != value:
+                changes[key] = value
+                existing_document[key] = value
+
+        # Update the existing document with changes
+        system_data_collection.update_one(unique_identifier, {"$set": existing_document})
+
+        # Log changes to the changelog collection
+        if changes:
+            changelog_entry = {
+                "timestamp": datetime.now(),
+                "agent_token": agent_token,
+                "changes": changes
+            }
+            changelog_collection.insert_one(changelog_entry)
+    else:
+        # Document with the unique identifier doesn't exist, insert the new document
+        # Insert the System Data into the System Data Collection
+        data["agent_token"] = agent_token
+        system_data_collection.insert_one(data)
     
     return jsonify(
         {
