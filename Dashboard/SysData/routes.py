@@ -31,8 +31,8 @@ collection = mongo_client[DB_NAME]["system_data"]
 @sys_data_bp.route('/', methods=['POST'])
 @agent_token_required
 def register():
-
     data = request.get_json()
+    data["agent_token"] = request.headers.get('Authorization')
 
     # Insert the System Data into the System Data Collection
     collection.insert_one(data)
