@@ -8,6 +8,7 @@ from datetime import datetime
 
 from Shared.configs import DB_NAME,DB_HOST,DB_PORT,DB_USERNAME,DB_PASSWORD
 from Shared.validators import agent_token_required
+from Agents.helper_funcs import get_id_by_token
 ##############################################################################
 
 # Blueprint
@@ -37,11 +38,14 @@ def register():
     # Extract the agent_token from the Authorization header
     agent_token = request.headers.get("Authorization")
 
+    # Get Agent ID by token
+    agent_id = get_id_by_token(agent_token)
+
     # Get Data from Request
     data = request.get_json()
 
-    # Define the unique identifier using the agent_token
-    unique_identifier = {"agent_token": agent_token}
+    # Define the unique identifier using the agent_id
+    unique_identifier = {"agent_id": agent_id}
 
     # Find existing document with the same identifier
     existing_document = system_data_collection.find_one(unique_identifier)
@@ -61,14 +65,14 @@ def register():
         if changes:
             changelog_entry = {
                 "timestamp": datetime.now(),
-                "agent_token": agent_token,
+                "agent_id": agent_id,
                 "changes": changes
             }
             changelog_collection.insert_one(changelog_entry)
     else:
         # Document with the unique identifier doesn't exist, insert the new document
         # Insert the System Data into the System Data Collection
-        data["agent_token"] = agent_token
+        data["agent_id"] = agent_id
         system_data_collection.insert_one(data)
     
     return jsonify(
