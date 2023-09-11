@@ -28,6 +28,21 @@ changelog_collection    = db["changelog"]
 ##############################################################################
 
 
+##############################################################################
+def compare_and_log_changes(existing_item, new_item, parent_key="", changes={}):
+    if isinstance(new_item, dict):
+        for key, value in new_item.items():
+            full_key = f"{parent_key}.{key}" if parent_key else key
+            changes = compare_and_log_changes(existing_item.get(key, {}), value, parent_key=full_key, changes=changes)
+    elif isinstance(new_item, list):
+        for i, item in enumerate(new_item):
+            full_key = f"{parent_key}[{i}]"
+            changes = compare_and_log_changes(existing_item[i] if i < len(existing_item) else {}, item, parent_key=full_key, changes=changes)
+    elif new_item != existing_item:
+        changes[parent_key] = {"new_value": new_item, "previous_value": existing_item}
+    return changes
+##############################################################################
+
 # Routes
 ##############################################################################
 
@@ -52,23 +67,22 @@ def register():
 
     if existing_document:
         # Document with the same identifier exists, check for changes
-        changes = {}
-        for key, value in data.items():
-            if key not in existing_document or existing_document[key] != value:
-                changes[key] = value
-                existing_document[key] = value
+        changes = compare_and_log_changes(existing_document, data)
 
-        # Update the existing document with changes
-        system_data_collection.update_one(unique_identifier, {"$set": existing_document})
-
-        # Log changes to the changelog collection
         if changes:
+            # Log changes to the changelog collection
             changelog_entry = {
                 "timestamp": datetime.now(),
                 "agent_id": agent_id,
                 "changes": changes
             }
             changelog_collection.insert_one(changelog_entry)
+
+            # Update the existing document with changes
+            system_data_collection.update_one(unique_identifier, {"$set": data})
+
+        # Update the existing document with changes
+        system_data_collection.update_one(unique_identifier, {"$set": existing_document})
     else:
         # Document with the unique identifier doesn't exist, insert the new document
         # Insert the System Data into the System Data Collection
