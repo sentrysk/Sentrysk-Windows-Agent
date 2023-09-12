@@ -5,9 +5,10 @@
 from flask import Blueprint, request, jsonify
 import pymongo
 from datetime import datetime
+from bson import json_util
 
 from Shared.configs import DB_NAME,DB_HOST,DB_PORT,DB_USERNAME,DB_PASSWORD
-from Shared.validators import agent_token_required
+from Shared.validators import agent_token_required, auth_token_required
 from Agents.helper_funcs import get_id_by_token
 ##############################################################################
 
@@ -45,6 +46,22 @@ def compare_and_log_changes(existing_item, new_item, parent_key="", changes={}):
 
 # Routes
 ##############################################################################
+
+# Get All SysData
+@sys_data_bp.route('/', methods=['GET'])
+@auth_token_required
+def list_all_data():
+    try:
+        # Fetch all documents from the collection
+        all_documents = list(system_data_collection.find({}))
+        
+        for document in all_documents:
+            del document["_id"]
+            document["agent_id"] = str(document["agent_id"])
+        
+        return jsonify(all_documents), 200
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
 
 # Save Data
 @sys_data_bp.route('/', methods=['POST'])
