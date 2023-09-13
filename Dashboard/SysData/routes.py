@@ -5,7 +5,7 @@
 from flask import Blueprint, request, jsonify
 import pymongo
 from datetime import datetime
-from bson import json_util
+from bson import json_util, ObjectId
 
 from Shared.configs import DB_NAME,DB_HOST,DB_PORT,DB_USERNAME,DB_PASSWORD
 from Shared.validators import agent_token_required, auth_token_required
@@ -62,6 +62,23 @@ def list_all_data():
         return jsonify(all_documents), 200
     except Exception as e:
         return jsonify({"error":str(e)}), 500
+
+# Get SysData by ID
+@sys_data_bp.route("/<string:document_id>", methods=["GET"])
+@auth_token_required
+def get_sys_data_by_id(document_id):
+    try:
+        # Find a document by its _id
+        sys_data = system_data_collection.find_one({"_id": ObjectId(document_id)})
+
+        if sys_data:
+            sys_data["_id"] = str(sys_data["_id"])
+            sys_data["agent_id"] = str(sys_data["agent_id"])
+            return jsonify(sys_data), 200
+        else:
+            return "Document not found", 404
+    except Exception as e:
+        return jsonify({"error":{str(e)}}),500
 
 # Save Data
 @sys_data_bp.route('/', methods=['POST'])
