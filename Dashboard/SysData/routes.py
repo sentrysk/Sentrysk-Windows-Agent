@@ -128,4 +128,20 @@ def register():
             'message': 'Data registered successfully.',
         }
     ), 201
+
+# Get All Changelog Data
+@sys_data_bp.route('/changelog', methods=['GET'])
+@auth_token_required
+def get_all_changelog_data():
+    try:
+        # Fetch all Changelog documents from the collection
+        all_documents = list(changelog_collection.find({}))
+
+        for document in all_documents:
+            document["_id"] = str(document["_id"])
+            document["agent_id"] = str(document["agent_id"])
+        
+        return jsonify(all_documents), 200
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
 ##############################################################################
