@@ -106,9 +106,10 @@ def register():
         if changes:
             # Log changes to the changelog collection
             changelog_entry = {
-                "timestamp": datetime.now(),
-                "agent_id": agent_id,
-                "changes": changes
+                "timestamp"       : datetime.now(),
+                "system_data_id"  : existing_document["_id"],
+                "agent_id"        : agent_id,
+                "changes"         : changes
             }
             changelog_collection.insert_one(changelog_entry)
 
