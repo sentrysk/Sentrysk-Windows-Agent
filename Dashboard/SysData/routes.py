@@ -140,6 +140,7 @@ def get_all_changelog_data():
 
         for document in all_documents:
             document["_id"] = str(document["_id"])
+            document["system_data_id"] = str(document["system_data_id"])
             document["agent_id"] = str(document["agent_id"])
         
         return jsonify(all_documents), 200
