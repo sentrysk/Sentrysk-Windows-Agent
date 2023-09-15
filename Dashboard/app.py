@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 from flask import Flask
+from flask_cors import CORS
 from mongoengine import connect
 
 from Shared.configs import (
@@ -28,6 +29,8 @@ db = connect(
     username = DB_USERNAME, 
     password = DB_PASSWORD
 )
+
+CORS(app)
 
 ##############################################################################
 
