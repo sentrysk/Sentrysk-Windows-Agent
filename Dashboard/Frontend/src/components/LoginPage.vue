@@ -11,6 +11,7 @@
   
   <script>
   import axios from "axios";
+  import Swal from "sweetalert2"; // Import SweetAlert2
 
   
   export default {
@@ -39,13 +40,26 @@
           const jwtPayload = JSON.parse(atob(token.split(".")[1]));
           const expirationTime = new Date(jwtPayload.exp * 1000);
           sessionStorage.setItem("tokenExpiration", expirationTime);
-  
+          
+          // Show a success message with SweetAlert
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Login successful.",
+          });
+
           // Redirect to another page or perform other actions as needed
           // For example, you can use Vue Router to navigate to a different page
           this.$router.push("/");
         } catch (error) {
           console.error("Login failed:", error);
           // Handle login error, show an error message, etc.
+          // Show an error message with SweetAlert
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Login failed. Please check your credentials.",
+          });
         }
       },
     },
