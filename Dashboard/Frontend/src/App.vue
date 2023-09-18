@@ -6,6 +6,17 @@
   <router-view/>
 </template>
 
+<script>
+import Navbar from "./components/Navbar.vue"; // Import the Navbar component
+
+export default {
+  components: {
+    Navbar, // Register the Navbar component
+  },
+};
+</script>
+
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
