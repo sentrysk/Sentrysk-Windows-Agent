@@ -13,7 +13,8 @@
   </nav>
   </template>
   
-  <script>
+<script>
+  import axios from "axios";
   import Swal from "sweetalert2";
   
   export default {
@@ -26,9 +27,13 @@
   
         if (jwtToken) {
           try {
-            // Send a POST request to your logout endpoint (if your backend has one)
-            // This step is optional and depends on your backend's logout implementation
-            // Example: await axios.post("YOUR_LOGOUT_API_URL", {}, { headers: { Authorization: `Bearer ${jwtToken}` } });
+            const API_URL = "http://localhost:5000/user/logout"
+            // Send a POST request to the logout endpoint with Authorization header
+            await axios.post(API_URL, null, {
+              headers: {
+                Authorization: jwtToken,
+              },
+            });
   
             // Clear the JWT token and session expiration from sessionStorage
             sessionStorage.removeItem("jwtToken");
@@ -60,5 +65,4 @@
       },
     },
   };
-  </script>
-  
+</script>
