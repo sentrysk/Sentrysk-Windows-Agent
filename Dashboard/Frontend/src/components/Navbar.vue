@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/">Dasboard</router-link>
+        <router-link class="navbar-brand" to="/"><i class="bi bi-speedometer2"></i> Dasboard</router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -16,13 +16,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link" to="/system-data">System Data</router-link>
+              <router-link class="nav-link" to="/system-data"><i class="bi bi-clipboard-data"></i> System Data</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/users">Users</router-link>
+              <router-link class="nav-link" to="/users"><i class="bi bi-people"></i> Users</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/agents">Agents</router-link>
+              <router-link class="nav-link" to="/agents"><i class="bi bi-cpu"></i> Agents</router-link>
             </li>
           </ul>
           <div class="dropdown d-flex">
@@ -34,16 +34,16 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Username <!-- Replace with the user's name or username -->
+            <i class="bi bi-person-circle"></i> <!-- Replace with the user's name or username -->
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <button class="dropdown-item" @click="logout">Logout</button>
+              <button class="dropdown-item" @click="logout"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
             </div>
           </div>
         </div>
       </div>
     </nav>
-  </template>
+</template>
   
 <script>
   import axios from "axios";
@@ -51,7 +51,7 @@
   
   export default {
     // ... Your other component options
-  
+    name: 'Navbar',
     methods: {
       async logout() {
         // Get the JWT token from sessionStorage
