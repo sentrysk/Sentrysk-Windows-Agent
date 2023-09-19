@@ -1,16 +1,48 @@
 <template>
-    <nav class="navbar">
-    <div class="navbar-brand">
-      <router-link to="/">Home</router-link>
-    </div>
-    <div class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <button @click="logout">Logout</button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <router-link class="navbar-brand" to="/">Dasboard</router-link>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <router-link class="nav-link" to="/system-data">System Data</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/users">Users</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/agents">Agents</router-link>
+            </li>
+          </ul>
+          <div class="dropdown d-flex">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="userDropdown"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Username <!-- Replace with the user's name or username -->
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+              <button class="dropdown-item" @click="logout">Logout</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
   </template>
   
 <script>
