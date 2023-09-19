@@ -1,29 +1,48 @@
 <template>
-    <div class="registration-container">
-      <div class="registration-box">
-        <h1 class="text-center mb-4">Register</h1>
-        <form @submit.prevent="register">
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="bi bi-person"></i></span>
-            <input type="text" v-model="name" class="form-control" placeholder="First Name" required />
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card mt-5">
+            <div class="card-header bg-dark text-white">
+              <h1 class="text-center">
+                <i class="bi bi-speedometer2"></i> Register
+              </h1>
+            </div>
+            <div class="card-body">
+              <form @submit.prevent="register">
+                <div class="mb-3 input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" v-model="name" class="form-control" placeholder="First Name" required />
+                </div>
+                <div class="mb-3 input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" v-model="lastname" class="form-control" placeholder="Last Name" required />
+                </div>
+                <div class="mb-3 input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" v-model="email" class="form-control" placeholder="Email" required />
+                </div>
+                <div class="mb-4 input-group">
+                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                  <input
+                    :type="showPassword ? 'text' : 'password'"
+                    v-model="password"
+                    class="form-control"
+                    placeholder="Password"
+                    required
+                  />
+                  <button type="button" class="btn btn-outline-secondary" @click="togglePasswordVisibility">
+                    <i :class="['bi', showPassword ? 'bi-eye-slash' : 'bi-eye']"></i>
+                  </button>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+              </form>
+            </div>
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="bi bi-person"></i></span>
-            <input type="text" v-model="lastname" class="form-control" placeholder="Last Name" required />
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-            <input type="email" v-model="email" class="form-control" placeholder="Email" required />
-          </div>
-          <div class="input-group mb-4">
-            <span class="input-group-text"><i class="bi bi-lock"></i></span>
-            <input type="password" v-model="password" class="form-control" placeholder="Password" required />
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Register</button>
-        </form>
+        </div>
       </div>
     </div>
-</template>
+  </template>
   
 <script>
   import axios from 'axios';
@@ -36,6 +55,7 @@
         lastname: '',
         email: '',
         password: '',
+        showPassword: false,
       };
     },
     methods: {
@@ -48,20 +68,17 @@
         };
   
         try {
-          // Send a POST request to the registration endpoint
-          const response = await axios.post('http://localhost:5000/user/register', registrationData);
+          const API_URL = "http://localhost:5000/user/register"
+          const response = await axios.post(API_URL, registrationData);
   
-          // Check if registration was successful
           if (response.status === 201) {
-            // Show a success message with SweetAlert2
             Swal.fire({
               icon: 'success',
               title: 'Registration Successful',
               text: 'You have been registered successfully.',
             });
   
-            // Redirect to the login page
-            this.$router.push('/login'); // Make sure to define the login route
+            this.$router.push('/login');
           }
         } catch (error) {
           // Handle registration error (e.g., show an error message)
@@ -74,9 +91,12 @@
           console.error('Registration failed:', error);
         }
       },
+      togglePasswordVisibility() {
+        this.showPassword = !this.showPassword;
+      },
     },
   };
-</script>
+  </script>
   
 <style scoped>
 .registration-container {
@@ -99,11 +119,24 @@
 }
 
 .input-group-text {
-  background-color: #f8f9fa;
+  background-color: #343a40; /* Darker background color */
+  border: none;
+  color: white; /* White text color */
 }
 
 .bi {
   font-size: 1.2rem;
+  color: #007bff; /* Blue icon color */
+}
+
+.btn-outline-secondary {
+  background-color: #343a40; /* Darker background color */
+  border: none;
+  color: white; /* White text color */
+}
+
+.btn-outline-secondary:hover {
+  background-color: #292e33; /* Slightly darker on hover */
 }
 
 .btn-primary {
