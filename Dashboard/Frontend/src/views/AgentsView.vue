@@ -16,7 +16,17 @@
           <tbody>
             <tr v-for="agent in agents" :key="agent.id">
               <td>{{ agent.id }}</td>
-              <td>{{ agent.type }}</td>
+              <td>
+                <span v-if="agent.type === 'windows'" title="Windows">
+                  <i class="bi bi-windows"></i>
+                </span>
+                <span v-else-if="agent.type === 'linux'" title="Linux">
+                  <i class="fab fa-linux"></i>
+                </span>
+                <span v-else-if="agent.type === 'macos'" title="macOS">
+                  <i class="bi bi-apple"></i>
+                </span>
+              </td>
               <td>
                 <span v-if="!agent.showToken">**********</span> <!-- Masked token -->
                 <span v-else>{{ agent.token }}</span> <!-- Revealed token -->
