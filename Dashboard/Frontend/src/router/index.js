@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginPage from '../components/LoginPage.vue'
 import RegisterPage from '../components/RegisterPage.vue'
+import AgentsView from '../views/AgentsView'
 import axios from "axios";
 
 const routes = [
@@ -20,6 +21,12 @@ const routes = [
     path: '/register',
     name: 'register',
     component: RegisterPage
+  },
+  {
+    path: '/agents',
+    name: 'agents',
+    component: AgentsView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/about',
