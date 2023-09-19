@@ -2,10 +2,10 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <div class="card mt-5">
+          <div class="card mt-5 shadow">
             <div class="card-header bg-dark text-white">
               <h1 class="text-center">
-                <i class="bi bi-speedometer2"></i> Register
+                <i class="bi bi-pencil"></i> Register
               </h1>
             </div>
             <div class="card-body">
@@ -37,6 +37,10 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
               </form>
+              <!-- Add registration link here -->
+               <div class="text-center mt-3">
+                <router-link to="/login">Already have an account? Login here.</router-link>
+               </div>
             </div>
           </div>
         </div>
@@ -99,18 +103,7 @@
   </script>
   
 <style scoped>
-.registration-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.registration-box {
-  max-width: 400px;
-  width: 100%;
-  padding: 20px;
-  border-radius: 10px;
+.shadow {
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -125,7 +118,7 @@
 }
 
 .bi {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #007bff; /* Blue icon color */
 }
 
