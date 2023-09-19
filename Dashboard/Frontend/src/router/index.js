@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginPage from '../components/LoginPage.vue'
+import RegisterPage from '../components/RegisterPage.vue'
 import axios from "axios";
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginPage
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterPage
   },
   {
     path: '/about',
