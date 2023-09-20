@@ -10,7 +10,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>#</th>
               <th>Type</th>
               <th>Token</th>
               <th>Created</th>
@@ -18,8 +18,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="agent in agents" :key="agent.id">
-              <td>{{ agent.id }}</td>
+            <tr v-for="(agent, index) in agents" :key="agent.id">
+              <td>
+                {{index}}
+              </td>
               <td>
                 <span v-if="agent.type === 'windows'" title="Windows">
                   <i class="bi bi-windows"></i>
@@ -40,12 +42,12 @@
               </td>
               <td>{{ agent.created }}</td>
               <td>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateAgentModal" @click="setUpdateAttributes(agent.id,agent.token,agent.type)">
+                  <i class="bi bi-plus-circle"></i> Update
+                </button>&nbsp;
                 <button class="btn btn-danger btn-sm" @click="deleteAgent(agent.id)">
                   <i class="bi bi-trash"></i> Delete
                 </button>
-                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateAgentModal" @click="setUpdateAttributes(agent.id,agent.token,agent.type)">
-                  <i class="bi bi-plus-circle"></i> Update
-                </button>  
               </td>
             </tr>
           </tbody>
