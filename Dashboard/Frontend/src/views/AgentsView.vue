@@ -14,6 +14,7 @@
               <th>Type</th>
               <th>Token</th>
               <th>Created</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +39,11 @@
                 </button>
               </td>
               <td>{{ agent.created }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" @click="deleteAgent(agent.id)">
+                  Delete
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -51,6 +57,7 @@
   
 <script>
   import axios from 'axios';
+  import Swal from 'sweetalert2';
   import Navbar from '../components/Navbar.vue'
   import AgentCreateModal from '@/components/AgentCreateModal.vue';
   
@@ -84,8 +91,55 @@
           console.error('Error fetching agents:', error);
         }
       },
-    toggleTokenVisibility(agent) {
+      toggleTokenVisibility(agent) {
         agent.showToken = !agent.showToken;
+      },
+      async deleteAgent(agentId) {
+        try {
+          const confirmResult = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this agent.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'No, cancel',
+            reverseButtons: true,
+          });
+
+          if (confirmResult.isConfirmed) {
+            // Retrieve JWT token from session storage
+            const jwtToken = sessionStorage.getItem('jwtToken');
+
+            // Send DELETE request to delete the agent by ID
+            await axios.delete(`http://localhost:5000/agent/${agentId}`, {
+              headers: {
+                Authorization: jwtToken,
+              },
+            });
+
+            // Show success message
+            Swal.fire({
+              icon: 'success',
+              title: 'Agent Deleted',
+              text: 'The agent has been successfully deleted.',
+            }).then(() => {
+              // Remove the deleted agent from the list
+              this.agents = this.agents.filter(agent => agent.id !== agentId);
+              // Reload Page
+              location.reload()
+            });;
+          }
+          
+        } catch (error) {
+          // Show error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Agent Deletion Failed',
+            text: 'Failed to delete the agent. Please try again later.',
+          });
+
+          console.error('Agent deletion failed:', error);
+        }
       },
     },
   };
