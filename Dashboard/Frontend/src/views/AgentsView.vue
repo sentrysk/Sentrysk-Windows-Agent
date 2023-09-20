@@ -41,8 +41,11 @@
               <td>{{ agent.created }}</td>
               <td>
                 <button class="btn btn-danger btn-sm" @click="deleteAgent(agent.id)">
-                  Delete
+                  <i class="bi bi-trash"></i> Delete
                 </button>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateAgentModal" @click="setUpdateAttributes(agent.id,agent.token,agent.type)">
+                  <i class="bi bi-plus-circle"></i> Update
+                </button>  
               </td>
             </tr>
           </tbody>
@@ -51,6 +54,7 @@
     </div>
 
     <AgentCreateModal></AgentCreateModal>
+    <AgentUpdateModal></AgentUpdateModal>
 
   </div>
 </template>
@@ -60,11 +64,13 @@
   import Swal from 'sweetalert2';
   import Navbar from '../components/Navbar.vue'
   import AgentCreateModal from '@/components/AgentCreateModal.vue';
+  import AgentUpdateModal from '@/components/AgentUpdateModal.vue';
   
   export default {
     components: {
       Navbar, // Declare Navbar as a component
       AgentCreateModal,
+      AgentUpdateModal,
     },
     data() {
       return {
@@ -75,6 +81,11 @@
       this.getAgents();
     },
     methods: {
+      setUpdateAttributes(agentId,agentToken,selectedAgentType){
+        document.getElementById('updateAgentId').value = agentId;
+        document.getElementById('updateAgentToken').value = agentToken;
+        document.querySelector(`#updateAgentModal input[type=radio][value=${selectedAgentType}]`).click()
+      },
       async getAgents() {
         try {
           // Retrieve JWT token from session storage
