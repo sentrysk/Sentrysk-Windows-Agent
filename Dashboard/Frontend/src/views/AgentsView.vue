@@ -40,7 +40,7 @@
                   <i :class="['bi', agent.showToken ? 'bi-eye-slash' : 'bi-eye']"></i>
                 </button>
               </td>
-              <td>{{ agent.created }}</td>
+              <td>{{ formatToLocalTime(agent.created) }}</td>
               <td>
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#updateAgentModal" @click="setUpdateAttributes(agent.id,agent.token,agent.type)">
                   <i class="bi bi-plus-circle"></i> Update
@@ -83,6 +83,23 @@
       this.getAgents();
     },
     methods: {
+      formatToLocalTime(utcTime) {
+        // Create a Date object from the UTC time
+        const utcDate = new Date(utcTime);
+
+        // Format the date and time to the user's locale and timezone
+        const formattedTime = utcDate.toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZoneName: 'short',
+        });
+
+        return formattedTime;
+      },
       setUpdateAttributes(agentId,agentToken,selectedAgentType){
         document.getElementById('updateAgentId').value = agentId;
         document.getElementById('updateAgentToken').value = agentToken;
