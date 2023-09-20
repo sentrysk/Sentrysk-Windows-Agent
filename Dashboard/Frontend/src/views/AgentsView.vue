@@ -4,6 +4,9 @@
     <h1 class="my-4">Agents</h1>
     <div class="card">
       <div class="card-body">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAgentModal" style="margin-left: 88%;margin-right: 0%;">
+          <i class="bi bi-plus-circle"></i> Create Agent
+        </button>
         <table class="table">
           <thead>
             <tr>
@@ -40,16 +43,21 @@
         </table>
       </div>
     </div>
+
+    <AgentCreateModal></AgentCreateModal>
+
   </div>
 </template>
   
 <script>
   import axios from 'axios';
   import Navbar from '../components/Navbar.vue'
+  import AgentCreateModal from '@/components/AgentCreateModal.vue';
   
   export default {
     components: {
       Navbar, // Declare Navbar as a component
+      AgentCreateModal,
     },
     data() {
       return {
