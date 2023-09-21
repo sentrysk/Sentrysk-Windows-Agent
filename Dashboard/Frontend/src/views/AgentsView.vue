@@ -96,6 +96,7 @@
           minute: '2-digit',
           second: '2-digit',
           timeZoneName: 'short',
+          hour12: false,
         });
 
         return formattedTime;
