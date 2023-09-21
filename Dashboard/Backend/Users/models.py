@@ -15,7 +15,7 @@ class User(Document):
     lastname  = StringField(required=True)
     email     = StringField(required=True, unique=True)
     password  = BinaryField(required=True)
-    created   = DateTimeField(default=datetime.now)
+    created   = DateTimeField(default=datetime.utcnow)
 
     def serialize(self):
         return {

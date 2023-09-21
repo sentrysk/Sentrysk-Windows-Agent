@@ -19,9 +19,9 @@ from datetime import datetime, timedelta
 class Session(Document):
     email         = StringField(required=True)
     token         = StringField(required=True, unique=True)
-    expire_date   = DateTimeField(default=datetime.now() + timedelta(hours=24))
+    expire_date   = DateTimeField(default=datetime.utcnow() + timedelta(hours=24))
     is_expired    = BooleanField(required=True, default=False)
-    created       = DateTimeField(default=datetime.now)
+    created       = DateTimeField(default=datetime.utcnow)
 
     def serialize(self):
         return {

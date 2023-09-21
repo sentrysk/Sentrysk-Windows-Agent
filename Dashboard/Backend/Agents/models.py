@@ -17,7 +17,7 @@ from datetime import datetime
 class Agent(Document):
     type    = StringField(required=True) # Agent type E.g Linux, Windows
     token   = StringField(required=True, unique=True)
-    created = DateTimeField(default=datetime.now)
+    created = DateTimeField(default=datetime.utcnow)
 
     def serialize(self):
         return {

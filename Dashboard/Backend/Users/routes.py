@@ -85,14 +85,14 @@ def login():
         # If Previous session exist -> Expire
         if prev_session:
             prev_session.is_expired = True
-            prev_session.expire_date = datetime.now()
+            prev_session.expire_date = datetime.utcnow()
             prev_session.save()
 
         # Generate a token for the user session
         token = jwt.encode(
             {
                 'email': email,
-                'exp': datetime.now() + timedelta(hours=24)
+                'exp': datetime.utcnow() + timedelta(hours=24)
             },
             SECRET_KEY,     # Secret Key
             JWT_ALG         # JWT Algorithm
@@ -109,7 +109,7 @@ def login():
             {
                 'message': 'Login successful.',
                 'token': token,
-                'token_expiry_date': datetime.now() + timedelta(hours=24)
+                'token_expiry_date': datetime.utcnow() + timedelta(hours=24)
             }
         ), 200
 
