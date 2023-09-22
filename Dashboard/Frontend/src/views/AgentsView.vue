@@ -4,10 +4,10 @@
     <h1 class="my-4">Agents</h1>
     <div class="card">
       <div class="card-body">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAgentModal" style="margin-left: 88%;margin-right: 0%;">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAgentModal" style="margin-left: 88%;margin-right: 0%;margin-bottom: 1rem;">
           <i class="bi bi-plus-circle"></i> Create Agent
         </button>
-        <table class="table">
+        <table class="table table-striped table-bordered dt-responsive nowrap" id="agentsTable">
           <thead>
             <tr>
               <th>#</th>
@@ -34,7 +34,7 @@
                 </span>
               </td>
               <td>
-                <span v-if="!agent.showToken">**********</span> <!-- Masked token -->
+                <span v-if="!agent.showToken">************************************</span> <!-- Masked token -->
                 <span v-else>{{ agent.token }}</span> <!-- Revealed token -->
                 <button class="btn btn-link btn-sm" @click="toggleTokenVisibility(agent)">
                   <i :class="['bi', agent.showToken ? 'bi-eye-slash' : 'bi-eye']"></i>
@@ -67,6 +67,7 @@
   import Navbar from '../components/Navbar.vue'
   import AgentCreateModal from '@/components/AgentCreateModal.vue';
   import AgentUpdateModal from '@/components/AgentUpdateModal.vue';
+  import $ from "jquery";
   
   export default {
     components: {
@@ -118,6 +119,15 @@
           });
   
           this.agents = response.data;
+          $(document).ready(() => {
+            $('#agentsTable').DataTable({
+              responsive: true,
+              searching: true,
+              lengthChange: false,
+              pageLength: 10,
+              order: [[3, 'desc']],
+            });
+          });
         } catch (error) {
           console.error('Error fetching agents:', error);
         }
