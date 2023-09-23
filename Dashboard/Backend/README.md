@@ -10,7 +10,7 @@ Endpoint prefix: **/agent**
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
 | Get         | /           | GET |
-| Get by ID   | /<id>       | GET |
+| Get by ID   | /id         | GET |
 | Create      | /register   | POST |
 | Delete      | /<id>       | DELETE |
 | Update      | /<id>       | PUT |
@@ -24,7 +24,7 @@ Endpoint prefix: **/user**
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
 | Get         | /           | GET |
-| Get by ID   | /<id>       | GET |
+| Get by ID   | /id         | GET |
 | Register    | /register   | POST |
 | Login       | /register   | POST |
 | Logout      | /logout     | POST |
@@ -37,5 +37,5 @@ Endpoint prefix: **/data**
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
 | Get All     | /           | GET |
-| Get by ID   | /<id>       | GET |
+| Get by ID   | /id         | GET |
 | Register    | /           | POST |
