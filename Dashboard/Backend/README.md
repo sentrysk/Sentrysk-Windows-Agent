@@ -5,6 +5,8 @@
 # Agents
 In this section you can create,update,delete,list **Agents**
 
+Endpoint prefix: **/agent**
+
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
 | Get         | /           | GET |
@@ -17,13 +19,12 @@ In this section you can create,update,delete,list **Agents**
 # Users
 In this section you can register,login,logout **Users**
 
+Endpoint prefix: **/user**
+
 | Action      | Endpoint | Method |
 | ----------- | ----------- | ----------- |
+| Get         | /           | GET |
+| Get by ID   | /<id>       | GET |
 | Register    | /register   | POST |
 | Login       | /register   | POST |
 | Logout      | /logout     | POST |
-
-will be added:
-- list
-- update
-- delete
