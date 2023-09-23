@@ -28,3 +28,14 @@ Endpoint prefix: **/user**
 | Register    | /register   | POST |
 | Login       | /register   | POST |
 | Logout      | /logout     | POST |
+
+# System Data
+In this section you can register and list **System Data**
+
+Endpoint prefix: **/data**
+
+| Action      | Endpoint | Method |
+| ----------- | ----------- | ----------- |
+| Get All     | /           | GET |
+| Get by ID   | /<id>       | GET |
+| Register    | /           | POST |
