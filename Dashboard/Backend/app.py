@@ -14,6 +14,7 @@ from Agents.routes import agnt_bp
 from Users.routes import users_bp
 from SysData.routes import sys_data_bp
 from Session.routes import session_bp
+from SystemInfo.routes import sys_info_bp
 ##############################################################################
 
 # Configs
@@ -42,6 +43,8 @@ app.register_blueprint(agnt_bp, url_prefix='/agent')
 app.register_blueprint(users_bp, url_prefix='/user')
 app.register_blueprint(sys_data_bp, url_prefix='/data')
 app.register_blueprint(session_bp, url_prefix='/session')
+
+app.register_blueprint(sys_info_bp, url_prefix='/sysinfo')
 ##############################################################################
 
 
