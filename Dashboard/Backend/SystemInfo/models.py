@@ -17,8 +17,8 @@ class SystemInfo(Document):
     domain              = DictField()
     cpu                 = DictField()
     memory              = DictField()
-    disks               = ListField(DictField())
-    network_interfaces  = ListField(DictField())
+    disks               = DictField()
+    network_interfaces  = DictField()
 
 class ChangeLogSystemInfo(Document):
     timestamp = DateTimeField(default=datetime.utcnow)
