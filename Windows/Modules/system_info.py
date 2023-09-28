@@ -112,36 +112,32 @@ def get_network_info():
     """
     interfaces = psutil.net_if_addrs()
 
-    network_info = []
+    network_info = {}
     for name, addresses in interfaces.items():
-        interface_info = {'name': name, 'addresses': [], 'mac_address': ''}
+        network_info[name] = { 
+            'mac_address': ''
+        }
 
         for address in addresses:
             if address.family == socket.AF_INET:
                 # IPv4 address
-                address_info = {
-                    'type': 'IPv4',
+                network_info[name]['IPv4'] = {
                     'ip_address': address.address,
                     'netmask': address.netmask,
                     'broadcast': address.broadcast
                 }
-                interface_info['addresses'].append(address_info)
 
             if address.family == socket.AF_INET6:
                 # IPv6 address
-                address_info = {
-                    'type': 'IPv6',
+                network_info[name]['IPv6'] = {
                     'ip_address': address.address,
                     'netmask': address.netmask,
                     'broadcast': None
                 }
-                interface_info['addresses'].append(address_info)
 
             if address.family == psutil.AF_LINK:
                 # MAC address
-                interface_info['mac_address'] = address.address
-
-        network_info.append(interface_info)
+                network_info[name]['mac_address'] = address.address
 
     return network_info
 ##############################################################################
