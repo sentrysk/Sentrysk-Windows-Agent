@@ -57,28 +57,23 @@ def get_system_info():
 
     # Disk Information
     partitions = psutil.disk_partitions()
-    disk_info = []
+    disk_info = {}
     for partition in partitions:
         if platform.system() == 'Windows':
             if 'cdrom' in partition.opts or partition.fstype == '':
                 continue
 
         disk_usage = psutil.disk_usage(partition.mountpoint)
-        disk = {
+        disk_info[partition.device] = {
             'device': partition.device,
             'mountpoint': partition.mountpoint,
             'filesystem': partition.fstype,
             'total_size': convert_size(disk_usage.total),
             'used_size': convert_size(disk_usage.used),
             'free_size': convert_size(disk_usage.free),
-            'usage_percent': disk_usage.percent
+            'usage_percent': disk_usage.percent,
+            'bitlocker_status': check_bitlocker_status(partition.device)
         }
-
-        # BitLocker Status
-        bitlocker_status = check_bitlocker_status(partition.device)
-        disk['bitlocker_status'] = bitlocker_status
-
-        disk_info.append(disk)
 
     system_info['disks'] = disk_info
 
