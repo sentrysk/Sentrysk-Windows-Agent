@@ -44,19 +44,15 @@ def get_system_info():
     system_info["memory"]["available_memory"] = memory_info["available"]
 
     # Collect disk information
-    disk_info = []
     for partition in psutil.disk_partitions():
-        disk = {
-            "device": partition.device,
+        system_info["disks"][partition.device] = {
             "mountpoint": partition.mountpoint,
             "fstype": partition.fstype,
         }
         disk_usage = psutil.disk_usage(partition.mountpoint)
-        disk["total_size"] = disk_usage.total
-        disk["used_size"] = disk_usage.used
-        disk["free_size"] = disk_usage.free
-        disk_info.append(disk)
-    system_info["disks"] = disk_info
+        system_info["disks"][partition.device]["total_size"] = disk_usage.total
+        system_info["disks"][partition.device]["used_size"] = disk_usage.used
+        system_info["disks"][partition.device]["free_size"] = disk_usage.free
 
     # Collect network interface information including MAC addresses
     for interface, addrs in psutil.net_if_addrs().items():
