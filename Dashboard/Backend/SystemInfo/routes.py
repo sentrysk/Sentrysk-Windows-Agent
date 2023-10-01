@@ -8,7 +8,7 @@ from marshmallow import ValidationError
 
 from .models import SystemInfo, ChangeLogSystemInfo
 from .schema import RegisterSchema,UpdateSchema
-from Shared.validators import agent_token_required
+from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
 from Agents.models import Agent
@@ -22,6 +22,16 @@ sys_info_bp = Blueprint('sys_info_blueprint', __name__)
 
 # Routes
 ##############################################################################
+
+# Get All System Data
+@sys_info_bp.route('/', methods=['GET'])
+@auth_token_required
+def get_all_system_info():
+    try:
+        sys_info = SystemInfo.objects()
+        return [info.serialize() for info in sys_info] # Serialize & Return
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
 
 # Register
 @sys_info_bp.route('/', methods=['POST'])
