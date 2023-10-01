@@ -6,3 +6,4 @@ With this agents you can collect information about installed apps, pip packages,
 ## Agent Types
 * ![Windows](/Windows)
 * ![Linux](/Linux)
+* ![MacOs](/MacOs)
