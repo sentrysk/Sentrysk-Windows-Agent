@@ -123,10 +123,17 @@
             $('#agentsTable').DataTable({
               responsive: true,
               searching: true,
-              lengthChange: false,
+              lengthChange: true,
               pageLength: 10,
               order: [[3, 'desc']],
+              lengthMenu: [
+                  [10, 25, 50, 100, -1],
+                  [10, 25, 50, 100, 'All']
+              ],
             });
+            // Style length Menu
+            const pageEntrySize = document.getElementById('agentsTable_length')
+            pageEntrySize.style = "margin-right:100%"
           });
         } catch (error) {
           console.error('Error fetching agents:', error);
