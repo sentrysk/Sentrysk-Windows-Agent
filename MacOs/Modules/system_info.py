@@ -4,7 +4,7 @@
 ##############################################################################
 import psutil
 import platform
-import json
+import socket
 
 from .helper_funcs import convert_size
 ##############################################################################
@@ -60,14 +60,22 @@ def get_system_info():
             "mac_address": ""
         }
         for addr in addrs:
-            system_info["network_interfaces"][interface][addr.family.name] = {
-                "family": addr.family.name,
-                "address": addr.address,
-                "netmask": addr.netmask,
-            }
-        
-        # Add MAC address to the network interface information
-        system_info["network_interfaces"][interface]["mac_address"] = psutil.net_if_addrs()[interface][0].address
+            if addr.family == psutil.AF_LINK:
+                # MAC Address
+                system_info["network_interfaces"][interface]["mac_address"] = psutil.net_if_addrs()[interface][0].address
+            elif addr.family == socket.AF_INET:
+                # IPv4 address 
+                system_info["network_interfaces"][interface]["IPv4"] = {
+                    "ip_address": addr.address,
+                    "netmask": addr.netmask,
+                    "broadcast": addr.broadcast
+                }
+            elif addr.family == socket.AF_INET6:
+                # IPv6 address
+                system_info["network_interfaces"][interface]["IPv4"] = {
+                    "ip_address": addr.address,
+                    "netmask": addr.netmask,
+                    "broadcast": None
+                }
 
-    # Print the JSON result
     return system_info
