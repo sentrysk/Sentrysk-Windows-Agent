@@ -20,7 +20,7 @@
           <tbody>
             <tr v-for="(agent, index) in agents" :key="agent.id">
               <td>
-                {{index}}
+                <router-link class="navbar-brand" :to="'/agents/'+agent.id"><i class="bi bi-speedometer2"></i> {{index}}</router-link>
               </td>
               <td>
                 <span v-if="agent.type === 'windows'" title="Windows">
