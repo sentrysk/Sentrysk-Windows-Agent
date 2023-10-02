@@ -122,7 +122,7 @@ def get_network_info():
             if address.family == socket.AF_INET:
                 # IPv4 address
                 network_info[name]['IPv4'] = {
-                    'ip_address': address.address,
+                    'address': address.address,
                     'netmask': address.netmask,
                     'broadcast': address.broadcast
                 }
@@ -130,7 +130,7 @@ def get_network_info():
             if address.family == socket.AF_INET6:
                 # IPv6 address
                 network_info[name]['IPv6'] = {
-                    'ip_address': address.address,
+                    'address': address.address,
                     'netmask': address.netmask,
                     'broadcast': None
                 }
