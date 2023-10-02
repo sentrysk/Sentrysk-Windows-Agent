@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginPage from '../components/LoginPage.vue'
 import RegisterPage from '../components/RegisterPage.vue'
 import AgentsView from '../views/AgentsView'
+import AgentSystemData from '../views/AgentSystemData'
 import axios from "axios";
 
 const routes = [
@@ -26,6 +27,12 @@ const routes = [
     path: '/agents',
     name: 'agents',
     component: AgentsView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/agents/:id',
+    name: 'agentData',
+    component: AgentSystemData,
     meta: { requiresAuth: true }
   },
   {
