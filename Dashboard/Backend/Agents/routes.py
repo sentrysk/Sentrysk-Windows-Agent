@@ -36,7 +36,7 @@ def get_agent_by_id(id):
         agent = Agent.objects(id=id).first().serialize()
         return jsonify(agent)
     except Exception as e:
-        return jsonify({"error":str(e)}), 500
+        return jsonify({"Message":"Not Found"}), 404
 
 # Register
 @agnt_bp.route('/register', methods=['POST'])
