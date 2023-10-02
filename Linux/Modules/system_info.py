@@ -62,21 +62,28 @@ def get_system_info():
     network_info = {}
     network_interfaces = psutil.net_if_addrs()
     for interface_name, interface_addresses in network_interfaces.items():
-        addresses = []
-        mac_address = ""
-        for address in interface_addresses:
-            if address.family == psutil.AF_LINK:  # AF_LINK represents MAC address
-                mac_address = address.address
-            else:
-                addresses.append({
-                    "family": socket.AddressFamily(address.family).name,
-                    "address": address.address,
-                    "netmask": address.netmask,
-                })
-        network_info[interface_name] = {
-            "addresses": addresses,
-            "mac_address": mac_address,
+        network_info[interface_name] = { 
+            'mac_address': ''
         }
+
+        for address in interface_addresses:
+            if address.family == psutil.AF_LINK:  
+                # AF_LINK represents MAC address
+                network_info[interface_name]['mac_address'] = address.address
+            elif address.family == socket.AF_INET:
+                # IP v4
+                network_info[interface_name]['IPv4'] ={
+                    'address': address.address,
+                    'netmask': address.netmask,
+                    'broadcast': address.broadcast
+                }
+            elif address.family == socket.AF_INET6:
+                # IP v6
+                network_info[interface_name]['IPv6'] ={
+                    'address': address.address,
+                    'netmask': address.netmask,
+                    'broadcast': None
+                }
     system_info["network_interfaces"] = network_info
 
     return system_info
