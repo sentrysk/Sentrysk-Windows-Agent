@@ -32,6 +32,16 @@ def get_all_system_info():
         return [info.serialize() for info in sys_info] # Serialize & Return
     except Exception as e:
         return jsonify({"error":str(e)}), 500
+    
+# Get All System Data
+@sys_info_bp.route('/<agent_id>', methods=['GET'])
+@auth_token_required
+def get_system_info_by_agent_id(agent_id):
+    try:
+        sys_info = SystemInfo.objects(agent=agent_id).first().serialize()
+        return jsonify(sys_info)
+    except Exception as e:
+        return jsonify({"Message":"Not Found"}), 404
 
 # Register
 @sys_info_bp.route('/', methods=['POST'])
