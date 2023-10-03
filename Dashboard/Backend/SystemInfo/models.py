@@ -39,4 +39,14 @@ class ChangeLogSystemInfo(Document):
     system_info     = ReferenceField(SystemInfo)
     timestamp       = DateTimeField(default=datetime.utcnow)
     changes         = DictField()
+
+    def serialize(self):
+        return {
+            "id":str(self.id),
+            "timestamp":self.timestamp,
+            "changes":self.changes
+        }
+
+    def __str__(self):
+        return str(self.serialize())
 ##############################################################################
