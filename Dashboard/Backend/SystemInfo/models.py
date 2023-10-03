@@ -18,6 +18,7 @@ class SystemInfo(Document):
     memory              = DictField()
     disks               = DictField()
     network_interfaces  = DictField()
+    updated             = DateTimeField(default=datetime.utcnow)
 
     def serialize(self):
         return {
