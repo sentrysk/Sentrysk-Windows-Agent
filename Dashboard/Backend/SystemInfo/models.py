@@ -36,6 +36,7 @@ class SystemInfo(Document):
         return str(self.serialize())
 
 class ChangeLogSystemInfo(Document):
-    timestamp = DateTimeField(default=datetime.utcnow)
-    changes = DictField()
+    system_info     = ReferenceField(SystemInfo)
+    timestamp       = DateTimeField(default=datetime.utcnow)
+    changes         = DictField()
 ##############################################################################

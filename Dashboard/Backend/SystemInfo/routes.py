@@ -84,6 +84,7 @@ def register():
             
             # Create a new ChangeLog entry
             change_log_entry = ChangeLogSystemInfo(
+                system_info = sys_info,
                 changes = changes
             )
             change_log_entry.save()
