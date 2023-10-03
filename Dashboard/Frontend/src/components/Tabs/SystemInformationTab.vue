@@ -1,22 +1,22 @@
 <template>
     <ul class="nav nav-tabs" id="systemSubTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="systemOsTab" data-bs-toggle="tab" data-bs-target="#systemOs" type="button" role="tab" aria-controls="systemOs" aria-selected="true">OS</button>
+            <button class="nav-link active" id="systemOsTab" data-bs-toggle="tab" data-bs-target="#systemOs" type="button" role="tab" aria-controls="systemOs" aria-selected="true"><i class="bi bi-code-square"></i> OS</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemDomainTab" data-bs-toggle="tab" data-bs-target="#systemDomain" type="button" role="tab" aria-controls="systemDomain" aria-selected="false">Domain</button>
+            <button class="nav-link" id="systemDomainTab" data-bs-toggle="tab" data-bs-target="#systemDomain" type="button" role="tab" aria-controls="systemDomain" aria-selected="false"><i class="fa-solid fa-network-wired"></i> Domain</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemCpuTab" data-bs-toggle="tab" data-bs-target="#systemCpu" type="button" role="tab" aria-controls="systemCpu" aria-selected="false">CPU</button>
+            <button class="nav-link" id="systemCpuTab" data-bs-toggle="tab" data-bs-target="#systemCpu" type="button" role="tab" aria-controls="systemCpu" aria-selected="false"><i class="bi bi-cpu"></i> CPU</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemMemoryTab" data-bs-toggle="tab" data-bs-target="#systemMemory" type="button" role="tab" aria-controls="systemMemory" aria-selected="false">Memory</button>
+            <button class="nav-link" id="systemMemoryTab" data-bs-toggle="tab" data-bs-target="#systemMemory" type="button" role="tab" aria-controls="systemMemory" aria-selected="false"><i class="bi bi-memory"></i> Memory</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemDisksTab" data-bs-toggle="tab" data-bs-target="#systemDisks" type="button" role="tab" aria-controls="systemDisks" aria-selected="false">Disks</button>
+            <button class="nav-link" id="systemDisksTab" data-bs-toggle="tab" data-bs-target="#systemDisks" type="button" role="tab" aria-controls="systemDisks" aria-selected="false"><i class="bi bi-hdd-stack"></i> Disks</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemNetworkInterfacesTab" data-bs-toggle="tab" data-bs-target="#systemNetworkInterfaces" type="button" role="tab" aria-controls="systemNetworkInterfaces" aria-selected="false">Network Interfaces</button>
+            <button class="nav-link" id="systemNetworkInterfacesTab" data-bs-toggle="tab" data-bs-target="#systemNetworkInterfaces" type="button" role="tab" aria-controls="systemNetworkInterfaces" aria-selected="false"><i class="bi bi-wifi"></i> Network Interfaces</button>
         </li>
     </ul>
 
