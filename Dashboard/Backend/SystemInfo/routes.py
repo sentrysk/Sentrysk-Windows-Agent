@@ -84,7 +84,7 @@ def register():
             
             # Create a new ChangeLog entry
             change_log_entry = ChangeLogSystemInfo(
-                system_info = sys_info,
+                system_info = sys_info.id,
                 changes = changes
             )
             change_log_entry.save()
@@ -127,4 +127,17 @@ def register():
         }
     ), 200
 
+
+# Changelog Routes
+
+# Get All Changelog Data by System Info ID
+@sys_info_bp.route('/changelog/<sys_info_id>', methods=['GET'])
+@auth_token_required
+def get_system_info_changelog_by_sys_info_id(sys_info_id):
+    try:
+        sys_info_changelog = ChangeLogSystemInfo.objects(system_info=sys_info_id)
+        return [info.serialize() for info in sys_info_changelog] # Serialize & Return
+    except Exception as e:
+        print(e)
+        return jsonify({"Message":"Not Found"}), 404
 ##############################################################################
