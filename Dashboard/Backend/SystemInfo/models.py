@@ -29,7 +29,8 @@ class SystemInfo(Document):
             "cpu":self.cpu,
             "memory":self.memory,
             "disks":self.disks,
-            "network_interfaces":self.network_interfaces
+            "network_interfaces":self.network_interfaces,
+            "updated":self.updated
         }
 
     def __str__(self):
