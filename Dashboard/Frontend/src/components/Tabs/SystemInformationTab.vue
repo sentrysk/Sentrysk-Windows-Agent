@@ -18,6 +18,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="systemNetworkInterfacesTab" data-bs-toggle="tab" data-bs-target="#systemNetworkInterfaces" type="button" role="tab" aria-controls="systemNetworkInterfaces" aria-selected="false"><i class="bi bi-wifi"></i> Network Interfaces</button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="systemChangelogTab" data-bs-toggle="tab" data-bs-target="#systemChangelog" type="button" role="tab" aria-controls="systemChangelog" aria-selected="false"> Changelog</button>
+        </li>
     </ul>
 
     <!-- Last Update -->
@@ -25,7 +28,7 @@
         <span :title=formatToLocalTime(systemInfo.updated)>Last Update : {{ calculateDatetimeDifference(systemInfo.updated) }}</span>
     </div>
 
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content" id="sysInfoTabContent">
         <!-- OS Tab -->
         <div class="tab-pane fade show active" id="systemOs" role="tabpanel" aria-labelledby="systemOs">
             <!-- Use Bootstrap Cards to display the data -->
@@ -172,6 +175,48 @@
                 </div>
             </div>
         </div>
+
+        <!-- Changelog Tab -->
+        <div class="tab-pane fade" id="systemChangelog" role="tabpanel" aria-labelledby="systemChangelog">
+            <!-- Use Bootstrap Cards to display the data -->
+            <div class="row">
+                <table class="table table-hover table-bordered table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Changes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in changeLog" :key="index">
+                            <td><span :title=formatToLocalTime(item.timestamp)>{{ calculateDatetimeDifference(item.timestamp) }}</span></td>
+                            <td>
+                                <table class="table table-striped table-bordered table-sm">
+                                    <tr v-for="(change, key) in item.changes" :key="key">
+                                        <td>{{ key }}</td>
+                                        <td>
+                                            <table class="table table-bordered table-sm">
+                                                <tr>
+                                                    <th>Field</th>
+                                                    <th>New Value</th>
+                                                    <th>Previous Value</th>
+                                                </tr>
+                                                <tr v-for="(newValue, field) in change.new_value" :key="field">
+                                                    <td>{{ field }}</td>
+                                                    <td>{{ newValue }}</td>
+                                                    <td>{{ change.previous_value[field] }}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -184,6 +229,7 @@
       data() {
         return {
           systemInfo: {},
+          changeLog: {},
         };
       },
       mounted() {
@@ -205,6 +251,16 @@
             });
     
             this.systemInfo = response.data;
+
+            //Get Changelog Request
+            const CHANGELOG_URL = "http://localhost:5000/sysinfo/changelog/"+response.data.id
+            const changelog = await axios.get(CHANGELOG_URL, {
+              headers: {
+                Authorization: jwtToken,
+              },
+            });
+            this.changeLog = changelog.data;
+
           } catch (error) {
             console.error('Error fetching agents:', error);
           }
