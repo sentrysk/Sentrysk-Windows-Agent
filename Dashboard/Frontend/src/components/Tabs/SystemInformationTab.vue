@@ -19,7 +19,7 @@
             <button class="nav-link" id="systemNetworkInterfacesTab" data-bs-toggle="tab" data-bs-target="#systemNetworkInterfaces" type="button" role="tab" aria-controls="systemNetworkInterfaces" aria-selected="false"><i class="bi bi-wifi"></i> Network Interfaces</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemChangelogTab" data-bs-toggle="tab" data-bs-target="#systemChangelog" type="button" role="tab" aria-controls="systemChangelog" aria-selected="false"> Changelog</button>
+            <button class="nav-link" id="systemChangelogTab" data-bs-toggle="tab" data-bs-target="#systemChangelog" type="button" role="tab" aria-controls="systemChangelog" aria-selected="false"><i class="bi bi-file-diff"></i> Changelogs</button>
         </li>
     </ul>
 
@@ -193,7 +193,7 @@
                             <td>
                                 <table class="table table-striped table-bordered table-sm">
                                     <tr v-for="(change, key) in item.changes" :key="key">
-                                        <td>{{ key }}</td>
+                                        <td><h3>{{ key }}</h3></td>
                                         <td>
                                             <table class="table table-bordered table-sm">
                                                 <tr>
@@ -203,8 +203,12 @@
                                                 </tr>
                                                 <tr v-for="(newValue, field) in change.new_value" :key="field">
                                                     <td>{{ field }}</td>
-                                                    <td>{{ newValue }}</td>
-                                                    <td>{{ change.previous_value[field] }}</td>
+                                                    
+                                                    <td v-if="newValue != change.previous_value[field]" style="color: chartreuse;">{{ newValue }}</td>
+                                                    <td v-else>{{ newValue }}</td>
+
+                                                    <td v-if="newValue != change.previous_value[field]" style="color: crimson;">{{ change.previous_value[field] }}</td>
+                                                    <td v-else>{{ change.previous_value[field] }}</td>
                                                 </tr>
                                             </table>
                                         </td>
