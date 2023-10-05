@@ -180,7 +180,7 @@
         <div class="tab-pane fade" id="systemChangelog" role="tabpanel" aria-labelledby="systemChangelog">
             <!-- Use Bootstrap Cards to display the data -->
             <div class="row">
-                <table class="table table-hover table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm" id="changelogsTable">
                     <thead class="table-dark">
                         <tr>
                             <th>Timestamp</th>
@@ -227,6 +227,9 @@
 
 <script>
     import axios from 'axios';
+    import jQuery from "jquery";
+    const $ = jQuery;
+    window.$ = $;
     
     export default {
       name: 'SystemInformationTab',
@@ -264,6 +267,22 @@
               },
             });
             this.changeLog = changelog.data;
+
+            $(document).ready(() => {
+                $('#changelogsTable').DataTable({
+                searching: true,
+                order: [[0, 'asc']],
+                lengthChange: true,
+                pageLength: 10,
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, 'All']
+                ],
+                });
+                // Style length Menu
+                const pageEntrySize = document.getElementById('changelogsTable_length')
+                pageEntrySize.style = "margin-right:100%"
+            });
 
           } catch (error) {
             console.error('Error fetching agents:', error);
