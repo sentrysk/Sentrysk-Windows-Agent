@@ -2,6 +2,7 @@
 
 # Libraries
 ##############################################################################
+import pwd
 import logging
 ##############################################################################
 
@@ -9,20 +10,21 @@ import logging
 ##############################################################################
 def get_user_info():
     try:
-        with open('/etc/passwd', 'r') as passwd_file:
-            users = []
-            for line in passwd_file:
-                user_info = line.strip().split(':')
-                user = {
-                    'username': user_info[0],
-                    'uid': user_info[2],
-                    'gid': user_info[3],
-                    'home_directory': user_info[5],
-                    'shell': user_info[6]
-                }
-                users.append(user)
+        # Initialize an empty list to store user information
+        users = []
+
+        # Iterate through the user entries in the /etc/passwd file
+        for entry in pwd.getpwall():
+            user_info = {
+                "Username": entry.pw_name,
+                "UserID": entry.pw_uid,
+                "GroupID": entry.pw_gid,
+                "HomeDirectory": entry.pw_dir,
+                "Shell": entry.pw_shell,
+            }
+            users.append(user_info)
             
-            return users
+        return users
     except Exception as e:
         # Log the error
         logging.error(e)
