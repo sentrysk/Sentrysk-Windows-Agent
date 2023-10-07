@@ -7,6 +7,7 @@ from configparser import ConfigParser,ExtendedInterpolation
 import logging
 
 from Modules.system_info import get_system_info
+from Modules.user_info import get_user_info
 ##############################################################################
 
 # Configs
@@ -39,6 +40,7 @@ logging.basicConfig(
 system_info = {}
 
 system_info['system']               = get_system_info()
+system_info['users']                = get_user_info()
 ##############################################################################
 
 # Usage
