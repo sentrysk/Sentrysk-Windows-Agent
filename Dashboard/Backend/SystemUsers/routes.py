@@ -33,38 +33,40 @@ def register():
     # Get Agent by Agent ID
     agent = Agent.objects(id=agent_id).first()
 
+    # Get Data from Request
+    data = request.get_json()
+
+    # Validate the Request
+    if 'users' not in data:
+        return jsonify({'error': 'Invalid JSON data'}), 400
+        
     # Get if record already exist
     sys_users = SystemUsers.objects(agent=agent).first()
 
     if sys_users:
-        # UPDATE If System Information data already exist 
-        
-        try:
-            data = request.get_json()
+        # UPDATE If System Information data already exist  
+        try:  
             sys_users.update(**data)
         except Exception as e:
             return jsonify({'error': e.messages}), 400
         
     else:
         # CREATE If System Information not exist 
-        
         try:
-            data = request.get_json()
             sys_users = SystemUsers(**data)
             sys_users.agent = agent
             sys_users.save()
-            
-            sys_users_data = json.loads(sys_users.to_json())
-
-            return jsonify(
-                {
-                    'message': 'System users registered successfully.',
-                    'sys_users': sys_users_data,
-                }
-            ), 200
-
-        except ValidationError as e:
+        except Exception as e:
             return jsonify({'error': e.messages}), 400
+    
+    sys_users_data = json.loads(sys_users.to_json())
+
+    return jsonify(
+        {
+            'message': 'System users registered successfully.',
+            'sys_users': sys_users_data,
+        }
+    ), 200
     
 
 
