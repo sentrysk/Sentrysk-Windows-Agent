@@ -4,9 +4,9 @@
 ##############################################################################
 from flask import Blueprint, request, jsonify
 import json
-from marshmallow import ValidationError
+from datetime import datetime
 
-from .models import SystemUsers
+from .models import SystemUsers, ChangeLogSystemUsers
 from Shared.validators import agent_token_required
 
 from Agents.helper_funcs import get_id_by_token
@@ -46,9 +46,43 @@ def register():
     if sys_users:
         # UPDATE If System Information data already exist  
         try:  
-            sys_users.update(**data)
+            new_users = SystemUsers(**data)
+            new_users.agent = agent
+            new_users = new_users.users
+            old_users = sys_users.users
+            
+            print("\nNEW USERS:\n")
+            print(new_users)
+            print("\nOLD USERS:\n")
+            print(old_users)
+            changes = {}
+            # Find deleted, new, and updated users
+            deleted_users = [user for user in old_users if user not in new_users]
+            new_users = [user for user in new_users if user not in old_users]
+            updated_users = [user for user in new_users if user in old_users]
+
+            if deleted_users:
+                changes["deleted_users"] = deleted_users
+            if new_users:
+                changes["new_users"] = new_users
+            if updated_users:
+                changes["updated_users"] = updated_users
+
+            # If any changes happens
+            if changes:
+                # Apply updates
+                sys_users.updated = datetime.utcnow
+                sys_users.update(**data)
+
+                # Create a new ChangeLog entry
+                change_log_entry = ChangeLogSystemUsers(
+                    sys_users = sys_users.id,
+                    changes = changes
+                )
+                change_log_entry.save()
+
         except Exception as e:
-            return jsonify({'error': e.messages}), 400
+            return jsonify({'error': e}), 500
         
     else:
         # CREATE If System Information not exist 
@@ -57,7 +91,7 @@ def register():
             sys_users.agent = agent
             sys_users.save()
         except Exception as e:
-            return jsonify({'error': e.messages}), 400
+            return jsonify({'error': e}), 500
     
     sys_users_data = json.loads(sys_users.to_json())
 
@@ -67,7 +101,5 @@ def register():
             'sys_users': sys_users_data,
         }
     ), 200
-    
-
 
 ##############################################################################

@@ -23,6 +23,34 @@ class UserData(EmbeddedDocument):
     flags           = ListField()
     sid             = StringField()
 
+    def serialize(self):
+        data = {
+            "username": self.username
+        }
+        if self.user_id:
+            data["user_id"] = self.user_id
+        if self.group_id:
+            data["group_id"] = self.group_id
+        if self.home_directory:
+            data["home_directory"] = self.home_directory
+        if self.shell:
+            data["shell"] = self.shell
+        if self.full_name:
+            data["full_name"] = self.full_name
+        if self.comment:
+            data["comment"] = self.comment
+        if self.last_logon:
+            data["last_logon"] = self.last_logon
+        if self.flags:
+            data["flags"] = self.flags
+        if self.sid:
+            data["sid"] = self.sid
+
+        return data
+
+    def __str__(self):
+        return str(self.serialize())
+
 class SystemUsers(Document):
     agent               = ReferenceField(Agent)
     users               = ListField(EmbeddedDocumentField(UserData))
