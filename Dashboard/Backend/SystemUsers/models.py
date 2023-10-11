@@ -45,7 +45,7 @@ class UserData(EmbeddedDocument):
             return dt.strftime(date_format)
         else:
             # If dt is not a datetime instance, its Str or something...
-            return datetime.strptime(dt,date_format)
+            return datetime.strftime(datetime.strptime(dt,date_format),date_format)
 
     def serialize(self):
         data = {
