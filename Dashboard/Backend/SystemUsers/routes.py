@@ -5,6 +5,7 @@
 from flask import Blueprint, request, jsonify
 import json
 from datetime import datetime
+import pickle
 
 from .models import SystemUsers, ChangeLogSystemUsers
 from Shared.validators import agent_token_required
@@ -44,22 +45,18 @@ def register():
     sys_users = SystemUsers.objects(agent=agent).first()
 
     if sys_users:
-        # UPDATE If System Information data already exist  
-        try:  
-            new_users = SystemUsers(**data)
-            new_users.agent = agent
-            new_users = new_users.users
-            old_users = sys_users.users
-            
-            print("\nNEW USERS:\n")
-            print(new_users)
-            print("\nOLD USERS:\n")
-            print(old_users)
-            changes = {}
+        # UPDATE If System Information data already exist
+        try:
+            # Create SystemUsers object to Compare
+            new_users_obj = SystemUsers(**data)
+            new_users_obj.agent = agent
+            #new_users_obj = new_users.users
+            #old_users_obj = sys_users
+
             # Find deleted, new, and updated users
-            deleted_users = [user for user in old_users if user not in new_users]
-            new_users = [user for user in new_users if user not in old_users]
-            updated_users = [user for user in new_users if user in old_users]
+            new_users, deleted_users, updated_users = sys_users.compare_users(new_users_obj)
+            
+            changes = {}
 
             if deleted_users:
                 changes["deleted_users"] = deleted_users
@@ -71,7 +68,7 @@ def register():
             # If any changes happens
             if changes:
                 # Apply updates
-                sys_users.updated = datetime.utcnow
+                data["updated"] = datetime.utcnow
                 sys_users.update(**data)
 
                 # Create a new ChangeLog entry
@@ -80,6 +77,10 @@ def register():
                     changes = changes
                 )
                 change_log_entry.save()
+            else:
+                # Apply only updated time
+                sys_users.update(updated=datetime.utcnow)
+                return jsonify({"message":"Nothing changed"})
 
         except Exception as e:
             return jsonify({'error': e}), 500
