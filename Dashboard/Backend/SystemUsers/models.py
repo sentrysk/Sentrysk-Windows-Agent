@@ -39,13 +39,16 @@ class UserData(EmbeddedDocument):
 
     @staticmethod
     def normalize_datetime(dt):
-        date_format = "%Y-%m-%d %H:%M:%S"
-        if isinstance(dt, datetime):
-            # If dt is already a datetime instance
-            return dt.strftime(date_format)
+        if dt:
+            date_format = "%Y-%m-%d %H:%M:%S"
+            if isinstance(dt, datetime):
+                # If dt is already a datetime instance
+                return dt.strftime(date_format)
+            else:
+                # If dt is not a datetime instance, its Str or something...
+                return datetime.strftime(datetime.strptime(dt,date_format),date_format)
         else:
-            # If dt is not a datetime instance, its Str or something...
-            return datetime.strftime(datetime.strptime(dt,date_format),date_format)
+            return dt
 
     def serialize(self):
         data = {
