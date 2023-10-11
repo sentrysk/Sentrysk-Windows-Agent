@@ -23,6 +23,30 @@ class UserData(EmbeddedDocument):
     flags           = ListField()
     sid             = StringField()
 
+    def __eq__(self, other):
+        return (
+            self.username == other.username and
+            self.user_id == other.user_id and
+            self.group_id == other.group_id and
+            self.home_directory == other.home_directory and
+            self.shell == other.shell and
+            self.full_name == other.full_name and
+            self.comment == other.comment and
+            self.normalize_datetime(self.last_logon) == self.normalize_datetime(other.last_logon) and
+            self.flags == other.flags and
+            self.sid == other.sid
+        )
+
+    @staticmethod
+    def normalize_datetime(dt):
+        date_format = "%Y-%m-%d %H:%M:%S"
+        if isinstance(dt, datetime):
+            # If dt is already a datetime instance
+            return dt.strftime(date_format)
+        else:
+            # If dt is not a datetime instance, its Str or something...
+            return datetime.strptime(dt,date_format)
+
     def serialize(self):
         data = {
             "username": self.username
@@ -56,6 +80,34 @@ class SystemUsers(Document):
     users               = ListField(EmbeddedDocumentField(UserData))
     updated             = DateTimeField(default=datetime.utcnow)
 
+    # To compare 2 Users Data
+    def compare_users(self, other):
+        if not isinstance(other, SystemUsers):
+            raise ValueError("Comparison should be done with another SystemUsers instance")
+
+        self_users = {user.username: user for user in self.users}
+        other_users = {user.username: user for user in other.users}
+
+        # Newly Added Users
+        new_users = [user for username, user in other_users.items() if username not in self_users]
+        # Deleted Users
+        deleted_users = [user for username, user in self_users.items() if username not in other_users]
+        # Updated Users and Fields
+        updated_users = {}
+
+        # Find the Updated Fields
+        for username in self_users:
+            if username in other_users and self_users[username] != other_users[username]:
+                updated_fields = {}
+                for field in UserData._fields:
+                    if self_users[username][field] != other_users[username][field]:
+                        updated_fields[field] = (self_users[username][field], other_users[username][field])
+                # Add Updated Fields to Updated Users Dict
+                updated_users[username] = updated_fields
+
+        # Return Compared Data
+        return new_users, deleted_users, updated_users
+    
     def serialize(self):
         return {
             "id":str(self.id),
