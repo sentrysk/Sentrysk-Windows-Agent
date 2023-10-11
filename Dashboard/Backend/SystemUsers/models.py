@@ -10,6 +10,11 @@ from Agents.models import Agent
 from datetime import datetime
 ##############################################################################
 
+# Global Values
+##############################################################################
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+##############################################################################
+
 ##############################################################################
 class UserData(EmbeddedDocument):
     username        = StringField()
@@ -40,13 +45,13 @@ class UserData(EmbeddedDocument):
     @staticmethod
     def normalize_datetime(dt):
         if dt:
-            date_format = "%Y-%m-%d %H:%M:%S"
+            
             if isinstance(dt, datetime):
                 # If dt is already a datetime instance
-                return dt.strftime(date_format)
+                return dt.strftime(DATE_FORMAT)
             else:
                 # If dt is not a datetime instance, its Str or something...
-                return datetime.strftime(datetime.strptime(dt,date_format),date_format)
+                return datetime.strftime(datetime.strptime(dt,DATE_FORMAT),DATE_FORMAT)
         else:
             return dt
 
@@ -103,7 +108,7 @@ class SystemUsers(Document):
             if username in other_users and self_users[username] != other_users[username]:
                 updated_fields = {}
                 for field in UserData._fields:
-                    if self_users[username][field] != other_users[username][field]:
+                    if str(self_users[username][field]) != str(other_users[username][field]):
                         updated_fields[field] = (self_users[username][field], other_users[username][field])
                 # Add Updated Fields to Updated Users Dict
                 updated_users[username] = updated_fields
