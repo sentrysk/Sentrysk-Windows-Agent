@@ -50,8 +50,6 @@ def register():
             # Create SystemUsers object to Compare
             new_users_obj = SystemUsers(**data)
             new_users_obj.agent = agent
-            #new_users_obj = new_users.users
-            #old_users_obj = sys_users
 
             # Find deleted, new, and updated users
             new_users, deleted_users, updated_users = sys_users.compare_users(new_users_obj)
