@@ -8,7 +8,7 @@ from datetime import datetime
 import pickle
 
 from .models import SystemUsers, ChangeLogSystemUsers
-from Shared.validators import agent_token_required
+from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
 from Agents.models import Agent
@@ -22,6 +22,26 @@ sys_users_bp = Blueprint('sys_users_blueprint', __name__)
 
 # Routes
 ##############################################################################
+
+# Get All System Data
+@sys_users_bp.route('/<agent_id>', methods=['GET'])
+@auth_token_required
+def get_system_users_by_agent_id(agent_id):
+    try:
+        # Get System Users
+        sys_users = SystemUsers.objects(agent=agent_id).first()
+        
+        # Serialize "users" section
+        users = []
+        for user in sys_users.users:
+            users.append(user.serialize())
+        
+        # Append again users to System Users
+        sys_users.users = users
+        # Return as serialized
+        return jsonify(sys_users.serialize())
+    except Exception as e:
+        return jsonify({"Message":"Not Found"}), 404
 
 # Register
 @sys_users_bp.route('/', methods=['POST'])
