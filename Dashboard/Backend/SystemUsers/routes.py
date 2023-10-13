@@ -23,7 +23,26 @@ sys_users_bp = Blueprint('sys_users_blueprint', __name__)
 # Routes
 ##############################################################################
 
-# Get All System Data
+# Get All System Users
+@sys_users_bp.route('/', methods=['GET'])
+@auth_token_required
+def get_all_system_users():
+    try:
+        all_sys_users = SystemUsers.objects()
+
+        for sys_users in all_sys_users:
+            # Serialize "users" section
+            users = []
+            for user in sys_users.users:
+                users.append(user.serialize())
+            # Append again users to System Users
+            sys_users.users = users
+        
+        return [info.serialize() for info in all_sys_users] # Serialize & Return
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+
+# Get System User by Agent ID
 @sys_users_bp.route('/<agent_id>', methods=['GET'])
 @auth_token_required
 def get_system_users_by_agent_id(agent_id):
