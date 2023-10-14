@@ -97,9 +97,11 @@ class SystemUsers(Document):
         other_users = {user.username: user for user in other.users}
 
         # Newly Added Users
-        new_users = [user for username, user in other_users.items() if username not in self_users]
+        new_users = [user.serialize() for username, user in other_users.items() if username not in self_users]
+        #new_users = [user.serialize() for user in new_users]
         # Deleted Users
-        deleted_users = [user for username, user in self_users.items() if username not in other_users]
+        deleted_users = [user.serialize() for username, user in self_users.items() if username not in other_users]
+        #new_users = [user.serialize() for user in new_users]
         # Updated Users and Fields
         updated_users = {}
 
