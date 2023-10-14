@@ -5,9 +5,8 @@
 from flask import Blueprint, request, jsonify
 import json
 from datetime import datetime
-import pickle
 
-from .models import SystemUsers, ChangeLogSystemUsers
+from .models import SystemUsers, ChangeLogSystemUsers, UserData
 from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
@@ -140,4 +139,44 @@ def register():
         }
     ), 200
 
+
+# Changelog Routes
+
+# Get All Changelog Data by System Users ID
+@sys_users_bp.route('/changelog/<sys_users_id>', methods=['GET'])
+@auth_token_required
+def get_system_info_changelog_by_sys_users_id(sys_users_id):
+    try:
+        """"
+        #return [info.serialize() for info in sys_users_changelog] # Serialize & Return
+        changelog_list = []
+        sys_users_changelog = ChangeLogSystemUsers.objects(sys_users=sys_users_id)
+        for changelog in sys_users_changelog:
+            changelog_dict = {
+                "id": str(changelog.id),
+                "timestamp": changelog.timestamp,
+                "changes": {}
+            }
+            if changelog.changes.get('new_users'):
+                new_users_list = []
+                for user in changelog.changes.get('new_users'):
+                    new_users_list.append(user.serialize())
+                changelog_dict["changes"]["new_users"] = new_users_list
+            if changelog.changes.get('deleted_users'):
+                deleted_users_list = []
+                for user in changelog.changes.get('deleted_users'):
+                    deleted_users_list.append(user.serialize())
+                changelog_dict["changes"]["deleted_users"] = deleted_users_list
+            if changelog.changes.get('updated_users'):
+                changelog_dict["changes"]["updated_users"] = changelog.changes.get('updated_users')
+            changelog_list.append(changelog_dict)
+
+        print(changelog_list)
+        return jsonify(changelog_list)
+        """
+        sys_users_changelog = ChangeLogSystemUsers.objects(sys_users=sys_users_id)
+        return [info.serialize() for info in sys_users_changelog] # Serialize & Return
+    except Exception as e:
+        print(e)
+        return jsonify({"Message":"Not Found"}), 404
 ##############################################################################
