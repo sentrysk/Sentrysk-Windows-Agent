@@ -147,33 +147,6 @@ def register():
 @auth_token_required
 def get_system_info_changelog_by_sys_users_id(sys_users_id):
     try:
-        """"
-        #return [info.serialize() for info in sys_users_changelog] # Serialize & Return
-        changelog_list = []
-        sys_users_changelog = ChangeLogSystemUsers.objects(sys_users=sys_users_id)
-        for changelog in sys_users_changelog:
-            changelog_dict = {
-                "id": str(changelog.id),
-                "timestamp": changelog.timestamp,
-                "changes": {}
-            }
-            if changelog.changes.get('new_users'):
-                new_users_list = []
-                for user in changelog.changes.get('new_users'):
-                    new_users_list.append(user.serialize())
-                changelog_dict["changes"]["new_users"] = new_users_list
-            if changelog.changes.get('deleted_users'):
-                deleted_users_list = []
-                for user in changelog.changes.get('deleted_users'):
-                    deleted_users_list.append(user.serialize())
-                changelog_dict["changes"]["deleted_users"] = deleted_users_list
-            if changelog.changes.get('updated_users'):
-                changelog_dict["changes"]["updated_users"] = changelog.changes.get('updated_users')
-            changelog_list.append(changelog_dict)
-
-        print(changelog_list)
-        return jsonify(changelog_list)
-        """
         sys_users_changelog = ChangeLogSystemUsers.objects(sys_users=sys_users_id)
         return [info.serialize() for info in sys_users_changelog] # Serialize & Return
     except Exception as e:
