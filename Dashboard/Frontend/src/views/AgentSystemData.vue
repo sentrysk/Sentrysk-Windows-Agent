@@ -25,8 +25,10 @@
                 <!-- System Information Sub Tabs -->
                 <SystemInformationTab></SystemInformationTab>
             </div>
-            <!-- Users Tab -->
-            <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="usersTab">This is profile tab...</div>
+            <!-- System Users Tab -->
+            <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="usersTab">
+                <SystemUsersTab></SystemUsersTab>
+            </div>
             <!-- Installed Programs Tab -->
             <div class="tab-pane fade" id="installedPrograms" role="tabpanel" aria-labelledby="installedProgramsTab">This is contact tab...</div>
         </div>
@@ -37,11 +39,13 @@
 <script>
     import Navbar from '../components/Navbar.vue'
     import SystemInformationTab from '../components/Tabs/SystemInformationTab.vue'
+    import SystemUsersTab from '../components/Tabs/SystemUsersTab.vue'
     
     export default {
       components: {
         Navbar,
         SystemInformationTab,
+        SystemUsersTab,
       },
     };
 </script>
