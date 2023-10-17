@@ -8,9 +8,9 @@
         </li>
     </ul>
 
-        <!-- Last Update -->
+    <!-- Last Update -->
     <div class="row">
-        <span>Last Update : {{ systemUsers.updated }}</span>
+      <span :title=localUpdateTime>Last Update : {{ timeDiff }}</span>
     </div>
 
     <div class="tab-content" id="sysUsersTabContent">
@@ -56,6 +56,8 @@
 <script>
     import axios from 'axios';
     import $ from "jquery";
+    import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
+
     
     export default {
       name: 'SystemUsersTab',
@@ -63,6 +65,8 @@
         return {
           systemUsers: {},
           changeLog: {},
+          localUpdateTime: "",
+          timeDiff: "",
         };
       },
       mounted() {
@@ -84,6 +88,8 @@
             });
     
             this.systemUsers = response.data;
+            this.localUpdateTime = formatToLocalTime(this.systemUsers.updated);
+            this.timeDiff =  calculateDatetimeDifference(this.systemUsers.updated);
 
             //Get Changelog Request
             const CHANGELOG_URL = "http://localhost:5000/sysusers/changelog/"+response.data.id
