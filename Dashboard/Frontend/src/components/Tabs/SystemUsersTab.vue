@@ -15,7 +15,7 @@
 
     <div class="tab-content" id="sysUsersTabContent">
         <div class="tab-pane fade show active" id="systemUsers" role="tabpanel" aria-labelledby="systemUsers">
-            <table class="table table-striped table-bordered dt-responsive nowrap">
+            <table class="table table-striped table-bordered nowrap" id="systemUsersTable">
                 <thead>
                     <tr>
                         <th>User ID</th>
@@ -99,6 +99,23 @@
               },
             });
             this.changeLog = changelog.data;
+
+            $(document).ready(() => {
+                $('#systemUsersTable').DataTable({
+                searching: true,
+                lengthChange: true,
+                pageLength: 10,
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, 'All']
+                ],
+                });
+                // Style length Menu
+                const pageEntrySize = document.getElementById('systemUsersTable_length')
+                pageEntrySize.style = "margin-right:100%"
+                const pageInfoText = document.getElementById('systemUsersTable_info')
+                pageInfoText.style = "float:left"
+            });
 
 
           } catch (error) {
