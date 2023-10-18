@@ -189,7 +189,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in changeLog" :key="index">
-                            <td><span :title=formatToLocalTime(item.timestamp)>{{ calculateDatetimeDifference(item.timestamp) }}</span></td>
+                            <td><span>{{ item.timestamp }}</span></td>
                             <td>
                                 <table class="table table-striped table-bordered table-sm">
                                     <tr v-for="(change, key) in item.changes" :key="key">
@@ -271,6 +271,10 @@
             });
             this.changeLog = changelog.data;
 
+            for (const element of this.changeLog) {
+                element.timestamp = formatToLocalTime(element.timestamp)
+            }
+
             $(document).ready(() => {
                 $('#changelogsTable').DataTable({
                 searching: true,
@@ -280,6 +284,7 @@
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, 'All']
                 ],
+                order: [ 0, 'desc' ],
                 });
                 // Style length Menu
                 const pageEntrySize = document.getElementById('changelogsTable_length')
