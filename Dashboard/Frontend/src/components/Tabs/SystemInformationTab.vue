@@ -289,6 +289,8 @@
                 // Style length Menu
                 const pageEntrySize = document.getElementById('changelogsTable_length')
                 pageEntrySize.style = "margin-right:100%"
+                const pageInfoText = document.getElementById('changelogsTable_info')
+                pageInfoText.style = "float:left"
             });
 
           } catch (error) {
