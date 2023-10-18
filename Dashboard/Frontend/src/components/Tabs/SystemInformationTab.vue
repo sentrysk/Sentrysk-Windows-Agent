@@ -25,7 +25,7 @@
 
     <!-- Last Update -->
     <div class="row">
-        <span :title=formatToLocalTime(systemInfo.updated)>Last Update : {{ calculateDatetimeDifference(systemInfo.updated) }}</span>
+        <span :title=localUpdateTime>Last Update : {{ timeDiff }}</span>
     </div>
 
     <div class="tab-content" id="sysInfoTabContent">
@@ -177,7 +177,7 @@
         </div>
 
         <!-- Changelog Tab -->
-        <div class="tab-pane fade" id="systemChangelog" role="tabpanel" aria-labelledby="systemChangelog">
+        <div class="tab-pane fade container" id="systemChangelog" role="tabpanel" aria-labelledby="systemChangelog">
             <!-- Use Bootstrap Cards to display the data -->
             <div class="row">
                 <table class="table table-hover table-bordered table-sm" id="changelogsTable">
@@ -227,9 +227,8 @@
 
 <script>
     import axios from 'axios';
-    import jQuery from "jquery";
-    const $ = jQuery;
-    window.$ = $;
+    import $ from "jquery";
+    import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
     
     export default {
       name: 'SystemInformationTab',
@@ -237,6 +236,8 @@
         return {
           systemInfo: {},
           changeLog: {},
+          localUpdateTime: "",
+          timeDiff: "",
         };
       },
       mounted() {
@@ -258,6 +259,8 @@
             });
     
             this.systemInfo = response.data;
+            this.localUpdateTime = formatToLocalTime(this.systemInfo.updated);
+            this.timeDiff =  calculateDatetimeDifference(this.systemInfo.updated);
 
             //Get Changelog Request
             const CHANGELOG_URL = "http://localhost:5000/sysinfo/changelog/"+response.data.id
@@ -271,7 +274,6 @@
             $(document).ready(() => {
                 $('#changelogsTable').DataTable({
                 searching: true,
-                order: [[0, 'asc']],
                 lengthChange: true,
                 pageLength: 10,
                 lengthMenu: [
@@ -287,52 +289,6 @@
           } catch (error) {
             console.error('Error fetching agents:', error);
           }
-        },
-        formatToLocalTime(utcTime) {
-            // Create a Date object from the UTC time
-            const utcDate = new Date(utcTime);
-
-            // Format the date and time to the user's locale and timezone
-            const formattedTime = utcDate.toLocaleString(undefined, {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            timeZoneName: 'short',
-            hour12: false,
-            });
-
-            return formattedTime;
-        },
-        // Function to calculate the difference between two datetime values
-        calculateDatetimeDifference(datetime1) {
-            // Parse the datetime strings into Date objects
-            const date1 = new Date(datetime1);
-            const date2 = new Date();
-
-            // Calculate the time difference in milliseconds
-            const timeDifference = Math.abs(date1 - date2);
-
-            // Calculate the difference in days, hours, minutes, and seconds
-            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-            
-            if (seconds > 0){
-                if(minutes > 0){
-                    if(hours > 0){
-                        if(days > 0){
-                            return days.toString()+" days "+hours.toString()+" hours "+minutes.toString()+" minutes "+seconds.toString()+" seconds ago"
-                        }
-                        return hours.toString()+" hours "+minutes.toString()+" minutes "+seconds.toString()+" seconds ago"
-                    }
-                    return minutes.toString()+" minutes "+seconds.toString()+" seconds ago"
-                }
-                return seconds.toString()+" seconds ago"
-            }
         }
       },
     };
