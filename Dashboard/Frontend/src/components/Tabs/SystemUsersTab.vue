@@ -15,7 +15,7 @@
 
     <div class="tab-content" id="sysUsersTabContent">
         <div class="tab-pane fade show active" id="systemUsers" role="tabpanel" aria-labelledby="systemUsers">
-            <table class="table table-striped table-bordered nowrap" id="systemUsersTable">
+            <table class="table table-striped table-bordered table-sm nowrap" id="systemUsersTable">
                 <thead>
                     <tr>
                         <th>User ID</th>
@@ -27,7 +27,6 @@
                         <th>Full Name</th>
                         <th>Comment</th>
                         <th>Last Logon</th>
-                        
                     </tr>
                 </thead>
                 <tbody>
@@ -41,13 +40,82 @@
                         <td>{{ user.full_name }}</td>
                         <td>{{ user.comment }}</td>
                         <td>{{ user.last_logon }}</td>
-                        
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="tab-pane fade container" id="systemUsersChangelog" role="tabpanel" aria-labelledby="systemUsersChangelog">
-            <p>abc</p>
+          <table class="table table-hover table-bordered table-sm" id="changelogsTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Changes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in changeLog" :key="index">
+                            <td><span>{{ item.timestamp }}</span></td>
+                            <td>
+                                <table class="table table-striped table-bordered table-sm">
+                                    <tr v-for="(change, key) in item.changes" :key="key">
+                                        <td><h3>{{ key }}</h3></td>
+                                        <td v-if="key == 'updated_users'">
+                                            <table class="table table-bordered table-sm">
+                                              <tr  v-for="(userValue, user) in change" :key="user">
+                                                <td>{{ user }}</td>
+                                                <td>
+                                                  <table class="table table-bordered table-sm">
+                                                    <thead>
+                                                      <th>Field</th>
+                                                      <th>Previous Value</th>
+                                                      <th>New Value</th>
+                                                    </thead>
+                                                    <tr v-for="(fieldValue, field) in userValue" :key="field">
+                                                      <td>{{ field }}</td>
+                                                      <td>{{ fieldValue.previous_value }}</td>
+                                                      <td>{{ fieldValue.new_value }}</td>
+                                                    </tr>
+                                                  </table>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                        </td>
+                                        <td v-else>
+                                          <table class="table table-bordered table-sm">
+                                            <thead>
+                                              <tr>
+                                                  <th>User ID</th>
+                                                  <th>SID</th>
+                                                  <th>Username</th>
+                                                  <th>Group ID</th>
+                                                  <th>Home Directory</th>
+                                                  <th>Shell</th>
+                                                  <th>Full Name</th>
+                                                  <th>Comment</th>
+                                                  <th>Last Logon</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr v-for="(user, index) in change" :key="index">
+                                                <td>{{ user.user_id }}</td>
+                                                <td>{{ user.sid }}</td>
+                                                <td>{{ user.username }}</td>
+                                                <td>{{ user.group_id }}</td>
+                                                <td>{{ user.home_directory }}</td>
+                                                <td>{{ user.shell }}</td>
+                                                <td>{{ user.full_name }}</td>
+                                                <td>{{ user.comment }}</td>
+                                                <td>{{ user.last_logon }}</td>
+                                            </tr>
+                                          </tbody>
+                                          </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
     </div>
 </template>
