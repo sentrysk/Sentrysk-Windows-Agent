@@ -98,10 +98,8 @@ class SystemUsers(Document):
 
         # Newly Added Users
         new_users = [user.serialize() for username, user in other_users.items() if username not in self_users]
-        #new_users = [user.serialize() for user in new_users]
         # Deleted Users
         deleted_users = [user.serialize() for username, user in self_users.items() if username not in other_users]
-        #new_users = [user.serialize() for user in new_users]
         # Updated Users and Fields
         updated_users = {}
 
@@ -111,7 +109,10 @@ class SystemUsers(Document):
                 updated_fields = {}
                 for field in UserData._fields:
                     if str(self_users[username][field]) != str(other_users[username][field]):
-                        updated_fields[field] = (self_users[username][field], other_users[username][field])
+                        updated_fields[field] = {
+                            "previous_value":self_users[username][field],
+                            "new_value":other_users[username][field]
+                        }
                 # Add Updated Fields to Updated Users Dict
                 updated_users[username] = updated_fields
 
