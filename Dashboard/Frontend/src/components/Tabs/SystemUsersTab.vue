@@ -45,7 +45,7 @@
             </table>
         </div>
         <div class="tab-pane fade container" id="systemUsersChangelog" role="tabpanel" aria-labelledby="systemUsersChangelog">
-          <table class="table table-hover table-bordered table-sm" id="changelogsTable">
+          <table class="table table-hover table-bordered table-sm" id="sysUsersChangelogsTable">
                     <thead class="table-dark">
                         <tr>
                             <th>Timestamp</th>
@@ -183,6 +183,22 @@
                 pageEntrySize.style = "margin-right:100%"
                 const pageInfoText = document.getElementById('systemUsersTable_info')
                 pageInfoText.style = "float:left"
+
+                $('#sysUsersChangelogsTable').DataTable({
+                searching: true,
+                lengthChange: true,
+                pageLength: 10,
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, 'All']
+                ],
+                order: [ 0, 'desc' ],
+                });
+                // Style length Menu
+                const chlgPageEntrySize = document.getElementById('sysUsersChangelogsTable_length')
+                chlgPageEntrySize.style = "margin-right:100%"
+                const chlgPageInfoText = document.getElementById('sysUsersChangelogsTable_info')
+                chlgPageInfoText.style = "float:left"
             });
 
 
