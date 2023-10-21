@@ -204,7 +204,7 @@
                                                 <tr v-for="(newValue, field) in change.new_value" :key="field">
                                                     <td>{{ field }}</td>
                                                     
-                                                    <td v-if="newValue != change.previous_value[field]" style="color: chartreuse;">{{ newValue }}</td>
+                                                    <td v-if="newValue != change.previous_value[field]" style="color: green;">{{ newValue }}</td>
                                                     <td v-else>{{ newValue }}</td>
 
                                                     <td v-if="newValue != change.previous_value[field]" style="color: crimson;">{{ change.previous_value[field] }}</td>

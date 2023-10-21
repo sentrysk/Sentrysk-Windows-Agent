@@ -70,21 +70,12 @@
                 <td>
                   {{ data.field }}
                 </td>
-
-                <td v-if="data.previous_value">
+                <td style="color:crimson">
                   {{ data.previous_value }}
                 </td>
-                <td v-else>
-                  -
-                </td>
-
-                <td v-if="data.new_value">
+                <td style="color: green;">
                   {{ data.new_value }}
                 </td>
-                <td v-else>
-                  -
-                </td>
-
               </tr>
           </tbody>
         </table>
