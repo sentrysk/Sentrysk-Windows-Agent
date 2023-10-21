@@ -63,13 +63,13 @@
                 </td>
 
                 <td v-if="data.action == 'New'" class="sysUserActionIcons" style="color: green;">
-                  <i class="bi bi-person-fill-add"></i>
+                  <span title="New User"><i class="bi bi-person-fill-add"></i></span>
                 </td>
                 <td v-if="data.action == 'Delete'"  class="sysUserActionIcons" style="color:crimson">
-                  <i class="fa-solid fa-user-slash fa-xs"></i>
+                  <span title="Deleted User"><i class="fa-solid fa-user-slash fa-xs"></i></span>
                 </td>
                 <td v-if="data.action == 'Update'" class="sysUserActionIcons" style="color: coral;">
-                  <i class="bi bi-person-fill-up"></i>
+                  <span title="Updated User"><i class="bi bi-person-fill-up"></i></span>
                 </td>
 
 
@@ -217,6 +217,7 @@
                   [10, 25, 50, 100, 'All']
               ],
               order: [ 0, 'desc' ],
+              select: true,
               });
               // Style length Menu
               const chlgPageEntrySize = document.getElementById('sysUsersChangelogsTable_length')
