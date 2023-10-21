@@ -62,13 +62,13 @@
                   {{ data.date }}
                 </td>
 
-                <td v-if="data.action == 'New'" class="sysUserActionIcons">
+                <td v-if="data.action == 'New'" class="sysUserActionIcons" style="color: green;">
                   <i class="bi bi-person-fill-add"></i>
                 </td>
-                <td v-if="data.action == 'Delete'"  class="sysUserActionIcons">
+                <td v-if="data.action == 'Delete'"  class="sysUserActionIcons" style="color:crimson">
                   <i class="fa-solid fa-user-slash fa-xs"></i>
                 </td>
-                <td v-if="data.action == 'Update'" class="sysUserActionIcons">
+                <td v-if="data.action == 'Update'" class="sysUserActionIcons" style="color: coral;">
                   <i class="bi bi-person-fill-up"></i>
                 </td>
 
