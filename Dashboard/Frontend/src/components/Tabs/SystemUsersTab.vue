@@ -44,8 +44,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade container" id="systemUsersChangelog" role="tabpanel" aria-labelledby="systemUsersChangelog">
-          <table class="table table-striped table-bordered table-sm nowrap" id="sysUsersChangelogsTable">
+        <div class="tab-pane fade" id="systemUsersChangelog" role="tabpanel" aria-labelledby="systemUsersChangelog">
+          <table class="table table-striped table-bordered table-sm" id="sysUsersChangelogsTable">
             <thead>
               <tr>
                 <th>Time</th>
@@ -219,10 +219,10 @@
               order: [ 0, 'desc' ],
               });
               // Style length Menu
-              //const chlgPageEntrySize = document.getElementById('sysUsersChangelogsTable_length')
-              //chlgPageEntrySize.style = "margin-right:100%"
-              //const chlgPageInfoText = document.getElementById('sysUsersChangelogsTable_info')
-              //chlgPageInfoText.style = "float:left"
+              const chlgPageEntrySize = document.getElementById('sysUsersChangelogsTable_length')
+              chlgPageEntrySize.style = "margin-right:100%"
+              const chlgPageInfoText = document.getElementById('sysUsersChangelogsTable_info')
+              chlgPageInfoText.style = "float:left"
           });
 
 
