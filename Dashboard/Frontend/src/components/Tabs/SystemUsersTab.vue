@@ -61,9 +61,18 @@
                 <td>
                   {{ data.date }}
                 </td>
-                <td>
-                  {{ data.action }}
+
+                <td v-if="data.action == 'New'" class="sysUserActionIcons">
+                  <i class="bi bi-person-fill-add"></i>
                 </td>
+                <td v-if="data.action == 'Delete'"  class="sysUserActionIcons">
+                  <i class="fa-solid fa-user-slash fa-xs"></i>
+                </td>
+                <td v-if="data.action == 'Update'" class="sysUserActionIcons">
+                  <i class="bi bi-person-fill-up"></i>
+                </td>
+
+
                 <td>
                   {{ data.username }}
                 </td>
@@ -230,5 +239,8 @@
 </script>
 
 <style>
-
+.sysUserActionIcons{
+  font-size: 2em;
+  max-width: 4rem;
+}
 </style>
