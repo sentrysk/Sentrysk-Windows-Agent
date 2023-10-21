@@ -45,14 +45,16 @@
             </table>
         </div>
         <div class="tab-pane fade container" id="systemUsersChangelog" role="tabpanel" aria-labelledby="systemUsersChangelog">
-          <table class="table table-striped table-bordered table-sm nowrap">
+          <table class="table table-striped table-bordered table-sm nowrap" id="sysUsersChangelogsTable">
             <thead>
-              <th>Time</th>
-              <th>Action</th>
-              <th>Username</th>
-              <th>Field</th>
-              <th>Previous Value</th>
-              <th>New Value</th>
+              <tr>
+                <th>Time</th>
+                <th>Action</th>
+                <th>Username</th>
+                <th>Field</th>
+                <th>Previous Value</th>
+                <th>New Value</th>
+              </tr>
             </thead>
             <tbody>
               <tr v-for="data in parsedData" :key="data">
@@ -68,12 +70,21 @@
                 <td>
                   {{ data.field }}
                 </td>
-                <td>
+
+                <td v-if="data.previous_value">
                   {{ data.previous_value }}
                 </td>
-                <td>
+                <td v-else>
+                  -
+                </td>
+
+                <td v-if="data.new_value">
                   {{ data.new_value }}
                 </td>
+                <td v-else>
+                  -
+                </td>
+
               </tr>
           </tbody>
         </table>
