@@ -3,6 +3,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="systemUsersUsersTab" data-bs-toggle="tab" data-bs-target="#systemUsers" type="button" role="tab" aria-controls="systemUsers" aria-selected="true">
               <i class="bi bi-code-square"></i>Users
+              <span class="badge rounded-pill bg-primary">
+              {{ systemUsersCount }}
+              </span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -111,6 +114,7 @@
       data() {
         return {
           systemUsers: {},
+          systemUsersCount: 0,
           changeLogData: [],
           changeLogCount: 0,
           localUpdateTime: "",
@@ -198,9 +202,10 @@
             return actionList;
           }).flat();
 
-          //Set Changelog Count
+          // Set Changelog Count
           this.changeLogCount = this.changeLogData.length;
-
+          // Set System Users Count
+          this.systemUsersCount = this.systemUsers.users.length;
 
           $(document).ready(() => {
               $('#systemUsersTable').DataTable({
