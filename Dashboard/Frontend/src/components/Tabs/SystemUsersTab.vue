@@ -1,10 +1,17 @@
 <template>
     <ul class="nav nav-tabs" id="systemSubTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="systemUsersUsersTab" data-bs-toggle="tab" data-bs-target="#systemUsers" type="button" role="tab" aria-controls="systemUsers" aria-selected="true"><i class="bi bi-code-square"></i>Users</button>
+            <button class="nav-link active" id="systemUsersUsersTab" data-bs-toggle="tab" data-bs-target="#systemUsers" type="button" role="tab" aria-controls="systemUsers" aria-selected="true">
+              <i class="bi bi-code-square"></i>Users
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="systemUsersChangelogTab" data-bs-toggle="tab" data-bs-target="#systemUsersChangelog" type="button" role="tab" aria-controls="systemUsersChangelog" aria-selected="false"><i class="bi bi-file-diff"></i> Changelogs</button>
+            <button class="nav-link" id="systemUsersChangelogTab" data-bs-toggle="tab" data-bs-target="#systemUsersChangelog" type="button" role="tab" aria-controls="systemUsersChangelog" aria-selected="false">
+              <i class="bi bi-file-diff"></i>Changelogs 
+              <span class="badge rounded-pill bg-primary">
+                {{ changeLogCount }}
+              </span>
+            </button>
         </li>
     </ul>
 
@@ -57,7 +64,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="data in parsedData" :key="data">
+              <tr v-for="data in changeLogData" :key="data">
                 <td>
                   {{ data.date }}
                 </td>
@@ -104,10 +111,10 @@
       data() {
         return {
           systemUsers: {},
-          changeLog: {},
+          changeLogData: [],
+          changeLogCount: 0,
           localUpdateTime: "",
           timeDiff: "",
-          parsedData: [],
         };
       },
       mounted() {
@@ -139,9 +146,8 @@
                 Authorization: jwtToken,
               },
             });
-            this.changeLog = changelog.data;
 
-            this.parsedData = changelog.data.map((item) => {
+            this.changeLogData = changelog.data.map((item) => {
             const date = formatToLocalTime(item.timestamp);
             const changes = item.changes;
 
@@ -191,6 +197,10 @@
 
             return actionList;
           }).flat();
+
+          //Set Changelog Count
+          this.changeLogCount = this.changeLogData.length;
+
 
           $(document).ready(() => {
               $('#systemUsersTable').DataTable({
