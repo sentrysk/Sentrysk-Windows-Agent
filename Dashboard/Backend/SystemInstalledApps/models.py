@@ -21,6 +21,13 @@ class InstalledApp(EmbeddedDocument):
     version         = StringField()
     installed_by    = StringField()
 
+    def __eq__(self, other):
+        return (
+            self.name == other.name and
+            self.version == other.version and
+            self.installed_by == other.installed_by
+        )
+
     def serialize(self):
         data = {
             "username": self.username,
