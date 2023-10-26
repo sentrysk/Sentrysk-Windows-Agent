@@ -16,6 +16,7 @@ from SysData.routes import sys_data_bp
 from Session.routes import session_bp
 from SystemInfo.routes import sys_info_bp
 from SystemUsers.routes import sys_users_bp
+from SystemInstalledApps.routes import sys_apps_bp
 ##############################################################################
 
 # Configs
@@ -47,6 +48,7 @@ app.register_blueprint(session_bp, url_prefix='/session')
 
 app.register_blueprint(sys_info_bp, url_prefix='/sysinfo')
 app.register_blueprint(sys_users_bp, url_prefix='/sysusers')
+app.register_blueprint(sys_apps_bp, url_prefix='/sysapps')
 ##############################################################################
 
 
