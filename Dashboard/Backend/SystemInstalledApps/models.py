@@ -3,7 +3,7 @@
 # Libraries
 ##############################################################################
 from mongoengine import (
-    Document, ReferenceField, DateTimeField, ListField,
+    Document, DictField, ReferenceField, DateTimeField, ListField,
     EmbeddedDocument, EmbeddedDocumentField, StringField
 )
 from Agents.models import Agent
@@ -45,6 +45,21 @@ class SystemInstalledApps(Document):
             "agent_id":str(self.agent.id),
             "apps":self.apps,
             "updated":self.updated
+        }
+
+    def __str__(self):
+        return str(self.serialize())
+
+class ChangeLogSystemInstalledApps(Document):
+    apps       = ReferenceField(SystemInstalledApps)
+    timestamp  = DateTimeField(default=datetime.utcnow)
+    changes    = DictField()
+
+    def serialize(self):
+        return {
+            "id":str(self.id),
+            "timestamp":self.timestamp,
+            "changes":self.changes
         }
 
     def __str__(self):
