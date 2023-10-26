@@ -5,6 +5,7 @@
 from flask import Blueprint, request, jsonify
 import json
 from marshmallow import ValidationError
+from datetime import datetime
 
 from .models import SystemInfo, ChangeLogSystemInfo
 from .schema import RegisterSchema,UpdateSchema
@@ -80,6 +81,7 @@ def register():
         # If any changes
         if changes:
             # Update the existing SystemInfo document
+            data["updated"] = datetime.utcnow
             sys_info.update(**data)
             
             # Create a new ChangeLog entry
@@ -88,6 +90,9 @@ def register():
                 changes = changes
             )
             change_log_entry.save()
+        else:
+            # Apply only updated time
+            sys_info.update(updated=datetime.utcnow)
     else:
         # CREATE If System Information not exist 
         
