@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 # Libraries
-#################################################################sys_appsapp#############
+##############################################################################
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 
-from .models import SystemInstalledApps
+from .models import SystemInstalledApps, ChangeLogSystemInstalledApps
 from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
@@ -66,10 +66,16 @@ def register():
                 # Apply updates
                 data["updated"] = datetime.utcnow
                 sys_apps.update(**data)
+
+                # Create a new ChangeLog entry
+                change_log_entry = ChangeLogSystemInstalledApps(
+                    apps = sys_apps.id,
+                    changes = changes
+                )
+                change_log_entry.save()
             else:
                 # Apply only updated time
                 sys_apps.update(updated=datetime.utcnow)
-                return jsonify({"message":"Nothing changed"})
 
         except Exception as e:
             return jsonify({'error': e}), 500
