@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify
 import json
 from datetime import datetime
 
-from .models import SystemUsers, ChangeLogSystemUsers, UserData
+from .models import SystemUsers, ChangeLogSystemUsers
 from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
@@ -116,7 +116,6 @@ def register():
             else:
                 # Apply only updated time
                 sys_users.update(updated=datetime.utcnow)
-                return jsonify({"message":"Nothing changed"})
 
         except Exception as e:
             return jsonify({'error': e}), 500
