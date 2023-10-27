@@ -21,6 +21,25 @@ sys_apps_bp = Blueprint('sys_apps_blueprint', __name__)
 # Routes
 ##############################################################################
 
+# Get All System Apps
+@sys_apps_bp.route('/', methods=['GET'])
+@auth_token_required
+def get_all_system_app():
+    try:
+        all_sys_apps = SystemInstalledApps.objects()
+
+        for sys_apps in all_sys_apps:
+            # Serialize "apps" section
+            apps = []
+            for app in sys_apps.apps:
+                apps.append(app.serialize())
+            # Append again apps to System apps
+            sys_apps.apps = apps
+        
+        return [info.serialize() for info in all_sys_apps] # Serialize & Return
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+
 # Register
 @sys_apps_bp.route('/', methods=['POST'])
 @agent_token_required
