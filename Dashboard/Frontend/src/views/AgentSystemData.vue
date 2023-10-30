@@ -30,7 +30,9 @@
                 <SystemUsersTab></SystemUsersTab>
             </div>
             <!-- Installed Programs Tab -->
-            <div class="tab-pane fade" id="installedPrograms" role="tabpanel" aria-labelledby="installedProgramsTab">This is contact tab...</div>
+            <div class="tab-pane fade" id="installedPrograms" role="tabpanel" aria-labelledby="installedProgramsTab">
+                <SystemInstalledAppsTab></SystemInstalledAppsTab>
+            </div>
         </div>
 
     </div>
@@ -40,12 +42,14 @@
     import Navbar from '../components/Navbar.vue'
     import SystemInformationTab from '../components/Tabs/SystemInformationTab.vue'
     import SystemUsersTab from '../components/Tabs/SystemUsersTab.vue'
+    import SystemInstalledAppsTab from '../components/Tabs/SystemInstalledApps.vue';
     
     export default {
       components: {
         Navbar,
         SystemInformationTab,
         SystemUsersTab,
+        SystemInstalledAppsTab,
       },
     };
 </script>
