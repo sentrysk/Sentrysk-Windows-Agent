@@ -24,7 +24,7 @@
 
     <div class="tab-content" id="sysInstalledAppsTabContent">
         <div class="tab-pane fade show active" id="systemInstalledApps" role="tabpanel" aria-labelledby="systemInstalledApps">
-            <table class="table table-striped table-bordered table-sm nowrap">
+            <table class="table table-striped table-bordered table-sm table-hover nowrap"  id="systemInstalledAppsTable">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -88,6 +88,23 @@
 
             // Set system Installed Apps Count
             this.systemInstalledAppsCount = this.systemInstalledApps.apps.length;
+
+            $(document).ready(() => {
+              $('#systemInstalledAppsTable').DataTable({
+              searching: true,
+              lengthChange: true,
+              pageLength: 25,
+              lengthMenu: [
+                  [25, 50, 100, 200, -1],
+                  [25, 50, 100, 200, 'All']
+              ],
+              });
+              // Style length Menu
+              const pageEntrySize = document.getElementById('systemInstalledAppsTable_length')
+              pageEntrySize.style = "margin-right:100%"
+              const pageInfoText = document.getElementById('systemInstalledAppsTable_info')
+              pageInfoText.style = "float:left"
+            });
           } catch (error) {
             console.error('Error fetching agents:', error);
           }
