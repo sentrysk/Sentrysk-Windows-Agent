@@ -134,4 +134,17 @@ def register():
         }
     ), 200
 
+
+# Changelog Routes
+
+# Get All Changelog Data by System Installed Apps ID
+@sys_apps_bp.route('/changelog/<sys_apps_id>', methods=['GET'])
+@auth_token_required
+def get_sys_apps_changelog_by_sys_apps_id(sys_apps_id):
+    try:
+        sys_apps_changelog = ChangeLogSystemInstalledApps.objects(apps=sys_apps_id)
+        return [info.serialize() for info in sys_apps_changelog] # Serialize & Return
+    except Exception as e:
+        print(e)
+        return jsonify({"Message":"Not Found"}), 404
 ##############################################################################
