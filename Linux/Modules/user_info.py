@@ -17,8 +17,8 @@ def get_user_info():
         for entry in pwd.getpwall():
             user_info = {
                 "username": entry.pw_name,
-                "user_id": entry.pw_uid,
-                "group_id": entry.pw_gid,
+                "user_id": str(entry.pw_uid),
+                "group_id": str(entry.pw_gid),
                 "home_directory": entry.pw_dir,
                 "shell": entry.pw_shell,
             }
