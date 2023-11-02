@@ -177,7 +177,7 @@
         </div>
 
         <!-- Changelog Tab -->
-        <div class="tab-pane fade container" id="systemChangelog" role="tabpanel" aria-labelledby="systemChangelog">
+        <div class="tab-pane fade" id="systemChangelog" role="tabpanel" aria-labelledby="systemChangelog">
             <!-- Use Bootstrap Cards to display the data -->
             <div class="row">
                 <table class="table table-hover table-bordered table-sm" id="changelogsTable">
@@ -226,9 +226,9 @@
 
 
 <script>
-    import axios from 'axios';
     import $ from "jquery";
     import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
+    import { getSystemInformation, getSysInfoChangeLog } from '../../utils/requestUtils';
     
     export default {
       name: 'SystemInformationTab',
@@ -241,40 +241,28 @@
         };
       },
       mounted() {
-        this.getSystemInformation();
+        this.fillSystemInformation();
       },
       methods: {
-        async getSystemInformation() {
-          try {
-            // Get the ID from the URL
-            const id = this.$route.params.id;
+        async fillSystemInformation() {
+            // Get the Agent ID from the URL
+            const agentId = this.$route.params.id;
+            
+            // Get System Information
+            this.systemInfo = await getSystemInformation(agentId);
+            // Get System Information Changelog
+            this.changeLog = await getSysInfoChangeLog(this.systemInfo.id)
 
-            // Retrieve JWT token from session storage
-            const jwtToken = sessionStorage.getItem('jwtToken');
-            const API_URL  =  "http://localhost:5000/sysinfo/"+id
-            const response = await axios.get(API_URL, {
-              headers: {
-                Authorization: jwtToken,
-              },
-            });
-    
-            this.systemInfo = response.data;
+            // Set Local Update Time and Time Diff
             this.localUpdateTime = formatToLocalTime(this.systemInfo.updated);
             this.timeDiff =  calculateDatetimeDifference(this.systemInfo.updated);
 
-            //Get Changelog Request
-            const CHANGELOG_URL = "http://localhost:5000/sysinfo/"+response.data.id+"/changelog"
-            const changelog = await axios.get(CHANGELOG_URL, {
-              headers: {
-                Authorization: jwtToken,
-              },
-            });
-            this.changeLog = changelog.data;
-
+            // Set Changelog Timestamps to Local Time
             for (const element of this.changeLog) {
                 element.timestamp = formatToLocalTime(element.timestamp)
             }
 
+            // Set Datatable
             $(document).ready(() => {
                 $('#changelogsTable').DataTable({
                 searching: true,
@@ -292,10 +280,6 @@
                 const pageInfoText = document.getElementById('changelogsTable_info')
                 pageInfoText.style = "float:left"
             });
-
-          } catch (error) {
-            console.error('Error fetching agents:', error);
-          }
         }
       },
     };
