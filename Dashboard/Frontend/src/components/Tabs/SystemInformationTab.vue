@@ -263,7 +263,7 @@
             this.timeDiff =  calculateDatetimeDifference(this.systemInfo.updated);
 
             //Get Changelog Request
-            const CHANGELOG_URL = "http://localhost:5000/sysinfo/changelog/"+response.data.id
+            const CHANGELOG_URL = "http://localhost:5000/sysinfo/"+response.data.id+"/changelog"
             const changelog = await axios.get(CHANGELOG_URL, {
               headers: {
                 Authorization: jwtToken,

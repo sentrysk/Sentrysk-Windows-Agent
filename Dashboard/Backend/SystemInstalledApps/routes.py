@@ -138,7 +138,7 @@ def register():
 # Changelog Routes
 
 # Get All Changelog Data by System Installed Apps ID
-@sys_apps_bp.route('/changelog/<sys_apps_id>', methods=['GET'])
+@sys_apps_bp.route('/<sys_apps_id>/changelog', methods=['GET'])
 @auth_token_required
 def get_sys_apps_changelog_by_sys_apps_id(sys_apps_id):
     try:

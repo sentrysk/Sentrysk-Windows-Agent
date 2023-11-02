@@ -142,7 +142,7 @@ def register():
 # Changelog Routes
 
 # Get All Changelog Data by System Users ID
-@sys_users_bp.route('/changelog/<sys_users_id>', methods=['GET'])
+@sys_users_bp.route('/<sys_users_id>/changelog', methods=['GET'])
 @auth_token_required
 def get_system_info_changelog_by_sys_users_id(sys_users_id):
     try:
