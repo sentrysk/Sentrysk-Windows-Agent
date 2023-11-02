@@ -6,12 +6,12 @@ const SYS_INFO_EP = "/sysinfo/"
 const CHLG_EP = "/changelog"
 
 // Retrive System Information Function
-export function getSystemInformation(agentId){
+export async function getSystemInformation(agentId){
     try {
         // Retrieve JWT token from session storage
         const jwtToken = sessionStorage.getItem('jwtToken');
         const URL = API_URL + SYS_INFO_EP + agentId
-        const response =  axios.get(URL, {
+        const response =  await axios.get(URL, {
             headers: {
                 Authorization: jwtToken,
             },
@@ -22,12 +22,12 @@ export function getSystemInformation(agentId){
     }
 }
 
-export function getSysInfoChangeLog(sysInfoId){
+export async function getSysInfoChangeLog(sysInfoId){
     try {
         // Retrieve JWT token from session storage
         const jwtToken = sessionStorage.getItem('jwtToken');
         const URL = API_URL + SYS_INFO_EP + sysInfoId + CHLG_EP
-        const changelog = axios.get(URL, {
+        const changelog = await axios.get(URL, {
             headers: {
             Authorization: jwtToken,
             },
