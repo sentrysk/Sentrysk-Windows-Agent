@@ -11,7 +11,7 @@ export async function getSystemInformation(agentId){
     try {
         // Retrieve JWT token from session storage
         const jwtToken = sessionStorage.getItem('jwtToken');
-        const URL = API_URL + SYS_INFO_EP + agentId
+        const URL = API_URL + SYS_INFO_EP + agentId;
         const response =  await axios.get(URL, {
             headers: {
                 Authorization: jwtToken,
@@ -28,7 +28,7 @@ export async function getSysInfoChangeLog(sysInfoId){
     try {
         // Retrieve JWT token from session storage
         const jwtToken = sessionStorage.getItem('jwtToken');
-        const URL = API_URL + SYS_INFO_EP + sysInfoId + CHLG_EP
+        const URL = API_URL + SYS_INFO_EP + sysInfoId + CHLG_EP;
         const changelog = await axios.get(URL, {
             headers: {
             Authorization: jwtToken,
@@ -45,7 +45,7 @@ export async function getSystemUsers(agentId){
     try {
         // Retrieve JWT token from session storage
         const jwtToken = sessionStorage.getItem('jwtToken');
-        const URL = API_URL + SYS_USR_EP + agentId
+        const URL = API_URL + SYS_USR_EP + agentId;
         const response = await axios.get(URL, {
             headers: {
                 Authorization: jwtToken,
@@ -54,5 +54,22 @@ export async function getSystemUsers(agentId){
         return response.data;
     } catch (error) {
         console.error('Error fetching System Users:', error);
+    }
+}
+
+// Retrive System Users Changelog
+export async function getSysUsersChangeLog(sysUsersId){
+    try {
+        // Retrieve JWT token from session storage
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const URL = API_URL + SYS_USR_EP + sysUsersId + CHLG_EP;
+        const changelog = await axios.get(URL, {
+            headers: {
+            Authorization: jwtToken,
+            },
+        });
+        return changelog.data
+    } catch (error) {
+        console.error('Error fetching System Users Changelog:', error);
     }
 }
