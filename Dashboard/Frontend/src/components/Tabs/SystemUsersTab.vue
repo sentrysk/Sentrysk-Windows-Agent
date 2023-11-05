@@ -104,10 +104,9 @@
 
 
 <script>
-    import axios from 'axios';
     import $ from "jquery";
-    import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
-
+    import { formatToLocalTime, calculateDatetimeDifference } from '../../utils/timeUtils';
+    import { getSystemUsers, getSysUsersChangeLog } from '../../utils/requestUtils';
     
     export default {
       name: 'SystemUsersTab',
@@ -122,36 +121,24 @@
         };
       },
       mounted() {
-        this.getSystemUsers();
+        this.fillSystemUsers();
       },
       methods: {
-        async getSystemUsers() {
+        async fillSystemUsers() {
           try {
-            // Get the ID from the URL
-            const id = this.$route.params.id;
+            // Get the Agent ID from the URL
+            const agentId = this.$route.params.id;
+            
+            // Retrive System Users
+            this.systemUsers = await getSystemUsers(agentId);
+            // Retrive System Users Changelog
+            this.changeLogData = await getSysUsersChangeLog(this.systemUsers.id);
 
-            // Retrieve JWT token from session storage
-            const jwtToken = sessionStorage.getItem('jwtToken');
-            const API_URL  =  "http://localhost:5000/sysusers/"+id
-            const response = await axios.get(API_URL, {
-              headers: {
-                Authorization: jwtToken,
-              },
-            });
-    
-            this.systemUsers = response.data;
+            // Set Local Update Time and Time Diff
             this.localUpdateTime = formatToLocalTime(this.systemUsers.updated);
             this.timeDiff =  calculateDatetimeDifference(this.systemUsers.updated);
 
-            //Get Changelog Request
-            const CHANGELOG_URL = "http://localhost:5000/sysusers/"+response.data.id+"/changelog"
-            const changelog = await axios.get(CHANGELOG_URL, {
-              headers: {
-                Authorization: jwtToken,
-              },
-            });
-
-            this.changeLogData = changelog.data.map((item) => {
+            this.changeLogData = this.changeLogData.map((item) => {
             const date = formatToLocalTime(item.timestamp);
             const changes = item.changes;
 
