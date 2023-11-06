@@ -4,6 +4,7 @@ import axios from 'axios';
 const API_URL  =  "http://localhost:5000"
 const SYS_INFO_EP = "/sysinfo/"
 const SYS_USR_EP = "/sysusers/"
+const SYS_APPS_EP = "/sysapps/"
 const CHLG_EP = "/changelog"
 
 // Retrive System Information
@@ -71,5 +72,22 @@ export async function getSysUsersChangeLog(sysUsersId){
         return changelog.data
     } catch (error) {
         console.error('Error fetching System Users Changelog:', error);
+    }
+}
+
+// Retrive System Apps
+export async function getInstalledApps(agentId){
+    try {
+        // Retrieve JWT token from session storage
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const URL = API_URL + SYS_APPS_EP + agentId;
+        const response = await axios.get(URL, {
+            headers: {
+                Authorization: jwtToken,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching System Apps:', error);
     }
 }
