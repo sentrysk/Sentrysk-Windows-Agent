@@ -47,9 +47,9 @@
 
 
 <script>
-    import axios from 'axios';
     import $ from "jquery";
     import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
+    import { getInstalledApps,getInstalledAppsChangeLog } from '../../utils/requestUtils'
 
     
     export default {
@@ -65,24 +65,20 @@
         };
       },
       mounted() {
-        this.getInstalledApps();
+        this.fillInstalledApps();
       },
       methods: {
-        async getInstalledApps() {
+        async fillInstalledApps() {
           try {
             // Get the ID from the URL
-            const id = this.$route.params.id;
+            const agentId = this.$route.params.id;
 
-            // Retrieve JWT token from session storage
-            const jwtToken = sessionStorage.getItem('jwtToken');
-            const API_URL  =  "http://localhost:5000/sysapps/"+id
-            const response = await axios.get(API_URL, {
-              headers: {
-                Authorization: jwtToken,
-              },
-            });
-    
-            this.systemInstalledApps = response.data;
+            // Retrieve System Apps
+            this.systemInstalledApps =  await getInstalledApps(agentId);
+            // Retrieve System Apps Changelogs
+            this.changeLogData = await getInstalledAppsChangeLog(this.systemInstalledApps.id)
+
+            // Set Local Update Time and Time Diff
             this.localUpdateTime = formatToLocalTime(this.systemInstalledApps.updated);
             this.timeDiff =  calculateDatetimeDifference(this.systemInstalledApps.updated);
 
