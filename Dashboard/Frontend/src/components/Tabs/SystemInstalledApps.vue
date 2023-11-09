@@ -189,13 +189,14 @@
             this.changeLogCount = this.changeLogData.length;
 
             $(document).ready(() => {
+              // Set Installed Apps as Data Table
               $('#systemInstalledAppsTable').DataTable({
               searching: true,
               lengthChange: true,
               pageLength: 25,
               lengthMenu: [
-                  [25, 50, 100, 200, -1],
-                  [25, 50, 100, 200, 'All']
+                  [25, 50, 100, 250, -1],
+                  [25, 50, 100, 250, 'All']
               ],
               });
               // Style length Menu
@@ -203,9 +204,27 @@
               pageEntrySize.style = "margin-right:100%"
               const pageInfoText = document.getElementById('systemInstalledAppsTable_info')
               pageInfoText.style = "float:left"
+              
+              // Set Changelogs as Data Table
+              $('#systemInstalledAppsChangelogTable').DataTable({
+              searching: true,
+              lengthChange: true,
+              pageLength: 25,
+              lengthMenu: [
+                  [25, 50, 100, 250, -1],
+                  [25, 50, 100, 250,'All']
+              ],
+              order: [ 0, 'desc' ],
+              select: true,
+              });
+              // Style length Menu
+              const chlgPageEntrySize = document.getElementById('systemInstalledAppsChangelogTable_length')
+              chlgPageEntrySize.style = "margin-right:100%"
+              const chlgPageInfoText = document.getElementById('systemInstalledAppsChangelogTable_info')
+              chlgPageInfoText.style = "float:left"
             });
           } catch (error) {
-            console.error('Error fetching agents:', error);
+            console.error(error);
           }
         },
       },
