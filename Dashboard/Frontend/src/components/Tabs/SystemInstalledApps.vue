@@ -12,6 +12,7 @@
             <button class="nav-link" id="systemInstalledAppsChangelogTab" data-bs-toggle="tab" data-bs-target="#systemInstalledAppsChangelog" type="button" role="tab" aria-controls="systemInstalledAppsChangelog" aria-selected="false">
               <i class="bi bi-file-diff"></i>Changelogs 
               <span class="badge rounded-pill bg-primary">
+                {{ changeLogCount }}
               </span>
             </button>
         </li>
@@ -84,6 +85,62 @@
 
             // Set system Installed Apps Count
             this.systemInstalledAppsCount = this.systemInstalledApps.apps.length;
+            
+
+            this.changeLogData = this.changeLogData.map((item) => {
+            const date = formatToLocalTime(item.timestamp);
+            const changes = item.changes;
+
+            // Define the Action List
+            const actionList = [];
+            
+            // Find Deleted Apps
+            if (changes.deleted_apps) {
+              for (const app of changes.deleted_apps) {
+                actionList.push({
+                  date,
+                  action: "Delete",
+                  appname:  app.name,
+                  field: "-",
+                  previous_value: app,
+                  new_value: "-",
+                });
+              }
+            }
+
+            // Find Newly Added Apps
+            if (changes.new_apps) {
+              for (const app of changes.new_apps) {
+                actionList.push({
+                  date,
+                  action: "New",
+                  appname:  app.name,
+                  field: "-",
+                  previous_value: "-",
+                  new_value: app,
+                });
+              }
+            }
+
+            // Find Updated Apps
+            if (changes.updated_apps) {
+              for (const appname in changes.updated_apps) {
+                const appChanges = changes.updated_apps[appname];
+                for (const changeKey in userChanges) {
+                  actionList.push({
+                    date,
+                    action: "Update",
+                    appname: appname,
+                    field: changeKey,
+                    previous_value: appChanges[changeKey]["previous_value"],
+                    new_value: appChanges[changeKey]["new_value"],
+                  });
+                }
+              }
+            }
+
+            return actionList;
+          }).flat();
 
             $(document).ready(() => {
               $('#systemInstalledAppsTable').DataTable({
