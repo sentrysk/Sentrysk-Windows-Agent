@@ -43,6 +43,50 @@
                 </tbody>
             </table>
         </div>
+        <div class="tab-pane fade" id="systemInstalledAppsChangelog" role="tabpanel" aria-labelledby="systemInstalledAppsChangelog">
+          <table class="table table-striped table-bordered table-sm" id="systemInstalledAppsChangelogTable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Action</th>
+                <th>App Name</th>
+                <th>Field</th>
+                <th>Previous Value</th>
+                <th>New Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="data in changeLogData" :key="data">
+                <td>
+                  {{ data.date }}
+                </td>
+
+                <td v-if="data.action == 'New'" style="color: green;">
+                  Install
+                </td>
+                <td v-if="data.action == 'Delete'" style="color:crimson">
+                  Delete
+                </td>
+                <td v-if="data.action == 'Update'" style="color: coral;">
+                  Update
+                </td>
+
+                <td>
+                  {{ data.appname }}
+                </td>
+                <td>
+                  {{ data.field }}
+                </td>
+                <td style="color:crimson">
+                  {{ data.previous_value }}
+                </td>
+                <td style="color: green;">
+                  {{ data.new_value }}
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 </template>
 
@@ -85,7 +129,6 @@
 
             // Set system Installed Apps Count
             this.systemInstalledAppsCount = this.systemInstalledApps.apps.length;
-            
 
             this.changeLogData = this.changeLogData.map((item) => {
             const date = formatToLocalTime(item.timestamp);
@@ -126,7 +169,7 @@
             if (changes.updated_apps) {
               for (const appname in changes.updated_apps) {
                 const appChanges = changes.updated_apps[appname];
-                for (const changeKey in userChanges) {
+                for (const changeKey in appChanges) {
                   actionList.push({
                     date,
                     action: "Update",
@@ -141,6 +184,9 @@
 
             return actionList;
           }).flat();
+
+            // Set Changelog Count
+            this.changeLogCount = this.changeLogData.length;
 
             $(document).ready(() => {
               $('#systemInstalledAppsTable').DataTable({
@@ -167,4 +213,8 @@
 </script>
 
 <style>
+.sysAppsActionIcons{
+  font-size: 2em;
+  max-width: 4rem;
+}
 </style>
