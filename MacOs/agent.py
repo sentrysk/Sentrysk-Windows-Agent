@@ -8,6 +8,7 @@ import logging
 
 from Modules.system_info import get_system_info
 from Modules.user_info import get_user_info
+from Modules.service_info import get_service_info
 ##############################################################################
 
 # Configs
@@ -41,6 +42,7 @@ system_info = {}
 
 system_info['system']               = get_system_info()
 system_info['users']                = get_user_info()
+system_info['services']             = get_service_info()
 ##############################################################################
 
 # Usage
