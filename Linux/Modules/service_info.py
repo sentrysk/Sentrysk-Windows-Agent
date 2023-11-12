@@ -27,7 +27,6 @@ def get_service_info():
         # Run the systemctl command to get the list of all services
         cmd = "systemctl list-units --type=service --all --plain --no-legend"
         result = subprocess.check_output(cmd, shell=True, text=True)
-        print(result)
         # Process the output and split it into lines
         lines = result.strip().split('\n')
 
@@ -41,17 +40,16 @@ def get_service_info():
 
             # Extract relevant information
             service_name = columns[0]
-            service_load = columns[1]
-            service_active = columns[2]
-            service_sub = columns[3]
+            #service_load = columns[1]
+            #service_active = columns[2]
+            service_status = columns[3]
             service_description = columns[4]
 
             # Append service information to the list
             services_info.append({
-                'Service Name': service_name,
-                'Load': service_load,
-                'Active': service_active,
-                'Sub': service_sub,
+            	'DisplayName': service_name,
+                'ServiceName': service_name,
+                'Status': service_status,
                 'Description': service_description
             })
 
@@ -60,5 +58,5 @@ def get_service_info():
     except subprocess.CalledProcessError as e:
         # Log the error
         logging.error(e)
-        return None
+        return []
 ##############################################################################
