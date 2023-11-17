@@ -43,4 +43,20 @@ class Service(EmbeddedDocument):
     def __str__(self):
         return str(self.serialize())
 
+class SystemServices(Document):
+    agent     = ReferenceField(Agent)
+    services  = ListField(EmbeddedDocumentField(Service))
+    updated   = DateTimeField(default=datetime.utcnow)
+
+    def serialize(self):
+        return {
+            "id":str(self.id),
+            "agent_id":str(self.agent.id),
+            "services":self.services,
+            "updated":self.updated
+        }
+
+    def __str__(self):
+        return str(self.serialize())
+
 ##############################################################################
