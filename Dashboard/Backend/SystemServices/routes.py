@@ -81,7 +81,7 @@ def register():
             return jsonify({'error': e}), 500
         
     else:
-        # CREATE If System Installed Apps not exist 
+        # CREATE If System Services not exist 
         try:
             sys_srvcs = SystemServices(**data)
             sys_srvcs.agent = agent
@@ -91,7 +91,7 @@ def register():
 
     return jsonify(
         {
-            'message': 'System apps registered successfully.',
+            'message': 'System Services registered successfully.',
         }
     ), 200
 
