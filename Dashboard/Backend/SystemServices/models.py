@@ -48,36 +48,36 @@ class SystemServices(Document):
     services  = ListField(EmbeddedDocumentField(Service))
     updated   = DateTimeField(default=datetime.utcnow)
 
-    # To compare 2 App Data
+    # Compare 2 Service Data
     def compare_servies(self, other):
         if not isinstance(other, SystemServices):
-            raise ValueError("Comparison should be done with another SystemInstalledApps instance")
+            raise ValueError("Comparison should be done with another SystemServices instance")
 
-        self_apps = {app.name: app for app in self.apps}
-        other_apps = {app.name: app for app in other.apps}
+        self_services = {service.service_name: service for service in self.services}
+        other_services = {service.service_name: service for service in other.services}
 
-        # Newly Added Apps
-        new_apps = [app.serialize() for name, app in other_apps.items() if name not in self_apps]
-        # Deleted Apps
-        deleted_apps = [app.serialize() for name, app in self_apps.items() if name not in other_apps]
-        # Updated Apps and Fields
-        updated_apps = {}
+        # Newly Added Services
+        new_services = [service.serialize() for service_name, service in other_services.items() if service_name not in self_services]
+        # Deleted Services
+        deleted_services = [service.serialize() for service_name, service in self_services.items() if service_name not in other_services]
+        # Updated Services and Fields
+        updated_services = {}
 
         # Find the Updated Fields
-        for appname in self_apps:
-            if appname in other_apps and self_apps[appname] != other_apps[appname]:
+        for service_name in self_services:
+            if service_name in other_services and self_services[service_name] != other_services[service_name]:
                 updated_fields = {}
-                for field in InstalledApp._fields:
-                    if str(self_apps[appname][field]) != str(other_apps[appname][field]):
+                for field in Service._fields:
+                    if str(self_services[service_name][field]) != str(other_services[service_name][field]):
                         updated_fields[field] = {
-                            "previous_value":self_apps[appname][field],
-                            "new_value":other_apps[appname][field]
+                            "previous_value":self_services[service_name][field],
+                            "new_value":other_services[service_name][field]
                         }
-                # Add Updated Fields to Updated apps Dict
-                updated_apps[appname] = updated_fields
+                # Add Updated Fields to Updated services Dict
+                updated_services[service_name] = updated_fields
 
         # Return Compared Data
-        return new_apps, deleted_apps, updated_apps
+        return new_services, deleted_services, updated_services
     
     def serialize(self):
         return {
