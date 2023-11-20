@@ -47,10 +47,10 @@ def get_service_info():
 
             # Append service information to the list
             services_info.append({
-            	'DisplayName': service_name,
-                'ServiceName': service_name,
-                'Status': service_status,
-                'Description': service_description
+            	'display_name': service_name,
+                'service_name': service_name,
+                'status': service_status,
+                'description': service_description
             })
 
         return services_info
