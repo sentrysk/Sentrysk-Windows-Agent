@@ -38,9 +38,16 @@ def get_macos_service_description(service_name):
 
 def parse_macos_service(line):
     service_name = line.split()[0]
-    return {"DisplayName": line.split()[2], "ServiceName": service_name, "Status": get_macos_service_status(service_name), "Description": get_macos_service_description(service_name)}
+    return {
+        "display_name": line.split()[2],
+        "service_name": service_name,
+        "status": get_macos_service_status(service_name), 
+        "description": get_macos_service_description(service_name)
+    }
 
 def get_service_info():
-    services_json = {"services": get_macos_services()}
+    services = get_macos_services()
+    services_info = [parse_macos_service(line) for line in services]
+    services_json = {"services": services_info}
     return services_json
 ##############################################################################
