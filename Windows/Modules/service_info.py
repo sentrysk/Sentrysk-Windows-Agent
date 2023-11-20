@@ -31,10 +31,21 @@ def get_service_info():
                 }
                 service_info.append(service)
 
-        # Remove the Node section & change Name to ServiceName
+        # Remove the Node section & change naming
         for service in service_info:
-            service["ServiceName"] = service["Name"]
+            # Change Name to service_name
+            service["service_name"] = service["Name"]
             del service["Name"]
+            # Change DisplayName to display_name
+            service["display_name"] = service["DisplayName"]
+            del service["DisplayName"]
+            # Change State to status
+            service["status"] = service["State"]
+            del service["State"]
+            # Change Description to description
+            service["description"] = service["Description"]
+            del service["Description"]
+            # Delete Node
             del service["Node"]
     except Exception as e:
         # Log the error
