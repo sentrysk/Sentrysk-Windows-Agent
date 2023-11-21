@@ -21,6 +21,25 @@ sys_srvc_bp = Blueprint('sys_services_blueprint', __name__)
 # Routes
 ##############################################################################
 
+# Get All System Services
+@sys_srvc_bp.route('/', methods=['GET'])
+@auth_token_required
+def get_all_system_services():
+    try:
+        all_sys_srvcs = SystemServices.objects()
+
+        for sys_srvcs in all_sys_srvcs:
+            # Serialize "services" section
+            services = []
+            for service in sys_srvcs.services:
+                services.append(service.serialize())
+            # Append again Service to System Services
+            sys_srvcs.services = services
+        
+        return [info.serialize() for info in all_sys_srvcs] # Serialize & Return
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+
 # Register
 @sys_srvc_bp.route('/', methods=['POST'])
 @agent_token_required
