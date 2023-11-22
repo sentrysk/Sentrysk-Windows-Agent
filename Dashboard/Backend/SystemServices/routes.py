@@ -40,6 +40,26 @@ def get_all_system_services():
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 
+# Get System Services by Agent ID
+@sys_srvc_bp.route('/<agent_id>', methods=['GET'])
+@auth_token_required
+def get_system_services_by_agent_id(agent_id):
+    try:
+        # Get System services
+        sys_srvcs = SystemServices.objects(agent=agent_id).first()
+        
+        # Serialize "services" section
+        services_list = []
+        for app in sys_srvcs.services:
+            services_list.append(app.serialize())
+        
+        # Append again services to System services
+        sys_srvcs.services = services_list
+        # Return as serialized
+        return jsonify(sys_srvcs.serialize())
+    except Exception as e:
+        return jsonify({"Message":str(e)}), 404
+
 # Register
 @sys_srvc_bp.route('/', methods=['POST'])
 @agent_token_required
