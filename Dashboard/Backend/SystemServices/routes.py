@@ -108,7 +108,7 @@ def register():
 
                 # Create a new ChangeLog entry
                 change_log_entry = ChangeLogSystemServices(
-                    apps = sys_srvcs.id,
+                    services = sys_srvcs.id,
                     changes = changes
                 )
                 change_log_entry.save()
@@ -134,5 +134,16 @@ def register():
         }
     ), 200
 
+# Changelog Routes
 
+# Get All Changelog Data by System Services ID
+@sys_srvc_bp.route('/<sys_srvcs_id>/changelog', methods=['GET'])
+@auth_token_required
+def get_sys_srvcs_changelog_by_sys_srvcs_id(sys_srvcs_id):
+    try:
+        sys_srvcs_changelog = ChangeLogSystemServices.objects(services=sys_srvcs_id)
+        return [info.serialize() for info in sys_srvcs_changelog] # Serialize & Return
+    except Exception as e:
+        print(e)
+        return jsonify({"Message":"Not Found"}), 404
 ##############################################################################
