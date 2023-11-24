@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+# Libraries
+##############################################################################
+import requests
+import json
+from faker import Faker
+##############################################################################
+
+# Config
+##############################################################################
+fake = Faker()
+
+BASE_URL = "http://localhost:5000"
+REG_EP = "/user/register"
+REG_URL = BASE_URL + REG_EP
+##############################################################################
+
+# Tests
+##############################################################################
+def test_register_success():
+    user_data = {}
+    user_data["name"] = str(fake.unique.first_name())
+    user_data["lastname"] = str(fake.unique.first_name())
+    user_data["email"] =user_data["name"].lower()\
+        +"."+user_data["lastname"].lower()\
+        +"@"+str(fake.free_email_domain())
+    user_data["password"] = "1234"
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    response = requests.request(
+        "POST",
+        REG_URL,
+        data=json.dumps(user_data),
+        headers=headers
+    )
+    
+    print(response.text)
+
+    assert "User registered successfully." in response.text
+    assert response.status_code == 201
+    
+    print("[SUCCESS]\ttest_register_success")
+##############################################################################
+
+test_register_success()
