@@ -7,13 +7,13 @@ from marshmallow import Schema, fields, validate
 
 # Regexs
 ##############################################################################
-ALPH_NUM_REGX = r"^[a-zA-Z]{1,25}(?: [a-zA-Z]{1,25})?$"
+NAME_REGX = r"^[a-zA-Z]{2,30}(?: [a-zA-Z]{2,30})?$"
 ##############################################################################
 
 # Schemas
 ##############################################################################
 class RegisterSchema(Schema):
-    name       = fields.Str(required = True,validate=validate.Regexp(ALPH_NUM_REGX))
+    name       = fields.Str(required = True,validate=validate.Regexp(NAME_REGX))
     lastname   = fields.Str(required = True)
     email      = fields.Email(required = True)
     password   = fields.Str(required = True)
