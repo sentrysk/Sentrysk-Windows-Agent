@@ -52,5 +52,37 @@ def test_register_success():
     print("[SUCCESS]\ttest_register_success")
 ##############################################################################
 
+# Tests
+##############################################################################
+def test_register_invalid_name():
+    testing_user_data = [
+        123423,
+        "!'.abcc-",
+        "'ab123asdf",
+        "||",
+        "space  test   third",
+        "",
+        "space test third",
+        "kerem oruc"
+    ]
 
-test_register_success()
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    for t_data in testing_user_data:
+        user_data = generate_user_data()
+        user_data["name"] = t_data
+
+        response = requests.request(
+            "POST",
+            REG_URL,
+            data=json.dumps(user_data),
+            headers=headers
+        )
+
+        assert "error" in response.text
+        assert response.status_code == 400
+    
+    return True
+##############################################################################
