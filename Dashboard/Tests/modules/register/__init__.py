@@ -16,9 +16,9 @@ REG_EP = "/user/register"
 REG_URL = BASE_URL + REG_EP
 ##############################################################################
 
-# Tests
+
 ##############################################################################
-def test_register_success():
+def generate_user_data():
     user_data = {}
     user_data["name"] = str(fake.unique.first_name())
     user_data["lastname"] = str(fake.unique.first_name())
@@ -26,6 +26,14 @@ def test_register_success():
         +"."+user_data["lastname"].lower()\
         +"@"+str(fake.free_email_domain())
     user_data["password"] = "1234"
+    
+    return user_data
+##############################################################################
+
+# Tests
+##############################################################################
+def test_register_success():
+    user_data = generate_user_data()
 
     headers = {
         'Content-Type': 'application/json'
@@ -37,13 +45,12 @@ def test_register_success():
         data=json.dumps(user_data),
         headers=headers
     )
-    
-    print(response.text)
 
     assert "User registered successfully." in response.text
     assert response.status_code == 201
     
     print("[SUCCESS]\ttest_register_success")
 ##############################################################################
+
 
 test_register_success()
