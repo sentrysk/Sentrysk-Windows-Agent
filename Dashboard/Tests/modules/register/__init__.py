@@ -30,7 +30,7 @@ def generate_user_data():
     return user_data
 ##############################################################################
 
-# Tests
+# Test Successfully Registration
 ##############################################################################
 def test_register_success():
     user_data = generate_user_data()
@@ -52,7 +52,7 @@ def test_register_success():
     print("[SUCCESS]\ttest_register_success")
 ##############################################################################
 
-# Tests
+# Test Invalid Names
 ##############################################################################
 def test_register_invalid_name():
     testing_user_data = [
@@ -62,8 +62,41 @@ def test_register_invalid_name():
         "||",
         "space  test   third",
         "",
-        "space test third",
-        "kerem oruc"
+        "space test third"
+    ]
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    for t_data in testing_user_data:
+        user_data = generate_user_data()
+        user_data["name"] = t_data
+
+        response = requests.request(
+            "POST",
+            REG_URL,
+            data=json.dumps(user_data),
+            headers=headers
+        )
+
+        assert "error" in response.text
+        assert response.status_code == 400
+    
+    return True
+##############################################################################
+
+# Test Invalid Lastnames
+##############################################################################
+def test_register_invalid_lastname():
+    testing_user_data = [
+        123423,
+        "!'.abcc-",
+        "'ab123asdf",
+        "||",
+        "space  test",
+        "",
+        "space test"
     ]
 
     headers = {
