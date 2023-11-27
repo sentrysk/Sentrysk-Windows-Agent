@@ -105,7 +105,45 @@ def test_register_invalid_lastname():
     
     for t_data in testing_user_data:
         user_data = generate_user_data()
-        user_data["name"] = t_data
+        user_data["lastname"] = t_data
+
+        response = requests.request(
+            "POST",
+            REG_URL,
+            data=json.dumps(user_data),
+            headers=headers
+        )
+
+        assert "error" in response.text
+        assert response.status_code == 400
+    
+    return True
+##############################################################################
+
+# Test Invalid Email
+##############################################################################
+def test_register_invalid_email():
+    testing_user_data = [
+        123423,
+        "!'.abcc-",
+        "'ab123asdf",
+        "||",
+        "",
+        "space @test.com",
+        "a@@.com",
+        "@",
+        "@.ta",
+        "1@1...",
+        "tes__@.com"
+    ]
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    for t_data in testing_user_data:
+        user_data = generate_user_data()
+        user_data["email"] = t_data
 
         response = requests.request(
             "POST",
