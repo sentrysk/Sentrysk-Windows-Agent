@@ -49,7 +49,7 @@ def test_register_success():
     assert "User registered successfully." in response.text
     assert response.status_code == 201
     
-    print("[SUCCESS]\ttest_register_success")
+    return user_data
 ##############################################################################
 
 # Test Invalid Names
