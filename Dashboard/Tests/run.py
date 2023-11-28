@@ -3,6 +3,7 @@
 # Libraries
 ##############################################################################
 from Modules.Register import *
+from Modules.Login import *
 ##############################################################################
 
 # Register Tests
@@ -30,4 +31,14 @@ if test_register_success():
     print("[SUCCESS]\t[test_register_success]")
 else:
     print("[FAIL]\t[test_register_success]")
+##############################################################################
+
+# Login Tests
+##############################################################################
+# Invalid Name Test
+if test_login_success():
+    print("[SUCCESS]\t[test_login_success]")
+else:
+    print("[FAIL]\t[test_login_success]")
+
 ##############################################################################
