@@ -5,14 +5,14 @@
 import requests
 import json
 
+from Modules.Config import Urls,Endpoints
 from Modules.Register import test_register_success
 ##############################################################################
 
+
 # Config
 ##############################################################################
-BASE_URL = "http://localhost:5000"
-LOGIN_EP = "/user/login"
-LOGIN_URL = BASE_URL + LOGIN_EP
+LOGIN_URL = Urls.base_url + Endpoints.login_ep
 ##############################################################################
 
 
@@ -36,7 +36,6 @@ def test_login_success():
         data=json.dumps(login_data),
         headers=headers
     )
-    print(response.text)
 
     assert "Login successful." in response.text
 
