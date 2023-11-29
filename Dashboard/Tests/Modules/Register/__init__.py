@@ -5,18 +5,20 @@
 import requests
 import json
 from faker import Faker
+
+from Modules.Config import Urls,Endpoints
 ##############################################################################
+
 
 # Config
 ##############################################################################
 fake = Faker()
 
-BASE_URL = "http://localhost:5000"
-REG_EP = "/user/register"
-REG_URL = BASE_URL + REG_EP
+REG_URL = Urls.base_url + Endpoints.register_ep
 ##############################################################################
 
 
+# Generate User Data
 ##############################################################################
 def generate_user_data():
     user_data = {}
