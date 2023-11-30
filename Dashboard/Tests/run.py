@@ -41,4 +41,8 @@ if test_login_success():
 else:
     print("[FAIL]\t[test_login_success]")
 
+if test_login_invalid_email():
+    print("[SUCCESS]\t[test_login_invalid_email]")
+else:
+    print("[FAIL]\t[test_login_invalid_email]")
 ##############################################################################
