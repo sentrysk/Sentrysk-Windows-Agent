@@ -16,7 +16,7 @@ LOGIN_URL = Urls.base_url + Endpoints.login_ep
 ##############################################################################
 
 
-# Functions
+# Test Login Success
 ##############################################################################
 def test_login_success():
     user_data = test_register_success()
@@ -38,6 +38,44 @@ def test_login_success():
     )
 
     assert "Login successful." in response.text
+
+    return True
+##############################################################################
+
+
+# Test Login Invalid Email
+##############################################################################
+def test_login_invalid_email():
+    invalid_emails = [
+        "space @test.com",
+        "",
+        " ",
+        "a@@.com",
+        "@",
+        "@.ta",
+        "1@1...",
+        "tes__@.com"
+    ]
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    for t_email in invalid_emails:
+        login_data = {
+            "email": t_email,
+            "password": "1234"
+        }
+
+        response = requests.request(
+            "POST",
+            LOGIN_URL,
+            data=json.dumps(login_data),
+            headers=headers
+        )
+
+        assert "Not a valid email address." in response.text
+        assert response.status_code == 400
 
     return True
 ##############################################################################
