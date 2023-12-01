@@ -72,7 +72,7 @@
             this.timeDiff =  calculateDatetimeDifference(this.systemServices.updated);
 
             // Set system Installed Apps Count
-            this.systemServicesCount = this.systemServices.apps.length;
+            this.systemServicesCount = this.systemServices.services.length;
 
           } catch (error) {
             console.error(error);
