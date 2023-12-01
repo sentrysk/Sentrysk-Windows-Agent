@@ -16,6 +16,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="installedProgramsTab" data-bs-toggle="tab" data-bs-target="#installedPrograms" type="button" role="tab" aria-controls="contact" aria-selected="false">Installed Programs</button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="servicesTab" data-bs-toggle="tab" data-bs-target="#services" type="button" role="tab" aria-controls="contact" aria-selected="false">Services</button>
+        </li>
       </ul>
 
         <!-- Tab Contents-->
@@ -33,6 +36,10 @@
             <div class="tab-pane fade" id="installedPrograms" role="tabpanel" aria-labelledby="installedProgramsTab">
                 <SystemInstalledAppsTab></SystemInstalledAppsTab>
             </div>
+            <!-- Services Tab -->
+            <div class="tab-pane fade" id="services" role="tabpanel" aria-labelledby="servicesTab">
+                <SystemServicesTab></SystemServicesTab>
+            </div>
         </div>
 
     </div>
@@ -43,6 +50,7 @@
     import SystemInformationTab from '../components/Tabs/SystemInformationTab.vue'
     import SystemUsersTab from '../components/Tabs/SystemUsersTab.vue'
     import SystemInstalledAppsTab from '../components/Tabs/SystemInstalledApps.vue';
+    import SystemServicesTab from '../components/Tabs/SystemServicesTab.vue'
     
     export default {
       components: {
@@ -50,6 +58,7 @@
         SystemInformationTab,
         SystemUsersTab,
         SystemInstalledAppsTab,
+        SystemServicesTab,
       },
     };
 </script>
