@@ -126,3 +126,20 @@ export async function getServices(agentId){
         console.error('Error fetching System Services:', error);
     }
 }
+
+// Retrive System Services Changelog
+export async function getServicesChangeLog(sysServicesId){
+    try {
+        // Retrieve JWT token from session storage
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const URL = API_URL + SYS_SRVCS_EP + sysServicesId + CHLG_EP;
+        const changelog = await axios.get(URL, {
+            headers: {
+            Authorization: jwtToken,
+            },
+        });
+        return changelog.data
+    } catch (error) {
+        console.error('Error fetching System Services Changelog:', error);
+    }
+}
