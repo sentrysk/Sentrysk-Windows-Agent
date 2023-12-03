@@ -28,7 +28,17 @@
                 </thead>
                 <tbody>
                     <tr v-for="(service, index) in systemServices.services" :key="index">
-                        <td>{{ service.status }}</td>
+
+                        <td v-if="service.status.toLowerCase() == 'running'" style="color: green;">
+                          {{ service.status }}
+                        </td>
+                        <td v-else-if="service.status.toLowerCase() == 'stopped'" style="color: crimson;">
+                          {{ service.status }}
+                        </td>
+                        <td v-else>
+                          {{ service.status }}
+                        </td>
+
                         <td>{{ service.display_name }}</td>
                         <td>{{ service.service_name }}</td>
                         <td>{{ service.description }}</td>
@@ -42,7 +52,7 @@
 
 <script>
     import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
-    import { getServices } from '../../utils/requestUtils'
+    import { getServices, getServicesChangeLog } from '../../utils/requestUtils'
 
     
     export default {
@@ -51,6 +61,8 @@
         return {
           systemServices: {},
           systemServicesCount: 0,
+          changeLogData: [],
+          changeLogCount: 0,
           localUpdateTime: "",
           timeDiff: "",
         };
@@ -64,14 +76,16 @@
             // Get the ID from the URL
             const agentId = this.$route.params.id;
 
-            // Retrieve System Apps
+            // Retrieve Services
             this.systemServices =  await getServices(agentId);
+            // Retrive Services Changelog
+            this.changeLogData = await getServicesChangeLog(this.systemServices.id);
 
             // Set Local Update Time and Time Diff
             this.localUpdateTime = formatToLocalTime(this.systemServices.updated);
             this.timeDiff =  calculateDatetimeDifference(this.systemServices.updated);
 
-            // Set system Installed Apps Count
+            // Set Services Count
             this.systemServicesCount = this.systemServices.services.length;
 
           } catch (error) {
