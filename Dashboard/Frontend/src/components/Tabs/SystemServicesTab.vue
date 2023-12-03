@@ -196,7 +196,10 @@
             }
 
             return actionList;
-          }).flat();
+            }).flat();
+
+            // Set Changelog Count
+            this.changeLogCount = this.changeLogData.length;
 
           } catch (error) {
             console.error(error);
