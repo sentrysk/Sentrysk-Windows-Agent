@@ -217,6 +217,24 @@
               pageEntrySize.style = "margin-right:100%"
               const pageInfoText = document.getElementById('systemServicesTable_info')
               pageInfoText.style = "float:left"
+
+              // Set Changelogs as Data Table
+              $('#systemServicesChangelogTable').DataTable({
+              searching: true,
+              lengthChange: true,
+              pageLength: 25,
+              lengthMenu: [
+                  [25, 50, 100, 250, -1],
+                  [25, 50, 100, 250,'All']
+              ],
+              order: [ 0, 'desc' ],
+              select: true,
+              });
+              // Style length Menu
+              const chlgPageEntrySize = document.getElementById('systemServicesChangelogTable_length')
+              chlgPageEntrySize.style = "margin-right:100%"
+              const chlgPageInfoText = document.getElementById('systemServicesChangelogTable_info')
+              chlgPageInfoText.style = "float:left"
               
             });
 
