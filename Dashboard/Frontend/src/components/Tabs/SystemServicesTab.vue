@@ -106,10 +106,10 @@
 </template>
 
 <script>
+    import $ from "jquery";
     import { formatToLocalTime,calculateDatetimeDifference } from '../../utils/timeUtils';
     import { getServices, getServicesChangeLog } from '../../utils/requestUtils'
 
-    
     export default {
       name: 'SystemServicesTab',
       data() {
@@ -200,6 +200,25 @@
 
             // Set Changelog Count
             this.changeLogCount = this.changeLogData.length;
+
+            $(document).ready(() => {
+              // Set Installed Apps as Data Table
+              $('#systemServicesTable').DataTable({
+              searching: true,
+              lengthChange: true,
+              pageLength: 25,
+              lengthMenu: [
+                  [25, 50, 100, 250, -1],
+                  [25, 50, 100, 250, 'All']
+              ],
+              });
+              // Style length Menu
+              const pageEntrySize = document.getElementById('systemServicesTable_length')
+              pageEntrySize.style = "margin-right:100%"
+              const pageInfoText = document.getElementById('systemServicesTable_info')
+              pageInfoText.style = "float:left"
+              
+            });
 
           } catch (error) {
             console.error(error);
