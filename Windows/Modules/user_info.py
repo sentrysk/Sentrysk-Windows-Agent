@@ -5,7 +5,6 @@
 import win32net
 import win32netcon
 import pywintypes
-import datetime
 import logging
 ##############################################################################
 
@@ -70,15 +69,12 @@ def get_user_info():
         while True:
             user_data, total, resume = win32net.NetUserEnum(None, 2, win32netcon.FILTER_NORMAL_ACCOUNT, resume)
             for user_info in user_data:
-                last_logon_timestamp = user_info['last_logon']
-                last_logon_datetime = datetime.datetime.fromtimestamp(last_logon_timestamp)
                 user_flags = [flag_name for flag, flag_name in USER_FLAGS.items() if user_info['flags'] & flag]
                 user_sid = get_user_sid(user_info['name'])
                 users.append({
                     "username": user_info['name'],
                     "full_name": user_info['full_name'],
                     "comment": user_info['comment'],
-                    "last_logon": last_logon_datetime.strftime("%Y-%m-%d %H:%M:%S"),  # Convert to a formatted string
                     "flags": user_flags,
                     "sid": user_sid,  # Include the SID as a string
                 })
