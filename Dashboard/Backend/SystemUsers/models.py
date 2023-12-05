@@ -24,7 +24,6 @@ class UserData(EmbeddedDocument):
     shell           = StringField()
     full_name       = StringField()
     comment         = StringField()
-    last_logon      = DateTimeField()
     flags           = ListField()
     sid             = StringField()
 
@@ -37,7 +36,6 @@ class UserData(EmbeddedDocument):
             self.shell == other.shell and
             self.full_name == other.full_name and
             self.comment == other.comment and
-            self.normalize_datetime(self.last_logon) == self.normalize_datetime(other.last_logon) and
             self.flags == other.flags and
             self.sid == other.sid
         )
@@ -71,8 +69,6 @@ class UserData(EmbeddedDocument):
             data["full_name"] = self.full_name
         if self.comment:
             data["comment"] = self.comment
-        if self.last_logon:
-            data["last_logon"] = self.last_logon
         if self.flags:
             data["flags"] = self.flags
         if self.sid:
