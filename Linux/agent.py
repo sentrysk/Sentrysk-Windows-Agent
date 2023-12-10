@@ -13,6 +13,7 @@ from Modules.npm_info import get_npm_packages
 from Modules.service_info import get_service_info
 from Modules.pip_info import get_pip_packages
 from Modules.docker_info import get_docker_info
+from Modules.last_logon import get_last_logons
 ##############################################################################
 
 # Configs
@@ -51,6 +52,7 @@ system_info['npm_info']             = get_npm_packages()
 system_info['services']             = get_service_info()
 system_info['pip_info']             = get_pip_packages()
 system_info['docker_info']          = get_docker_info()
+system_info['last_logons']          = get_last_logons()
 ##############################################################################
 
 
