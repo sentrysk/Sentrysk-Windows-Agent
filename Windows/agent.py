@@ -15,6 +15,7 @@ from Modules.updates_info import get_update_history, check_missing_updates
 from Modules.docker_info import get_docker_info
 from Modules.npm_info import get_npm_packages
 from Modules.pip_info import get_pip_packages
+from Modules.last_logon import get_last_logons
 ##############################################################################
 
 # Configs
@@ -56,6 +57,7 @@ system_info['missing_updates']      = check_missing_updates()
 system_info['docker_info']          = get_docker_info()
 system_info['npm_info']             = get_npm_packages()
 system_info['pip_info']             = get_pip_packages()
+system_info['last_logons']          = get_last_logons()
 ##############################################################################
 
 
@@ -64,3 +66,4 @@ json_data = json.dumps(system_info, indent=4)
 with open('result.json','w') as f:
     f.write(json_data)
 print(json_data)
+
