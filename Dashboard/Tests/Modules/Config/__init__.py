@@ -11,4 +11,5 @@ class Urls():
 class Endpoints():
     register_ep = "/user/register"
     login_ep = "/user/login"
+    agents_ep = "/agent"
 ##############################################################################
