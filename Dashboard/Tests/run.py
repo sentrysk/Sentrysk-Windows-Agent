@@ -37,7 +37,8 @@ else:
 # Login Tests
 ##############################################################################
 # Invalid Name Test
-if test_login_success(USER_DATA):
+USER_TOKEN = test_login_success(USER_DATA)
+if USER_TOKEN:
     print("[SUCCESS]\t[test_login_success]")
 else:
     print("[FAIL]\t[test_login_success]")
