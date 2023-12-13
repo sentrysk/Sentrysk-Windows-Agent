@@ -18,9 +18,7 @@ LOGIN_URL = Urls.base_url + Endpoints.login_ep
 
 # Test Login Success
 ##############################################################################
-def test_login_success():
-    user_data = test_register_success()
-
+def test_login_success(user_data):
     headers = {
         'Content-Type': 'application/json'
     }
