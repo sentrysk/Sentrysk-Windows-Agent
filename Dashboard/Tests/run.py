@@ -27,7 +27,8 @@ else:
     print("[FAIL]\t[test_register_invalid_email]")
 
 # Successfuly Register Test
-if test_register_success():
+USER_DATA = test_register_success()
+if USER_DATA:
     print("[SUCCESS]\t[test_register_success]")
 else:
     print("[FAIL]\t[test_register_success]")
@@ -36,7 +37,7 @@ else:
 # Login Tests
 ##############################################################################
 # Invalid Name Test
-if test_login_success():
+if test_login_success(USER_DATA):
     print("[SUCCESS]\t[test_login_success]")
 else:
     print("[FAIL]\t[test_login_success]")
