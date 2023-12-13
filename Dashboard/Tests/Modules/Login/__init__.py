@@ -6,7 +6,6 @@ import requests
 import json
 
 from Modules.Config import Urls,Endpoints
-from Modules.Register import test_register_success
 ##############################################################################
 
 
@@ -37,7 +36,7 @@ def test_login_success(user_data):
 
     assert "Login successful." in response.text
 
-    return True
+    return response.json()["token"]
 ##############################################################################
 
 
