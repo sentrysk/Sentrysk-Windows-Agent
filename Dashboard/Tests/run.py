@@ -4,7 +4,7 @@
 ##############################################################################
 from Modules.Register import *
 from Modules.Login import *
-from Modules.Register import *
+from Modules.Agent import *
 ##############################################################################
 
 # Register Tests
@@ -44,6 +44,7 @@ if USER_TOKEN:
 else:
     print("[FAIL]\t[test_login_success]")
 
+# Invalid Email Test
 if test_login_invalid_email():
     print("[SUCCESS]\t[test_login_invalid_email]")
 else:
