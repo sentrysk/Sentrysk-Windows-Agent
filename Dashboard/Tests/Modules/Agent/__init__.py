@@ -19,9 +19,9 @@ AGENT_REG_URL = Urls.base_url + Endpoints.agents_reg_ep
 ##############################################################################
 def test_register_agent_success(token):
     agent_types = [
-        'Windows',
-        'Linux',
-        'MacOs'
+        'windows',
+        'linux',
+        'macos'
     ]
     
     headers = {
