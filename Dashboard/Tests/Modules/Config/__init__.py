@@ -12,5 +12,5 @@ class Endpoints():
     register_ep = "/user/register"
     login_ep = "/user/login"
     agents_ep = "/agent"
-    agents_reg = agents_ep + "/register"
+    agents_reg_ep = agents_ep + "/register"
 ##############################################################################
