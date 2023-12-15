@@ -45,3 +45,38 @@ def test_register_agent_success(token):
 
     return response.json()["agent"]
 ##############################################################################
+
+
+# Test Agent Register Wrong Agent Type
+##############################################################################
+def test_register_wrong_agent_types(token):
+    agent_types = [
+        'WinDowS',
+        'LiNuX',
+        'MaCos',
+        '',
+        'Test',
+        'Test Space'
+    ]
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    }
+
+    for agent_type in agent_types:
+        reg_data = {
+            'type': agent_type
+        }
+
+        response = requests.request(
+            "POST",
+            AGENT_REG_URL,
+            data=json.dumps(reg_data),
+            headers=headers
+        )
+
+        assert response.status_code == 400
+
+    return True
+##############################################################################
