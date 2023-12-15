@@ -54,7 +54,8 @@ else:
 # Agent Tests
 ##############################################################################
 # Successfuly Register Test
-if test_register_agent_success(USER_TOKEN):
+AGENT = test_register_agent_success(USER_TOKEN)
+if AGENT:
     print("[SUCCESS]\t[test_register_agent_success]")
 else:
     print("[FAIL]\t[test_register_agent_success]")
