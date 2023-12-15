@@ -43,5 +43,5 @@ def test_register_agent_success(token):
     assert "Agent registered successfully." in response.text
     assert response.status_code == 201
 
-    return True
+    return response.json()["agent"]
 ##############################################################################
