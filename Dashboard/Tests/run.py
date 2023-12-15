@@ -37,22 +37,27 @@ else:
 
 # Login Tests
 ##############################################################################
-# Invalid Name Test
-USER_TOKEN = test_login_success(USER_DATA)
-if USER_TOKEN:
-    print("[SUCCESS]\t[test_login_success]")
-else:
-    print("[FAIL]\t[test_login_success]")
-
 # Invalid Email Test
 if test_login_invalid_email():
     print("[SUCCESS]\t[test_login_invalid_email]")
 else:
     print("[FAIL]\t[test_login_invalid_email]")
+
+# Successfuly Login Test
+USER_TOKEN = test_login_success(USER_DATA)
+if USER_TOKEN:
+    print("[SUCCESS]\t[test_login_success]")
+else:
+    print("[FAIL]\t[test_login_success]")
 ##############################################################################
 
 # Agent Tests
 ##############################################################################
+if test_register_wrong_agent_types():
+    print("[SUCCESS]\t[test_register_wrong_agent_types]")
+else:
+    print("[FAIL]\t[test_register_wrong_agent_types]")
+
 # Successfuly Register Test
 AGENT = test_register_agent_success(USER_TOKEN)
 if AGENT:
