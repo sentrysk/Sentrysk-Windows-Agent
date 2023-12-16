@@ -8,7 +8,7 @@ import json
 from marshmallow import ValidationError
 
 from .models import Agent
-from .schema import AgentTypeSchema
+from .schema import AgentTypeSchema, UpdateSchema
 from Shared.validators import auth_token_required
 ##############################################################################
 
@@ -89,6 +89,17 @@ def delete_agent(id):
 @agnt_bp.route('/<id>', methods=['PUT'])
 @auth_token_required
 def update_agent(id):
+    try:
+        # ID added for validation
+        json_data = request.json
+        json_data["agent_id"] = id
+
+        # Load and validate the JSON request using the schema
+        data = UpdateSchema().load(json_data)
+    except ValidationError as e:
+        # Return validation errors as a JSON response with a 400 status code
+        return jsonify({'error': e.messages}), 400
+
     try:
         agent = Agent.objects(id=id).first()
 
