@@ -36,5 +36,5 @@ class UpdateSchema(Schema):
         required=True, 
         validate = validate.OneOf([val for val in AgentTypeEnum])
     )
-    token = fields.Str()
+    token = fields.UUID()
 ##############################################################################
