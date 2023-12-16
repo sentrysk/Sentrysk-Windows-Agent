@@ -5,8 +5,10 @@
 from flask import Blueprint, request, jsonify
 import uuid
 import json
+from marshmallow import ValidationError
 
 from .models import Agent
+from .schema import RegisterSchema
 from Shared.validators import auth_token_required
 ##############################################################################
 
@@ -42,11 +44,15 @@ def get_agent_by_id(id):
 @agnt_bp.route('/register', methods=['POST'])
 @auth_token_required
 def register():
-    data = request.get_json()
-    agent_type = data.get('type')
+    try:
+        # Load and validate the JSON request using the schema
+        data = RegisterSchema().load(request.json)
+    except ValidationError as e:
+        # Return validation errors as a JSON response with a 400 status code
+        return jsonify({'error': e.messages}), 400
 
-    if not agent_type:
-        return jsonify({'message': 'Agent type is required.'}), 400
+    # Get Agent Type from Data
+    agent_type = data.get('type')
 
     # Generate a token for the agent
     token = str(uuid.uuid4())
