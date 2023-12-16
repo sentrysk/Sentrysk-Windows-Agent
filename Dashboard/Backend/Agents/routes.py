@@ -8,7 +8,7 @@ import json
 from marshmallow import ValidationError
 
 from .models import Agent
-from .schema import RegisterSchema
+from .schema import AgentTypeSchema
 from Shared.validators import auth_token_required
 ##############################################################################
 
@@ -46,7 +46,7 @@ def get_agent_by_id(id):
 def register():
     try:
         # Load and validate the JSON request using the schema
-        data = RegisterSchema().load(request.json)
+        data = AgentTypeSchema().load(request.json)
     except ValidationError as e:
         # Return validation errors as a JSON response with a 400 status code
         return jsonify({'error': e.messages}), 400
