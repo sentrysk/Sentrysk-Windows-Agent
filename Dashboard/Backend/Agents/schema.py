@@ -29,7 +29,9 @@ class AgentTypeSchema(Schema):
     )
 
 class UpdateSchema(Schema):
-    agent_id = fields.Str()
+    agent_id = fields.Str(
+        validate=validate.Regexp(ID_REGX)
+    )
     type = fields.Str(
         required=True, 
         validate = validate.OneOf([val for val in AgentTypeEnum])
