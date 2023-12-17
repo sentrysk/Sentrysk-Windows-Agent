@@ -53,10 +53,17 @@ else:
 
 # Agent Tests
 ##############################################################################
-if test_register_wrong_agent_types():
+# Wrong Agent Types Test
+if test_register_wrong_agent_types(USER_TOKEN):
     print("[SUCCESS]\t[test_register_wrong_agent_types]")
 else:
     print("[FAIL]\t[test_register_wrong_agent_types]")
+
+# Double Agent Types Test
+if test_register_double_agent_type(USER_TOKEN):
+    print("[SUCCESS]\t[test_register_double_agent_type]")
+else:
+    print("[FAIL]\t[test_register_double_agent_type]")
 
 # Successfuly Register Test
 AGENT = test_register_agent_success(USER_TOKEN)
