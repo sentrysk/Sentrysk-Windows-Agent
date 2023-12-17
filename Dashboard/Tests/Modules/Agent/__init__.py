@@ -12,25 +12,28 @@ from Modules.Config import Urls,Endpoints
 # Config
 ##############################################################################
 AGENT_REG_URL = Urls.base_url + Endpoints.agents_reg_ep
+AGENT_UPDT_URL = Urls.base_url + Endpoints.agents_ep 
 ##############################################################################
 
+# Global Values
+##############################################################################
+VALID_AGENT_TYPES = [
+    'windows',
+    'linux',
+    'macos'
+]
+##############################################################################
 
 # Test Agent Register Success
 ##############################################################################
-def test_register_agent_success(token):
-    agent_types = [
-        'windows',
-        'linux',
-        'macos'
-    ]
-    
+def test_register_agent_success(token):    
     headers = {
         'Content-Type': 'application/json',
         'Authorization': token
     }
 
     reg_data = {
-        'type': random.choice(agent_types)
+        'type': random.choice(VALID_AGENT_TYPES)
     }
 
     response = requests.request(
@@ -101,8 +104,43 @@ def test_register_double_agent_type(token):
         data=json.dumps(reg_data),
         headers=headers
     )
-    print(response.text)
+
     assert response.status_code == 400
+
+    return True
+##############################################################################
+
+# Test Update Wrong Agent ID
+##############################################################################
+def test_update_wrong_agent_id(token):
+    test_agent_ids = [
+        "abc123",
+        "123",
+        " ",
+        "@",
+        "%27OR%201%3D1--", # 'OR 1=1--
+        "%24where%20%3A%20%271%20%3D%3D%201" # $where : '1 == 1
+    ]
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    }
+
+    update_data = {
+        'type': random.choice(VALID_AGENT_TYPES)
+    }
+
+    for test_agent_id in test_agent_ids:
+        response = requests.request(
+            "PUT",
+            AGENT_UPDT_URL + "/" +  test_agent_id,
+            data=json.dumps(update_data),
+            headers=headers
+        )
+        print(test_agent_id)
+        print(response.text)
+        assert response.status_code == 400
 
     return True
 ##############################################################################
