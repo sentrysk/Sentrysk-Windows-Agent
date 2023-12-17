@@ -65,6 +65,12 @@ if test_register_double_agent_type(USER_TOKEN):
 else:
     print("[FAIL]\t[test_register_double_agent_type]")
 
+# Update Wrong Agent Id Test
+if test_update_wrong_agent_id(USER_TOKEN):
+    print("[SUCCESS]\t[test_update_wrong_agent_id]")
+else:
+    print("[FAIL]\t[test_update_wrong_agent_id]")
+
 # Successfuly Register Test
 AGENT = test_register_agent_success(USER_TOKEN)
 if AGENT:
