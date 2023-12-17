@@ -80,3 +80,29 @@ def test_register_wrong_agent_types(token):
 
     return True
 ##############################################################################
+
+
+# Test Agent Register Double Agent Type
+##############################################################################
+def test_register_double_agent_type(token):
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    }
+
+    reg_data = {
+        'type': 'Test',
+        'type': 'Test2'
+    }
+
+    response = requests.request(
+        "POST",
+        AGENT_REG_URL,
+        data=json.dumps(reg_data),
+        headers=headers
+    )
+    print(response.text)
+    assert response.status_code == 400
+
+    return True
+##############################################################################
