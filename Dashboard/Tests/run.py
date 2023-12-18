@@ -77,4 +77,10 @@ if AGENT:
     print("[SUCCESS]\t[test_register_agent_success]")
 else:
     print("[FAIL]\t[test_register_agent_success]")
+
+# Successfully Update Agent Type Test
+if test_successfully_update_agent_type(AGENT["_id"]["$oid"],USER_TOKEN):
+    print("[SUCCESS]\t[test_successfully_update_agent_type]")
+else:
+    print("[FAIL]\t[test_successfully_update_agent_type]")
 ##############################################################################
