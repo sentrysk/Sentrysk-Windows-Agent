@@ -9,11 +9,13 @@ import random
 from Modules.Config import Urls,Endpoints
 ##############################################################################
 
+
 # Config
 ##############################################################################
 AGENT_REG_URL = Urls.base_url + Endpoints.agents_reg_ep
 AGENT_UPDT_URL = Urls.base_url + Endpoints.agents_ep 
 ##############################################################################
+
 
 # Global Values
 ##############################################################################
@@ -23,6 +25,7 @@ VALID_AGENT_TYPES = [
     'macos'
 ]
 ##############################################################################
+
 
 # Test Agent Register Success
 ##############################################################################
@@ -48,7 +51,6 @@ def test_register_agent_success(token):
 
     return response.json()["agent"]
 ##############################################################################
-
 
 # Test Agent Register Wrong Agent Type
 ##############################################################################
@@ -83,7 +85,6 @@ def test_register_wrong_agent_types(token):
 
     return True
 ##############################################################################
-
 
 # Test Agent Register Double Agent Type
 ##############################################################################
@@ -138,9 +139,32 @@ def test_update_wrong_agent_id(token):
             data=json.dumps(update_data),
             headers=headers
         )
-        print(test_agent_id)
-        print(response.text)
+
         assert response.status_code == 400
+
+    return True
+##############################################################################
+
+# Test Successfully Update Agent Type
+##############################################################################
+def test_successfully_update_agent_type(agent_id,token):
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    }
+
+    update_data = {
+        'type': random.choice(VALID_AGENT_TYPES)
+    }
+
+    response = requests.request(
+        "PUT",
+        AGENT_UPDT_URL + "/" +  agent_id,
+        data=json.dumps(update_data),
+        headers=headers
+    )
+
+    assert response.status_code == 400
 
     return True
 ##############################################################################
