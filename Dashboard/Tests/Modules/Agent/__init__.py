@@ -164,7 +164,7 @@ def test_successfully_update_agent_type(agent_id,token):
         headers=headers
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 200
 
     return True
 ##############################################################################
