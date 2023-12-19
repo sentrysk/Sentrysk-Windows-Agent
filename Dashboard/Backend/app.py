@@ -18,6 +18,7 @@ from SystemInfo.routes import sys_info_bp
 from SystemUsers.routes import sys_users_bp
 from SystemInstalledApps.routes import sys_apps_bp
 from SystemServices.routes import sys_srvc_bp
+from SystemLastLogons.routes import sys_last_logons_bp
 ##############################################################################
 
 # Configs
@@ -49,6 +50,7 @@ app.register_blueprint(session_bp, url_prefix='/session')
 
 app.register_blueprint(sys_info_bp, url_prefix='/sysinfo')
 app.register_blueprint(sys_users_bp, url_prefix='/sysusers')
+app.register_blueprint(sys_last_logons_bp, url_prefix='/sysusers/lastlogons')
 app.register_blueprint(sys_apps_bp, url_prefix='/sysapps')
 app.register_blueprint(sys_srvc_bp, url_prefix='/sysservices')
 ##############################################################################
