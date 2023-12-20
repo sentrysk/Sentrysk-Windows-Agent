@@ -9,6 +9,7 @@ from marshmallow import ValidationError
 
 from .models import SystemLastLogons
 from .schema import LastLogonSchema
+from .helper import merge_and_remove_duplicates
 from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
@@ -20,7 +21,13 @@ from Agents.models import Agent
 sys_last_logons_bp = Blueprint('sys_last_logons_blueprint', __name__)
 ##############################################################################
 
+# Global Values
+##############################################################################
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+##############################################################################
+
 # Register
+##############################################################################
 @sys_last_logons_bp.route('/', methods=['POST'])
 @agent_token_required
 def register():
@@ -44,10 +51,24 @@ def register():
     if last_logons:
         # UPDATE If Last Logons data already exist
         try:
-            # Compare 2 list
+            # Get Existing Logons
+            exist_logons = last_logons.last_logons
+            
+            # Convert Last Logons into STR
+            for logon in exist_logons:
+                logon.last_logon = logon.last_logon.strftime(DATE_FORMAT)
+
+            # Get New System Last Logons
+            new_logons = data.get('last_logons')
+
+            # Compare 2 list & Make new one
+            last_list = merge_and_remove_duplicates(exist_logons,new_logons)
+                        
             # Save
-            # Apply only updated time
-            last_logons.update(updated=datetime.utcnow)
+            last_logons.update(
+                last_logons = last_list,
+                updated = datetime.utcnow
+            )
 
         except Exception as e:
             return jsonify({'error': e}), 500
@@ -66,3 +87,4 @@ def register():
             'message': 'Last Logons data registered successfully.',
         }
     ), 200
+##############################################################################
