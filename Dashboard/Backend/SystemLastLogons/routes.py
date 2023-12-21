@@ -26,8 +26,22 @@ sys_last_logons_bp = Blueprint('sys_last_logons_blueprint', __name__)
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 ##############################################################################
 
-# Register
+# Routes
 ##############################################################################
+# Get All Last Logons Data
+@sys_last_logons_bp.route('/', methods=['GET'])
+@auth_token_required
+def get_all_last_logons():
+    try:
+        # Get All Last Logons from DB
+        sys_last_logons = SystemLastLogons.objects()
+        # Serialize & Return
+        return [last_logons.serialize() for last_logons in sys_last_logons]
+    except Exception as e:
+        return jsonify({"error":str(e)}), 500
+
+
+# Register & Update
 @sys_last_logons_bp.route('/', methods=['POST'])
 @agent_token_required
 def register():
