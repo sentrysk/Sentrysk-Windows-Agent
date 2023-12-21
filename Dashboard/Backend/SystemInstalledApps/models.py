@@ -78,10 +78,15 @@ class SystemInstalledApps(Document):
         return new_apps, deleted_apps, updated_apps
     
     def serialize(self):
+        # Serialize All InstalledApp
+        serialized_apps = []
+        for app in self.apps:
+            serialized_apps.append(app.serialize())
+        
         return {
             "id":str(self.id),
             "agent_id":str(self.agent.id),
-            "apps":self.apps,
+            "apps":serialized_apps,
             "updated":self.updated
         }
 
