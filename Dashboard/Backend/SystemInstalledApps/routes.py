@@ -4,8 +4,10 @@
 ##############################################################################
 from flask import Blueprint, request, jsonify
 from datetime import datetime
+from marshmallow import ValidationError
 
 from .models import SystemInstalledApps, ChangeLogSystemInstalledApps
+from .schema import RegisterSchema
 from Shared.validators import agent_token_required, auth_token_required
 
 from Agents.helper_funcs import get_id_by_token
@@ -56,12 +58,12 @@ def register():
     # Get Agent by Agent ID
     agent = Agent.objects(id=agent_id).first()
 
-    # Get Data from Request
-    data = request.get_json()
-
-    # Validate the Request
-    if 'apps' not in data:
-        return jsonify({'error': 'Invalid JSON data'}), 400
+    try:
+        # Load and validate the JSON request using the schema
+        data = RegisterSchema().load(request.json)
+    except ValidationError as e:
+        # Return validation errors as a JSON response with a 400 status code
+        return jsonify({'error': e.messages}), 400
         
     # Get if record already exist
     sys_apps = SystemInstalledApps.objects(agent=agent).first()
