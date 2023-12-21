@@ -38,18 +38,10 @@ def get_all_system_apps():
 @auth_token_required
 def get_system_apps_by_agent_id(agent_id):
     try:
-        # Get System Apps
-        sys_apps = SystemInstalledApps.objects(agent=agent_id).first()
-        
-        # Serialize "apps" section
-        apps_list = []
-        for app in sys_apps.apps:
-            apps_list.append(app.serialize())
-        
-        # Append again apps to System apps
-        sys_apps.apps = apps_list
-        # Return as serialized
-        return jsonify(sys_apps.serialize())
+        # Get System Apps by Agent ID & Serialize
+        sys_apps = SystemInstalledApps.objects(agent=agent_id).first().serialize()
+        # Return the System Apps
+        return jsonify(sys_apps)
     except Exception as e:
         return jsonify({"Message":str(e)}), 404
 
