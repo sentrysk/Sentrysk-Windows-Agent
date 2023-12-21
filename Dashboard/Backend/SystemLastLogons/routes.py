@@ -40,6 +40,15 @@ def get_all_last_logons():
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 
+# Get Last Logons Data by Agent ID
+@sys_last_logons_bp.route('/<agent_id>', methods=['GET'])
+@auth_token_required
+def get_last_logons_by_agent_id(agent_id):
+    try:
+        sys_info = SystemLastLogons.objects(agent=agent_id).first().serialize()
+        return jsonify(sys_info)
+    except Exception as e:
+        return jsonify({"Message":"Not Found"}), 404
 
 # Register & Update
 @sys_last_logons_bp.route('/', methods=['POST'])
