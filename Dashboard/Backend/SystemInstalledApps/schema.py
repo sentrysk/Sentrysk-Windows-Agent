@@ -5,7 +5,7 @@
 from marshmallow import Schema, fields
 ##############################################################################
 
-# Schemas
+# App Schema
 ##############################################################################
 class AppSchema(Schema):
     name         = fields.Str(required=True)
@@ -13,7 +13,7 @@ class AppSchema(Schema):
     installed_by = fields.Str(required=False)
 ##############################################################################
 
-# Schemas
+# Register Schema
 ##############################################################################
 class RegisterSchema(Schema):
     apps = fields.List(fields.Nested(AppSchema))
