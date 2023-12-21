@@ -75,12 +75,8 @@ def register():
         # UPDATE If Last Logons data already exist
         try:
             # Get Existing Logons
-            exist_logons = last_logons.last_logons
+            exist_logons = last_logons.serialize().get('last_logons')
             
-            # Convert Last Logons into STR
-            for logon in exist_logons:
-                logon.last_logon = logon.last_logon.strftime(DATE_FORMAT)
-
             # Get New System Last Logons
             new_logons = data.get('last_logons')
 
