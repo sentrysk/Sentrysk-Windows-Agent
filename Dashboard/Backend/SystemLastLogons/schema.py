@@ -5,13 +5,15 @@
 from marshmallow import Schema, fields
 ##############################################################################
 
-# Schemas
+# Login Schema
+##############################################################################
+class LoginSchema(Schema):
+    username    = fields.Str(required=True)
+    last_logon  = fields.DateTime(required=True)
+##############################################################################
+
+# Last Logons Schema
 ##############################################################################
 class LastLogonSchema(Schema):
-    last_logons = fields.List(
-        fields.Dict(
-            username    = fields.Str(),
-            last_logon  = fields.DateTime()
-        )
-    )
+    last_logons = fields.List(fields.Nested(LoginSchema))
 ##############################################################################
