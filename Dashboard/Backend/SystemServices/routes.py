@@ -26,17 +26,10 @@ sys_srvc_bp = Blueprint('sys_services_blueprint', __name__)
 @auth_token_required
 def get_all_system_services():
     try:
+        # Get All System Services from DB
         all_sys_srvcs = SystemServices.objects()
-
-        for sys_srvcs in all_sys_srvcs:
-            # Serialize "services" section
-            services = []
-            for service in sys_srvcs.services:
-                services.append(service.serialize())
-            # Append again Service to System Services
-            sys_srvcs.services = services
-        
-        return [info.serialize() for info in all_sys_srvcs] # Serialize & Return
+        # Serialize & Return
+        return [info.serialize() for info in all_sys_srvcs]
     except Exception as e:
         return jsonify({"error":str(e)}), 500
 
