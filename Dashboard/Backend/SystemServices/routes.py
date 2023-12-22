@@ -43,7 +43,7 @@ def get_system_services_by_agent_id(agent_id):
         # Return the System Services
         return jsonify(sys_srvcs)
     except Exception as e:
-        return jsonify({"Message":str(e)}), 404
+        return jsonify({"Message":"Not Found"}), 404
 
 # Register
 @sys_srvc_bp.route('/', methods=['POST'])
