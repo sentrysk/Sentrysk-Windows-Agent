@@ -80,10 +80,15 @@ class SystemServices(Document):
         return new_services, deleted_services, updated_services
     
     def serialize(self):
+        # Serialize All Services
+        serialized_services = []
+        for service in self.services:
+            serialized_services.append(service.serialize())
+
         return {
             "id":str(self.id),
             "agent_id":str(self.agent.id),
-            "services":self.services,
+            "services":serialized_services,
             "updated":self.updated
         }
 
