@@ -74,7 +74,7 @@ system_info['last_logons']          = get_last_logons()
 
 
 # Usage
-#json_data = json.dumps(system_info, indent=4)
-#with open('result.json','w') as f:
-#    f.write(json_data)
-#print(json_data)
+json_data = json.dumps(system_info, indent=4)
+with open('result.json','w') as f:
+    f.write(json_data)
+print(json_data)
