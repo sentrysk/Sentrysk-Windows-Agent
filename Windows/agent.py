@@ -5,6 +5,7 @@
 import json
 from configparser import ConfigParser,ExtendedInterpolation
 import logging
+import os
 
 from Modules.system_info import get_system_info
 from Modules.user_info import get_user_info
@@ -20,19 +21,30 @@ from Modules.last_logon import get_last_logons
 
 # Configs
 ##############################################################################
-CONFIG_FILE = 'config.ini'
+def load_config(file_path):
+    with open(file_path, 'r') as file:
+        config_data = json.load(file)
+    return config_data
 
-config = ConfigParser(interpolation=ExtendedInterpolation())
-config.read(CONFIG_FILE)
+# Specify the path to your JSON configuration file
+config_file_path = 'config.json'
 
-DASHBOARD_URL   = config.get('dashboard','url')
-LOGFILE         = config.get('logging','logfile')
+# Load configuration from the JSON file
+config = load_config(config_file_path)
 
+# Extract information from the configuration
+base_url = config['api']['base_url']
+endpoints = config['api']['endpoints']
+agent_token = config['api']['agent_token']
+
+home_dir = config['dirs']['home_dir']
+logfile_relative_path = config['dirs']['logfile']
+logfile_path = os.path.join(home_dir, logfile_relative_path)
 
 FORMAT = '%(asctime)s :: %(levelname)-6s :: %(name)s :: [%(filename)s:%(lineno)s - %(funcName)s()] :: %(message)s'
 # Configure logging to write logs to a log file
 logging.basicConfig(
-    filename=LOGFILE, 
+    filename=logfile_path, 
     level=logging.INFO,
     format=FORMAT,
     encoding='utf-8'
@@ -62,8 +74,7 @@ system_info['last_logons']          = get_last_logons()
 
 
 # Usage
-json_data = json.dumps(system_info, indent=4)
-with open('result.json','w') as f:
-    f.write(json_data)
-print(json_data)
-
+#json_data = json.dumps(system_info, indent=4)
+#with open('result.json','w') as f:
+#    f.write(json_data)
+#print(json_data)
