@@ -3,7 +3,6 @@
 # Libraries
 ##############################################################################
 import json
-from configparser import ConfigParser,ExtendedInterpolation
 import logging
 import os
 
