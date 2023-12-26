@@ -4,6 +4,7 @@ import axios from 'axios';
 const API_URL  =  "http://localhost:5000"
 const SYS_INFO_EP = "/sysinfo/"
 const SYS_USR_EP = "/sysusers/"
+const SYS_USR_LAST_LOGN_EP = SYS_USR_EP + "lastlogons/"
 const SYS_APPS_EP = "/sysapps/"
 const SYS_SRVCS_EP = "/sysservices/"
 const CHLG_EP = "/changelog"
@@ -59,6 +60,23 @@ export async function getSystemUsers(agentId){
     }
 }
 
+// Retrive System Users Last Logons
+export async function getSystemUsersLastLogons(agentId){
+    try {
+        // Retrieve JWT token from session storage
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const URL = API_URL + SYS_USR_LAST_LOGN_EP + agentId;
+        const response = await axios.get(URL, {
+            headers: {
+                Authorization: jwtToken,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching System Users Last Logons:', error);
+    }
+}
+
 // Retrive System Users Changelog
 export async function getSysUsersChangeLog(sysUsersId){
     try {
@@ -93,7 +111,7 @@ export async function getInstalledApps(agentId){
     }
 }
 
-// Retrive System Users Changelog
+// Retrive Installed Apps Changelog
 export async function getInstalledAppsChangeLog(sysInstalledAppsId){
     try {
         // Retrieve JWT token from session storage
