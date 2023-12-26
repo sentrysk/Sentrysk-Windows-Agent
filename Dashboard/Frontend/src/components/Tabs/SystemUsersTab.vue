@@ -9,6 +9,13 @@
             </button>
         </li>
         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="systemUsersLastLogonsTab" data-bs-toggle="tab" data-bs-target="#systemUsersLastLogons" type="button" role="tab" aria-controls="SystemUsersLastLogons" aria-selected="false">
+              <i class="bi bi-file-diff"></i>Last Logins 
+              <span class="badge rounded-pill bg-primary">
+              </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
             <button class="nav-link" id="systemUsersChangelogTab" data-bs-toggle="tab" data-bs-target="#systemUsersChangelog" type="button" role="tab" aria-controls="systemUsersChangelog" aria-selected="false">
               <i class="bi bi-file-diff"></i>Changelogs 
               <span class="badge rounded-pill bg-primary">
@@ -99,6 +106,9 @@
           </tbody>
         </table>
       </div>
+
+      <LastLogonsTab></LastLogonsTab>
+
     </div>
 </template>
 
@@ -107,9 +117,13 @@
     import $ from "jquery";
     import { formatToLocalTime, calculateDatetimeDifference } from '../../utils/timeUtils';
     import { getSystemUsers, getSysUsersChangeLog } from '../../utils/requestUtils';
+    import LastLogonsTab from './UsersSubTabs/LastLogonsTab.vue';
     
     export default {
       name: 'SystemUsersTab',
+      components: {
+        LastLogonsTab,
+      },
       data() {
         return {
           systemUsers: {},
