@@ -1,6 +1,9 @@
 <template>
     <div class="tab-pane fade" id="systemUsersLastLogons" role="tabpanel" aria-labelledby="SystemUsersLastLogons">
-        <b>Last Update : {{ lastUpdate }}</b>
+        <!-- Last Update -->
+        <div class="row">
+            <b><span :title=localUpdateTime>Last Update : {{ timeDiff }}</span></b>
+        </div>
         <table class="table table-striped table-bordered table-sm" id="sysUsersLastLogonsTable">
             <thead>
                 <tr>
@@ -24,13 +27,15 @@
 
 <script>
     import { getSystemUsersLastLogons } from '../../../utils/requestUtils';
+    import { formatToLocalTime, calculateDatetimeDifference } from '../../../utils/timeUtils';
 
     export default {
         name: 'LastLogonsTab',
         data(){
             return{
                 systemUsersLastLogons: {},
-                lastUpdate: ""
+                localUpdateTime: "",
+                timeDiff: ""
             }
         },
         mounted() {
@@ -46,7 +51,10 @@
                     this.systemUsersLastLogons = await getSystemUsersLastLogons(agentId);
 
                     // Set Last Update
-                    this.lastUpdate = this.systemUsersLastLogons.updated;
+                    this.localUpdateTime = formatToLocalTime(this.systemUsersLastLogons.updated);
+
+                    // Set Time Diff
+                    this.timeDiff = calculateDatetimeDifference(this.systemUsersLastLogons.updated);
 
                 } catch (error) {
                     console.error('Error fetching system users last logons:', error);
