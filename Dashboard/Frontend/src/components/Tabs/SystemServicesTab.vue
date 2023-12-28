@@ -28,7 +28,7 @@
     <div class="tab-content" id="sysServicesTabContent">
         <!-- Services Section -->
         <div class="tab-pane fade show active" id="systemServices" role="tabpanel" aria-labelledby="systemServices">
-            <table class="table table-striped table-bordered table-sm table-hover nowrap"  id="systemServicesTable">
+            <table class="table table-striped table-bordered table-sm table-hover table-responsive"  id="systemServicesTable">
                 <thead>
                     <tr>
                         <th>Status</th>
