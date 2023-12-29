@@ -4,6 +4,7 @@
 ##############################################################################
 from flask import Blueprint, jsonify
 
+from Shared.validators import auth_token_required
 from .functions import (
     get_sys_user_counts_by_agent_id
 )
@@ -18,6 +19,7 @@ inf_data_bp = Blueprint('informational_data', __name__)
 # Routes 
 ##############################################################################
 @inf_data_bp.route('/user_counts/<agent_id>', methods=['GET'])
+@auth_token_required
 def sys_user_count_by_agent_id(agent_id):
     sys_user_count = get_sys_user_counts_by_agent_id(agent_id)
     
