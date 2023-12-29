@@ -6,7 +6,8 @@ from flask import Blueprint, jsonify
 
 from Shared.validators import auth_token_required
 from .functions import (
-    get_sys_user_counts_by_agent_id
+    get_sys_user_count_by_agent_id,
+    get_sys_user_changelog_entry_count_by_agent_id
 )
 ##############################################################################
 
@@ -18,12 +19,25 @@ inf_data_bp = Blueprint('informational_data', __name__)
 
 # Routes 
 ##############################################################################
-@inf_data_bp.route('/user_counts/<agent_id>', methods=['GET'])
+
+# Get Sys User Count by Agent ID
+@inf_data_bp.route('/user_count/<agent_id>', methods=['GET'])
 @auth_token_required
 def sys_user_count_by_agent_id(agent_id):
-    sys_user_count = get_sys_user_counts_by_agent_id(agent_id)
+    sys_user_count = get_sys_user_count_by_agent_id(agent_id)
     
     return jsonify({
         "user_count": str(sys_user_count)
     })
+
+# Get Sys User ChangeLog Count by Agent ID
+@inf_data_bp.route('/user_changelog_count/<agent_id>', methods=['GET'])
+@auth_token_required
+def sys_user_changelog_count_by_agent_id(agent_id):
+    user_changelog_count = get_sys_user_changelog_entry_count_by_agent_id(agent_id)
+    
+    return jsonify({
+        "user_changelog_count": str(user_changelog_count)
+    })
+
 ##############################################################################
