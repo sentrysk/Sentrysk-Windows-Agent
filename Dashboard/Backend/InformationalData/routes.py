@@ -2,10 +2,11 @@
 
 # Libraries
 ##############################################################################
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 
-from SystemUsers.models import SystemUsers
-
+from .functions import (
+    get_sys_user_counts_by_agent_id
+)
 ##############################################################################
 
 # Blueprint
@@ -17,21 +18,10 @@ inf_data_bp = Blueprint('informational_data', __name__)
 # Routes 
 ##############################################################################
 @inf_data_bp.route('/user_counts/<agent_id>', methods=['GET'])
-def get_sys_user_counts_by_agent_id(agent_id):
-    try:
-        # Get System Users
-        sys_users = SystemUsers.objects(agent=agent_id).first()
-        
-        # If exist
-        if sys_users:
-            return jsonify({
-                "user_counts":str(len(sys_users.users))
-            })
-        return jsonify({
-                "user_counts":0
-        })
-    except Exception as e:
-        return jsonify({
-                "user_counts":0
-        })
+def sys_user_count_by_agent_id(agent_id):
+    sys_user_count = get_sys_user_counts_by_agent_id(agent_id)
+    
+    return jsonify({
+        "user_count": str(sys_user_count)
+    })
 ##############################################################################
