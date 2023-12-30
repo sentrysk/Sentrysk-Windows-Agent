@@ -4,6 +4,7 @@
 ##############################################################################
 
 from SystemUsers.models import SystemUsers, ChangeLogSystemUsers
+from SystemLastLogons.models import SystemLastLogons
 
 ##############################################################################
 
@@ -52,4 +53,19 @@ def get_sys_user_changelog_entry_count_by_agent_id(agent_id):
     except Exception as e:
         print(e)
         return chlg_count
+##############################################################################
+    
+# Get Last Logons Count by Agent ID
+##############################################################################
+def get_last_logons_by_agent_id(agent_id):
+    try:
+        # Get System Last Logons
+        sys_last_logons = SystemLastLogons.objects(agent=agent_id).first()
+
+        # If exist, return count
+        if sys_last_logons:
+            return len(sys_last_logons.last_logons)
+        return 0
+    except Exception as e:
+        return 0
 ##############################################################################
