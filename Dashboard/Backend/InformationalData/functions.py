@@ -5,11 +5,22 @@
 
 from SystemUsers.models import SystemUsers, ChangeLogSystemUsers
 from SystemLastLogons.models import SystemLastLogons
+from Agents.models import Agent
 
 ##############################################################################
 
 
 # Functions
+
+# Get Agent Count
+##############################################################################
+def get_agent_count():
+    try:
+        # Get Agent Count & Return
+        return Agent.objects.count()
+    except Exception as e:
+        return 0
+##############################################################################
 
 # Get User Count By Agent ID
 ##############################################################################
