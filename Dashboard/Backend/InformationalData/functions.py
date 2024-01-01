@@ -6,6 +6,7 @@
 from SystemUsers.models import SystemUsers, ChangeLogSystemUsers
 from SystemLastLogons.models import SystemLastLogons
 from Agents.models import Agent
+from SystemInstalledApps.models import SystemInstalledApps
 
 ##############################################################################
 
@@ -76,6 +77,21 @@ def get_last_logons_by_agent_id(agent_id):
         # If exist, return count
         if sys_last_logons:
             return len(sys_last_logons.last_logons)
+        return 0
+    except Exception as e:
+        return 0
+##############################################################################
+    
+# Get Installed Apps Count By Agent ID
+##############################################################################
+def get_sys_installed_apps_count_by_agent_id(agent_id):
+    try:
+        
+        # Get System Users
+        sys_installed_apps = SystemInstalledApps.objects(agent=agent_id).first()
+        # If exist
+        if sys_installed_apps:
+            return len(sys_installed_apps.apps)
         return 0
     except Exception as e:
         return 0
