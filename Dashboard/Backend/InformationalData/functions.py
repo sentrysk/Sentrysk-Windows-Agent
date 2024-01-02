@@ -86,13 +86,29 @@ def get_last_logons_by_agent_id(agent_id):
 ##############################################################################
 def get_sys_installed_apps_count_by_agent_id(agent_id):
     try:
-        
         # Get System Users
         sys_installed_apps = SystemInstalledApps.objects(agent=agent_id).first()
         # If exist
         if sys_installed_apps:
             return len(sys_installed_apps.apps)
         return 0
+    except Exception as e:
+        return 0
+##############################################################################
+    
+# Get All Installed Apps
+##############################################################################
+def get_all_installed_apps_count():
+    try:
+        # Get All Agents
+        agents = Agent.objects()
+        # Installed Apps
+        all_installed_apps_count = 0
+        for agent in agents:
+            agnt_inst_app_cnt = get_sys_installed_apps_count_by_agent_id(agent.id)
+            all_installed_apps_count = all_installed_apps_count + agnt_inst_app_cnt
+
+        return all_installed_apps_count
     except Exception as e:
         return 0
 ##############################################################################
