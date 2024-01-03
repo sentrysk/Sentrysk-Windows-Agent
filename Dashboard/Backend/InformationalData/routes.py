@@ -10,7 +10,8 @@ from .functions import (
     get_sys_user_count_by_agent_id,
     get_sys_user_changelog_entry_count_by_agent_id,
     get_last_logons_by_agent_id,
-    get_sys_installed_apps_count_by_agent_id
+    get_sys_installed_apps_count_by_agent_id,
+    get_all_installed_apps_count
 )
 ##############################################################################
 
@@ -79,6 +80,16 @@ def installed_apps_count_by_agent_id(agent_id):
         "installed_apps_count": str(get_sys_installed_apps_count_by_agent_id(agent_id))
     })
 
+# Get All Installed Apps Count
+@inf_data_bp.route('/installed_apps_count/', methods=['GET'])
+@auth_token_required
+def all_installed_apps_count():  
+    return jsonify({
+        "installed_apps_count": str(get_all_installed_apps_count())
+    })
+
 ##############################################################################
 
+
+# End Routes #
 ##############################################################################
