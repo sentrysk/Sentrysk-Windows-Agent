@@ -91,5 +91,20 @@ def all_installed_apps_count():
 ##############################################################################
 
 
+# About Page View
+##############################################################################
+
+# Home Page Statistics
+@inf_data_bp.route('/homepage', methods=['GET'])
+@auth_token_required
+def get_homepage_statistics():  
+    return jsonify({
+        "agent_count": str(get_agent_count()),
+        "installed_apps_count": str(get_all_installed_apps_count())
+    })
+
+##############################################################################
+
+
 # End Routes #
 ##############################################################################
