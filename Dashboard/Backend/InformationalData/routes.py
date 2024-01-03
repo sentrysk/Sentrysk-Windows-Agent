@@ -109,7 +109,8 @@ def all_installed_apps_count():
 def get_homepage_statistics():  
     return jsonify({
         "agent_count": str(get_agent_count()),
-        "installed_apps_count": str(get_all_installed_apps_count())
+        "installed_apps_count": str(get_all_installed_apps_count()),
+        "sys_user_count": str(get_all_sys_user_count())
     })
 
 ##############################################################################
