@@ -37,6 +37,23 @@ def get_sys_user_count_by_agent_id(agent_id):
         return 0
 ##############################################################################
     
+# Get All System Users Count
+##############################################################################
+def get_all_sys_user_count():
+    try:
+        # Get All Agents
+        agents = Agent.objects()
+        # Installed Apps
+        all_sys_user_count = 0
+        for agent in agents:
+            agnt_sys_usr_cnt = get_sys_user_count_by_agent_id(agent.id)
+            all_sys_user_count = all_sys_user_count + agnt_sys_usr_cnt
+
+        return all_sys_user_count
+    except Exception as e:
+        return 0
+##############################################################################
+    
 # Get User ChangeLog Count By Agent ID
 ##############################################################################
 def get_sys_user_changelog_entry_count_by_agent_id(agent_id):
