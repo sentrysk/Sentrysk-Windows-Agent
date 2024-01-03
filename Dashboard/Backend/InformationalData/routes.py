@@ -11,7 +11,8 @@ from .functions import (
     get_sys_user_changelog_entry_count_by_agent_id,
     get_last_logons_by_agent_id,
     get_sys_installed_apps_count_by_agent_id,
-    get_all_installed_apps_count
+    get_all_installed_apps_count,
+    get_all_sys_user_count
 )
 ##############################################################################
 
@@ -45,6 +46,14 @@ def sys_user_count_by_agent_id(agent_id):
     
     return jsonify({
         "user_count": str(sys_user_count)
+    })
+
+# Get All Sys User Count
+@inf_data_bp.route('/user_count/', methods=['GET'])
+@auth_token_required
+def all_sys_user_count():
+    return jsonify({
+        "user_count": str(get_all_sys_user_count())
     })
 
 # Get Sys User ChangeLog Count by Agent ID
