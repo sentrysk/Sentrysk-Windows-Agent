@@ -8,6 +8,8 @@ const SYS_USR_LAST_LOGN_EP = SYS_USR_EP + "lastlogons/"
 const SYS_APPS_EP = "/sysapps/"
 const SYS_SRVCS_EP = "/sysservices/"
 const CHLG_EP = "/changelog"
+const INF_DT_EP = "/inf_data"
+const HOME_PG_STS_EP = INF_DT_EP + "/homepage"
 
 // Retrive System Information
 export async function getSystemInformation(agentId){
@@ -34,7 +36,7 @@ export async function getSysInfoChangeLog(sysInfoId){
         const URL = API_URL + SYS_INFO_EP + sysInfoId + CHLG_EP;
         const changelog = await axios.get(URL, {
             headers: {
-            Authorization: jwtToken,
+                Authorization: jwtToken,
             },
         });
         return changelog.data
@@ -85,7 +87,7 @@ export async function getSysUsersChangeLog(sysUsersId){
         const URL = API_URL + SYS_USR_EP + sysUsersId + CHLG_EP;
         const changelog = await axios.get(URL, {
             headers: {
-            Authorization: jwtToken,
+                Authorization: jwtToken,
             },
         });
         return changelog.data
@@ -119,7 +121,7 @@ export async function getInstalledAppsChangeLog(sysInstalledAppsId){
         const URL = API_URL + SYS_APPS_EP + sysInstalledAppsId + CHLG_EP;
         const changelog = await axios.get(URL, {
             headers: {
-            Authorization: jwtToken,
+                Authorization: jwtToken,
             },
         });
         return changelog.data
@@ -153,11 +155,28 @@ export async function getServicesChangeLog(sysServicesId){
         const URL = API_URL + SYS_SRVCS_EP + sysServicesId + CHLG_EP;
         const changelog = await axios.get(URL, {
             headers: {
-            Authorization: jwtToken,
+                Authorization: jwtToken,
             },
         });
         return changelog.data
     } catch (error) {
         console.error('Error fetching System Services Changelog:', error);
+    }
+}
+
+// Retrive Home Page Statistics
+export async function getHomePageStatistics(){
+    try {
+        // Retrieve JWT token from session storage
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const URL = API_URL + HOME_PG_STS_EP;
+        const homepageData = await axios.get(URL, {
+            headers: {
+                Authorization: jwtToken,
+            },
+        });
+        return homepageData.data
+    } catch (error) {
+        console.error('Error fetching Home Page Statistics:', error);
     }
 }
