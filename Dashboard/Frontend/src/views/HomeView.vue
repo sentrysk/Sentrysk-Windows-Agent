@@ -1,5 +1,6 @@
 <template>
   <Navbar /> <!-- Include the Navbar component here -->
+  <GeneralStatistics></GeneralStatistics>
   <div class="container mt-5">
     <div class="jumbotron">
       <h1 class="display-4">Welcome to Our App</h1>
@@ -14,11 +15,13 @@
 <script>
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue';
+import GeneralStatistics from '@/components/HomePage/GeneralStatistics.vue'
 
 export default {
   name: 'HomeView',
   components: {
     Navbar,
+    GeneralStatistics,
   }
 }
 </script>
