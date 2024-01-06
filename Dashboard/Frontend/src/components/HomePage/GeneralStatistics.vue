@@ -26,9 +26,9 @@
         </div>
         <div class="col-sm-2">
             <div class="card">
-                <div class="card-header">Data Here</div>
+                <div class="card-header"><i class="bi bi-code-square"></i> Total Services </div>
                 <div class="card-body">
-                    <p class="card-text">Data Here</p>
+                    <p class="card-text">{{ servicesCount }}</p>
                 </div>
             </div>
         </div>
@@ -62,6 +62,7 @@
                 agentCount: 0,
                 userCount: 0,
                 installedAppsCount: 0,
+                servicesCount: 0,
                 homePageData: {}
             }
         },
@@ -75,6 +76,7 @@
                 this.agentCount = this.homePageData.agent_count;
                 this.userCount  = this.homePageData.sys_user_count;
                 this.installedAppsCount = this.homePageData.installed_apps_count;
+                this.servicesCount = this.homePageData.services_count;
 
             }
         }
