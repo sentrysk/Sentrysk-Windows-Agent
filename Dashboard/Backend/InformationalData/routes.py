@@ -101,6 +101,20 @@ def all_installed_apps_count():
 
 ##############################################################################
 
+# About Services
+##############################################################################
+
+# Get Services Count by Agent ID
+@inf_data_bp.route('/services/<agent_id>', methods=['GET'])
+@auth_token_required
+def services_count_by_agent_id(agent_id):  
+    return jsonify({
+        "services_count": str(get_sys_services_count_by_agent_id(agent_id))
+    })
+
+
+##############################################################################
+
 
 # About Page View
 ##############################################################################
