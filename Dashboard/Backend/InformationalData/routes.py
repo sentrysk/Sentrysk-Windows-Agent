@@ -12,7 +12,9 @@ from .functions import (
     get_last_logons_by_agent_id,
     get_sys_installed_apps_count_by_agent_id,
     get_all_installed_apps_count,
-    get_all_sys_user_count
+    get_all_sys_user_count,
+    get_sys_services_count_by_agent_id,
+    get_all_services_count
 )
 ##############################################################################
 
@@ -110,7 +112,8 @@ def get_homepage_statistics():
     return jsonify({
         "agent_count": str(get_agent_count()),
         "installed_apps_count": str(get_all_installed_apps_count()),
-        "sys_user_count": str(get_all_sys_user_count())
+        "sys_user_count": str(get_all_sys_user_count()),
+        "services_count": str(get_all_services_count())
     })
 
 ##############################################################################
