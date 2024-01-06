@@ -139,8 +139,25 @@ def get_sys_services_count_by_agent_id(agent_id):
         sys_srvcs = SystemServices.objects(agent=agent_id).first()
         # If exist
         if sys_srvcs:
-            return len(sys_srvcs.users)
+            return len(sys_srvcs.services)
         return 0
+    except Exception as e:
+        return 0
+##############################################################################
+    
+# Get All Services Count (System Wide)
+##############################################################################
+def get_all_services_count():
+    try:
+        # Get All Agents
+        agents = Agent.objects()
+        # Installed Services
+        all_services_count = 0
+        for agent in agents:
+            agnt_srvcs_cnt = get_sys_services_count_by_agent_id(agent.id)
+            all_services_count = all_services_count + agnt_srvcs_cnt
+
+        return all_services_count
     except Exception as e:
         return 0
 ##############################################################################
