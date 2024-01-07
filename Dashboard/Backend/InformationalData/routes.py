@@ -112,6 +112,13 @@ def services_count_by_agent_id(agent_id):
         "services_count": str(get_sys_services_count_by_agent_id(agent_id))
     })
 
+# Get All Services Count
+@inf_data_bp.route('/services/', methods=['GET'])
+@auth_token_required
+def all_services_count():  
+    return jsonify({
+        "services_count": str(get_all_services_count())
+    })
 
 ##############################################################################
 
