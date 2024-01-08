@@ -26,7 +26,7 @@ class Session(Document):
     def serialize(self):
         return {
             "id":str(self.id),
-            "email":self.type,
+            "email":self.email,
             "token":self.token,
             "expire_date":self.expire_date,
             "is_expired":self.is_expired,
