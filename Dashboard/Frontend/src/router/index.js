@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import DashboardLastLoginsView from '@/views/DashboardLastLoginsView'
 import LoginPage from '../components/LoginPage.vue'
 import RegisterPage from '../components/RegisterPage.vue'
 import AgentsView from '../views/AgentsView'
@@ -33,6 +34,12 @@ const routes = [
     path: '/agents/:id',
     name: 'agentData',
     component: AgentSystemData,
+    meta: { requiresAuth: true }
+  },
+  {
+    path:'/user/lastlogins',
+    name:'lastLogins',
+    component: DashboardLastLoginsView,
     meta: { requiresAuth: true }
   },
   {
