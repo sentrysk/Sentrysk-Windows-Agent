@@ -37,7 +37,7 @@ def get_personal_prev_sessions():
     prev_sessions = []
     # Serialize the Sessions
     for session in sessions:
-        prev_sessions.append(session.serialize())
+        prev_sessions.append(session.safe_serialize())
     
     # Return the List of Previous Sessions
     return jsonify(prev_sessions),200
