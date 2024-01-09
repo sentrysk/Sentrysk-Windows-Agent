@@ -2,6 +2,8 @@ import axios from 'axios';
 
 // Global Variables
 const API_URL  =  "http://localhost:5000"
+const SESSIONS_EP = "/session"
+const MY_LOGINS_EP = SESSIONS_EP + "/prev_sessions"
 const SYS_INFO_EP = "/sysinfo/"
 const SYS_USR_EP = "/sysusers/"
 const SYS_USR_LAST_LOGN_EP = SYS_USR_EP + "lastlogons/"
@@ -178,5 +180,22 @@ export async function getHomePageStatistics(){
         return homepageData.data
     } catch (error) {
         console.error('Error fetching Home Page Statistics:', error);
+    }
+}
+
+// Retrive my User Last Dashboard Logins
+export async function getMyLastDashboardLogins(){
+    try {
+        // Retrieve JWT token from session storage
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const URL = API_URL + MY_LOGINS_EP;
+        const myLoginsData = await axios.get(URL, {
+            headers: {
+                Authorization: jwtToken,
+            },
+        });
+        return myLoginsData.data
+    } catch (error) {
+        console.error('Error fetching Last Logins:', error);
     }
 }
