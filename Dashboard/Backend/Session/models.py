@@ -32,6 +32,12 @@ class Session(Document):
             "is_expired":self.is_expired,
             "created":self.created
         }
+    
+    def safe_serialize(self):
+        return {
+            "email":self.email,
+            "created":self.created
+        }
 
     def __str__(self):
         return str(self.serialize())
