@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import $ from "jquery";
     import { getSystemUsersLastLogons } from '../../../utils/requestUtils';
     import { formatToLocalTime, calculateDatetimeDifference } from '../../../utils/timeUtils';
 
@@ -55,6 +56,19 @@
 
                     // Set Time Diff
                     this.timeDiff = calculateDatetimeDifference(this.systemUsersLastLogons.updated);
+
+                    // Make Users Last Logons Table as DataTable
+                    $(document).ready(() => {
+                        $('#sysUsersLastLogonsTable').DataTable({
+                        searching: true,
+                        lengthChange: true,
+                        pageLength: 25,
+                        lengthMenu: [
+                            [25, 50, 100, 250, -1],
+                            [25, 50, 100, 250, 'All']
+                        ],
+                        }); 
+                    });
 
                 } catch (error) {
                     console.error('Error fetching system users last logons:', error);
