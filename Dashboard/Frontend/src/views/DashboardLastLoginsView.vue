@@ -1,7 +1,7 @@
 <template>
     <Navbar /> <!-- Include the Navbar component here -->
     <div class="container">
-        <table class="table table-striped table-bordered dt-responsive nowrap" id="agentsTable">
+        <table class="table table-striped table-bordered dt-responsive nowrap" id="dashboardLastLoginsTable">
           <thead>
             <tr>
               <th>Date</th>
@@ -19,6 +19,7 @@
   
   <script>
   // @ is an alias to /src
+  import $ from "jquery";
   import Navbar from '@/components/Navbar.vue';
   import { getMyLastDashboardLogins } from '@/utils/requestUtils';
   
@@ -38,6 +39,20 @@
     methods:{
         async fillLastDasboardLogins(){
             this.lastLoginsData = await getMyLastDashboardLogins();
+
+            // Make Users Last Logons Table as DataTable
+            $(document).ready(() => {
+                $('#dashboardLastLoginsTable').DataTable({
+                searching: true,
+                lengthChange: true,
+                pageLength: 25,
+                lengthMenu: [
+                    [25, 50, 100, 250, -1],
+                    [25, 50, 100, 250, 'All']
+                ],
+                order: [ 0, 'desc' ]
+                }); 
+            }); 
         }
     }
   }
