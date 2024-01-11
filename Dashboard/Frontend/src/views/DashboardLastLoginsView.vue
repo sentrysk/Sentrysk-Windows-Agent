@@ -1,7 +1,7 @@
 <template>
     <Navbar /> <!-- Include the Navbar component here -->
     <div class="container">
-        <table class="table table-striped table-bordered dt-responsive nowrap" id="dashboardLastLoginsTable">
+        <table class="table table-striped table-bordered table-hover nowrap" id="dashboardLastLoginsTable">
           <thead>
             <tr>
               <th>Date</th>
@@ -15,9 +15,9 @@
         </table>
     </div>
     
-  </template>
+</template>
   
-  <script>
+<script>
   // @ is an alias to /src
   import $ from "jquery";
   import Navbar from '@/components/Navbar.vue';
@@ -51,10 +51,22 @@
                     [25, 50, 100, 250, 'All']
                 ],
                 order: [ 0, 'desc' ]
-                }); 
-            }); 
+                });
+                // Style length Menu
+                const pageEntrySize = document.getElementById('dashboardLastLoginsTable_length')
+                pageEntrySize.style = "float:left"
+                const pageInfoText = document.getElementById('dashboardLastLoginsTable_info')
+                pageInfoText.style = "float:left"
+
+            });
         }
     }
   }
-  </script>
+</script>
+
+<style>
+  #dashboardLastLoginsTable{
+    margin-top: 5rem;
+  }
+</style>
   
