@@ -37,8 +37,8 @@
             <i class="bi bi-person-circle"></i> <!-- Replace with the user's name or username -->
             </button>
             <div class="dropdown-menu" aria-labelledby="userDropdown">
-              <li><button class="dropdown-item" @click="logout"><i class="bi bi-box-arrow-in-right"></i> Logout</button></li>
               <li><router-link class="dropdown-item" to="/user/lastlogins"><i class="bi bi-people"></i> Last Logins</router-link></li>
+              <li><button class="dropdown-item" @click="logout"><i class="bi bi-box-arrow-in-right"></i> Logout</button></li>
             </div>
           </div>
         </div>
