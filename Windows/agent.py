@@ -37,8 +37,13 @@ endpoints = config['api']['endpoints']
 agent_token = config['api']['agent_token']
 
 home_dir = config['dirs']['home_dir']
+logs_dir = os.path.join(home_dir,'logs')
 logfile_relative_path = config['dirs']['logfile']
 logfile_path = os.path.join(home_dir, logfile_relative_path)
+
+# Check if path not exist, create new one
+if not os.path.exists(logs_dir):
+    os.makedirs(logs_dir)
 
 FORMAT = '%(asctime)s :: %(levelname)-6s :: %(name)s :: [%(filename)s:%(lineno)s - %(funcName)s()] :: %(message)s'
 # Configure logging to write logs to a log file
