@@ -5,6 +5,9 @@
 import json
 import logging
 import os
+import schedule
+import requests
+import time
 
 from Modules.system_info import get_system_info
 from Modules.user_info import get_user_info
@@ -53,32 +56,59 @@ logging.basicConfig(
     format=FORMAT,
     encoding='utf-8'
 )
+
+# Get Scheduled Jobs from Config
+scheduled_jobs = config['scheduled_jobs']
 ##############################################################################
 
 # Functions
 ##############################################################################
-"""
-    Retrieve system information.
-"""
+def send_system_info():
+    try:
+        url = str(base_url) + endpoints["system_info"]
 
-system_info = {}
+        payload = json.dumps(get_system_info(), indent=4)
 
-system_info['system']               = get_system_info()
-system_info['users']                = get_user_info()
-system_info['audit_policies']       = get_audit_policies()
-system_info['installed_programs']   = get_installed_programs()
-system_info['services']             = get_service_info()
-system_info['update_history']       = get_update_history()
-system_info['missing_updates']      = check_missing_updates()
-system_info['docker_info']          = get_docker_info()
-system_info['npm_info']             = get_npm_packages()
-system_info['pip_info']             = get_pip_packages()
-system_info['last_logons']          = get_last_logons()
+        headers = {
+            'Authorization': agent_token,
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        print(response.text)
+    except Exception as e:
+        print(e)
+
+def send_user_info():
+    try:
+        url = str(base_url) + endpoints["user_info"]
+
+        payload = json.dumps({"users":get_user_info()})
+
+        headers = {
+            'Authorization': agent_token,
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        print(response.text)
+    except Exception as e:
+        print(e)
 ##############################################################################
+ 
+# Schedule jobs
+for job_name, job_config in scheduled_jobs.items():
+    if "interval" in job_config:
+        interval = job_config["interval"]
+        unit = job_config.get("unit", "minutes")
+        getattr(schedule.every(interval), unit).do(eval(job_name))
+    elif "time" in job_config:
+        time_str = job_config["time"]
+        schedule.every().day.at(time_str).do(eval(job_name))
 
-
-# Usage
-json_data = json.dumps(system_info, indent=4)
-with open('result.json','w') as f:
-    f.write(json_data)
-print(json_data)
+# Run 
+while True:
+    schedule.run_pending()
+    time.sleep(60)  # Check every 60 seconds
