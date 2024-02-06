@@ -63,6 +63,7 @@ scheduled_jobs = config['scheduled_jobs']
 
 # Functions
 ##############################################################################
+# System Info Sender Function
 def send_system_info():
     try:
         url = str(base_url) + endpoints["system_info"]
@@ -80,6 +81,7 @@ def send_system_info():
     except Exception as e:
         print(e)
 
+# Users Info Sender Function
 def send_user_info():
     try:
         url = str(base_url) + endpoints["user_info"]
@@ -96,6 +98,61 @@ def send_user_info():
         print(response.text)
     except Exception as e:
         print(e)
+
+# Installed Apps Info Sender Function
+def send_installed_programs():
+    try:
+        url = str(base_url) + endpoints["installed_programs"]
+
+        payload = json.dumps({"apps":get_installed_programs()})
+
+        headers = {
+            'Authorization': agent_token,
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        print(response.text)
+    except Exception as e:
+        print(e)
+
+# Services Info Sender Function
+def send_service_info():
+    try:
+        url = str(base_url) + endpoints["service_info"]
+
+        payload = json.dumps({"services":get_service_info()})
+
+        headers = {
+            'Authorization': agent_token,
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        print(response.text)
+    except Exception as e:
+        print(e)
+
+# Last Logons Info Sender Function
+def send_last_logons():
+    try:
+        url = str(base_url) + endpoints["last_logons"]
+
+        payload = json.dumps({"last_logons":get_last_logons()})
+
+        headers = {
+            'Authorization': agent_token,
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        print(response.text)
+    except Exception as e:
+        print(e)
+
 ##############################################################################
  
 # Schedule jobs
