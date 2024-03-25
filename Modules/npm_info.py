@@ -17,7 +17,7 @@ def get_npm_packages():
 
         # NPM is installed, collect packages and versions
         completed_process = subprocess.run(
-            'npm list --depth=0 --json', 
+            'npm list -g --depth=0 --json', 
             capture_output=True, 
             check=True, 
             shell=True
