@@ -24,21 +24,21 @@ def get_npm_packages():
         )
         package_list = json.loads(completed_process.stdout)['dependencies']
         
-        npm_data = json.loads('{"installed":true, "packages":""}')
-        package_data = []
+        installed_packages = []
         for package_name, package_info in package_list.items():
             package = {"name": package_name, "version": package_info['version']}
-            package_data.append(package)
+            installed_packages.append(package)
 
-        npm_data["packages"] = package_data
-
-        return npm_data
+        return {
+            "is_installed": True,
+            "packages": installed_packages
+        }
     except Exception as e:
         # Log the error
         logging.error(e)
-        data = {
-            "running":False
+        return {
+            "is_installed": False,
+            "packages": []
         }
-        return data
 
 ##############################################################################
