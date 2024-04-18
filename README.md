@@ -3,24 +3,25 @@
 | Content  | 
 | ------------- |
 | [Project Architecture](##Architecture)     | 
-| [Provided Data](##ProvidedData)     | 
-| [Roadmap](##Roadmap)    | 
-| [How to Install](##Roadmap)    | 
-| [How it Works](##Roadmap)    | 
+| [Requirements](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#requirements) |
+| [How to Install](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#how-to-install)   | 
+| [Roadmap](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#roadmap)   | 
+| [How it Works](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#how-it-works)    | 
 
 ## Architecture
 
-## Provided Data
-- System Info
-- Users Info
-- Audit Policies
-- Installed Apps
-- Services
-- Update History
-- Missing Updates
-- Docker Info
-- NPM Info
-- Pip Info
+## Requirements
+| Program  | Version |
+| ------------- |:-------------:|
+| Python      | 3.10     |
+
+## How To Install
+
+- Install requirements
+**Using admin rights** 
+```
+pip install -r requirements.txt
+```
 
 ## Roadmap
 ### Version 1.0-Beta
@@ -42,18 +43,7 @@
 - [ ] Memory data collector module (planning to keep 1 month data)
 - [ ] CPU data collector module (planning to keep 1 month data)
 
-## Requirements
-| Program  | Version |
-| ------------- |:-------------:|
-| Python      | 3.10     |
 
-## How To Install
-
-- Install requirements
-**Using admin rights** 
-```
-pip install -r requirements.txt
-```
 
 ## How It Works
 ### Users
