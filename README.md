@@ -42,3 +42,18 @@ code runs and returns
     "Description"
 }
 ```
+
+## Roadmap
+### Version 1.0-Beta
+- [x] [Developing NPM data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/1)
+- [x] [Developing Pip data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/2)
+- [x] [Developing installed apps data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/3)
+- [x] [Developing last logons data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/4)
+- [x] [Developing services data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/5)
+- [x] [Developing users data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/6)
+- [x] [Developing system information data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/7)
+- [x] [Developing docker data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/8)
+- [x] [Developing config file](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/9)
+- [x] [Developing data sender functions](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/10)
+- [x] [Developing scheduled jobs](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/11)
+- [ ] [Developing config sender module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/12)
