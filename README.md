@@ -57,3 +57,8 @@ code runs and returns
 - [x] [Developing data sender functions](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/10)
 - [x] [Developing scheduled jobs](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/11)
 - [ ] [Developing config sender module](https://github.com/sentrysk/Sentrysk-Windows-Agent/issues/12)
+
+### Feature Development
+- [ ] Process data collector module
+- [ ] Memory data collector module (planning to keep 1 month data)
+- [ ] CPU data collector module (planning to keep 1 month data)
