@@ -2,11 +2,11 @@
 
 | Content  | 
 | ------------- |
-| [Project Architecture](##Architecture)     | 
+| [Project Architecture](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#architecture)     | 
 | [Requirements](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#requirements) |
 | [How to Install](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#how-to-install)   | 
 | [Roadmap](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#roadmap)   | 
-| [How it Works](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#how-it-works)    | 
+| [Modules](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/README.md#modules)    | 
 
 ## Architecture
 
@@ -18,10 +18,16 @@
 ## How To Install
 
 - Install requirements
-**Using admin rights** 
 ```
 pip install -r requirements.txt
 ```
+Note: **Admin rights needed** 
+
+- Run the app
+```
+python agent.py
+```
+Note: **Admin rights needed** 
 
 ## Roadmap
 ### Version 1.0-Beta
@@ -45,31 +51,12 @@ pip install -r requirements.txt
 
 
 
-## How It Works
-### Users
-Get user information from NetUserGetInfo command via win32 net library and returns
-```
-{
-    "username": "",
-    "full_name": "",
-    "comment": "",
-    "flags": "",
-    "sid": ""
-}
-```
-
-
-### Services
-```
-wmic service get DisplayName,Name,State,Description /format:csv
-```
-code runs and returns
-
-```
-{
-    "DisplayName":"",
-    "ServiceName":"",
-    "Status":"",
-    "Description"
-}
-```
+## Modules
+- [NPM data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/npm_info.py)
+- [Pip data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/pip_info.py)
+- [installed apps data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/installed_apps.py)
+- [last logons data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/last_logon.py)
+- [services data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/service_info.py)
+- [users data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/user_info.py)
+- [system information data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/system_info.py)
+- [docker data collector module](https://github.com/sentrysk/Sentrysk-Windows-Agent/blob/main/Modules/docker_info.py)
