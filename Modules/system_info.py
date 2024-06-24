@@ -69,9 +69,6 @@ def get_system_info():
             'mountpoint': partition.mountpoint,
             'filesystem': partition.fstype,
             'total_size': convert_size(disk_usage.total),
-            'used_size': convert_size(disk_usage.used),
-            'free_size': convert_size(disk_usage.free),
-            'usage_percent': disk_usage.percent,
             'bitlocker_status': check_bitlocker_status(partition.device)
         }
 
