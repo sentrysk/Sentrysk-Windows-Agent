@@ -20,6 +20,7 @@ from Modules.npm_info import get_npm_packages
 from Modules.pip_info import get_pip_packages
 from Modules.last_logon import get_last_logons
 from Modules.disk_usage_info import get_disk_usage_info
+from Modules.memory_usage_info import get_memory_usage_info
 ##############################################################################
 
 # Configs
@@ -247,6 +248,24 @@ def send_disk_usage():
         payload = json.dumps({
            "disk_usage": get_disk_usage_info()
         })
+        print(payload)
+        headers = {
+            'Authorization': agent_token,
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        print(response.text)
+    except Exception as e:
+        print(e)
+
+# Disk Usage Sender Function
+def send_memory_usage():
+    try:
+        url = str(base_url) + endpoints["memory_usage"]
+
+        payload = json.dumps(get_memory_usage_info())
         print(payload)
         headers = {
             'Authorization': agent_token,
