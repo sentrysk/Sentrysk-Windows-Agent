@@ -52,9 +52,7 @@ def get_system_info():
     # Memory Information
     memory = psutil.virtual_memory()
     system_info['memory']['total_memory'] = convert_size(memory.total)
-    system_info['memory']['available_memory'] = convert_size(memory.available)
-    system_info['memory']['memory_percent'] = memory.percent
-
+    
     # Disk Information
     partitions = psutil.disk_partitions()
     disk_info = {}
